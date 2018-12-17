@@ -1,0 +1,213 @@
+﻿@model CamDoAnhTu.Models.Customer
+@using CamDoAnhTu.Helper
+@{ 
+    Layout = null;
+}
+
+<script src="~/Scripts/jquery-3.0.0.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<style>
+    .style-table {
+        display: table;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        min-height: 24px;
+    }
+
+        .style-table .style-table-cell {
+            display: table-cell;
+        }
+
+            .style-table .style-table-cell * {
+                vertical-align: bottom;
+            }
+
+    .dashed-style {
+        border-bottom: #9d9d9d dashed 1px;
+        height: 20px;
+        display: block;
+        text-align: center;
+    }
+
+    .alignleft {
+        float: left;
+    }
+
+    .alignright {
+        float: right;
+    }
+</style>
+
+<style type="text/css">
+    @@media screen, print {
+        body {
+            font-size: 20px
+        }
+    }
+</style>
+
+<div>
+    <p class="alignleft" style="font-size:30px;font-weight:bold;margin-left:1%">Mã số: @Model.Code</p>
+    <p class="alignright" style="font-size:30px;font-weight:bold;margin-right:1%">Mã số cũ: @Model.OldCode</p>
+</div>
+<div style="clear: both;"></div>
+<h1 style="text-align:center">GIẤY BIÊN NHẬN</h1>
+<div class="style-table">
+    <div class="style-table-cell" style="width: 100px;">Họ và tên:</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+            @Model.Name
+        </span>
+    </div>
+</div>
+<div class="style-table">
+    <div class="style-table-cell" style="width: 100px;">CMTND:</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+        </span>
+    </div>
+</div>
+<div class="style-table">
+    <div class="style-table-cell" style="width: 100px;">Ngày cấp:</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+            025336493
+        </span>
+    </div>
+    <div class="style-table-cell" style="width: 80px;">Nơi cấp:</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+            TPHCM
+        </span>
+    </div>
+</div>
+<div class="style-table">
+    <div class="style-table-cell" style="width: 200px;">Hộ khẩu thường trú:</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+        </span>
+    </div>
+</div>
+<div class="style-table">
+    <div class="style-table-cell">
+        <span class="dashed-style">
+        </span>
+    </div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+        </span>
+    </div>
+</div>
+<div class="style-table">
+    <div class="style-table-cell" style="width: 130px;">SDT liên hệ:</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+            @Model.Phone
+        </span>
+    </div>
+</div>
+<div class="style-table">
+    <div class="style-table-cell" style="width: 200px;">SDT vợ hoặc chồng:</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+        </span>
+    </div>
+</div>
+<div class="style-table">
+    <div class="style-table-cell" style="width: 100px;">Hôm nay, </div>
+
+    <div class="style-table-cell" style="width: 30px;">ngày:</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+            @Model.StartDate.Day
+        </span>
+    </div>
+    <div class="style-table-cell" style="width: 30px;">tháng:</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+            @Model.StartDate.Month
+        </span>
+    </div>
+    <div class="style-table-cell" style="width: 10px;">năm:</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+            @Model.StartDate.Year
+        </span>
+    </div>
+</div>
+
+
+<div class="style-table">
+    <div class="style-table-cell" style="width: 180px;">Tôi có nhận của anh</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+            <b>Trần Đăng Tú</b>
+        </span>
+    </div>
+</div>
+
+<div class="style-table">
+    <div class="style-table-cell" style="width: 100px;">Số CMND:</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+        </span>
+    </div>
+</div>
+<div class="style-table">
+    <div class="style-table-cell" style="width: 140px;">Với số tiền là:</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+            @Model.Loan.Value.ToString("N0")
+        </span>
+    </div>
+    <div class="style-table-cell" style="width: 100px;">Bằng chữ:</div>
+    <div class="style-table-cell">
+        <span class="dashed-style">
+            @Helper.So_chu(@Model.Loan.Value)
+        </span>
+    </div>
+</div>
+
+<div class="style-table">
+    <div class="style-table-cell">
+        Để mua hộ cho anh <b>Trần Đăng Tú</b> chiếc xe máy Honda Wave .
+    </div>
+</div>
+<div class="style-table">
+    <div class="style-table-cell" style="width:100px">
+        Tôi có hẹn sau ........... ngày kể từ ngày nhận tiền sẽ giao xe cho anh Trần Đăng Tú như đã
+        thỏa thuận. Nếu không giao được xe đúng hẹn tôi xin hoàn trả lại số tiền mà tôi đã
+        nhận là :   @Model.Loan.Value.ToString("N0") . Bằng chữ : @Helper.So_chu(@Model.Loan.Value)
+    </div>
+
+</div>
+<div class="style-table" style="width:60%">
+    <div class="style-table-cell" style="width: 140px;">Một lần duy nhất,</div>
+
+    <div class="style-table-cell" style="width: 80px;">vào ngày: </div>
+    <div class="style-table-cell" style="width:15%">
+        <span class="dashed-style">
+        </span>
+    </div>
+    <div class="style-table-cell" style="width: 30px;">tháng:</div>
+    <div class="style-table-cell" style="width:15%">
+        <span class="dashed-style">
+        </span>
+    </div>
+    <div class="style-table-cell" style="width: 10px;">năm:</div>
+    <div class="style-table-cell" style="width:15%">
+        <span class="dashed-style">
+        </span>
+    </div>
+</div>
+
+Tôi cam đoan sự việc trên là đúng nếu sai tôi xin hoàn toàn chịu trách nhiệm .
+
+<div style="width:100%;margin-top:25px">
+    <p class="alignleft" style="font-size:30px;font-weight:bold;margin-left:10%">Người Bão Lãnh</p>
+    <p class="alignright" style="font-size:30px;font-weight:bold;margin-right:10%">Người Viết Giấy</p>
+</div>
+<div style="clear: both;"></div>
