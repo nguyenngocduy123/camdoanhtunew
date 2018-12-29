@@ -764,3 +764,4 @@ E:\CamDoAnhTuNew\CamDoAnhTu\obj\Debug\CamDoAnhTu.csproj.CopyComplete
 E:\CamDoAnhTuNew\CamDoAnhTu\obj\Debug\CamDoAnhTu.dll
 E:\CamDoAnhTuNew\CamDoAnhTu\obj\Debug\CamDoAnhTu.pdb
 E:\CamDoAnhTuNew\CamDoAnhTu\bin\System.Linq.Dynamic.dll
+E:\CamDoAnhTuNew\CamDoAnhTu\obj\Debug\CamDoAnhTu.csprojAssemblyReference.cache

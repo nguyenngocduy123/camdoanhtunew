@@ -360,13 +360,12 @@ listItems = new List<SelectListItem>
                         <i class="fa fa-home"></i>Trang góp
                     </a>
 
-                    
-                    @if (type != -1 && us.Permission != 0)
-                    {
-                        <a href="@Url.Action("AddCustomerXE1", "Home",new{type = type})" class="btn btn-default">
-                            <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
-                        </a>
-                    }
+
+
+                    <a href="@Url.Action("AddCustomerXE1", "Home",new{type = type})" class="btn btn-default">
+                        <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
+                    </a>
+
                 </div>
                 <form class="navbar-form navbar-left" role="search" action="/Home/SearchXE1" style="height:50px">
                     <input type="hidden" value="@type" name="type" id="type" />
@@ -453,12 +452,11 @@ else
                     <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","Home", new {type =type })" role="button">
                         <i class="fa fa-home"></i>Trang đứng
                     </a>
-                    @if (type != -1 && us.Permission != 0)
-                    {
-                        <a href="@Url.Action("AddCustomerXE1", "Home",new{type = type})" class="btn btn-default">
-                            <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
-                        </a>
-                    }
+
+                    <a href="@Url.Action("AddCustomerXE1", "Home",new{type = type})" class="btn btn-default">
+                        <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
+                    </a>
+
                 </div>
                 <form class="form-horizontal" role="search" action="/Home/SearchXE1" style="height:50px; margin-bottom:50px;margin-top:10px">
                     <input type="hidden" value="@type" name="type" id="type" />

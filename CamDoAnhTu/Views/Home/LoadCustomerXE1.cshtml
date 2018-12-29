@@ -327,12 +327,10 @@ t = (List<Loan>
                     </a>
 
 
-                    @if (type != -1 && us.Permission != 0)
-                    {
-                        <a href="@Url.Action("AddCustomerXE1", "Home",new{type = type})" class="btn btn-default">
-                            <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
-                        </a>
-                    }
+                    <a href="@Url.Action("AddCustomerXE1", "Home",new{type = type})" class="btn btn-default">
+                        <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
+                    </a>
+
 
                 </div>
                 <form class="navbar-form navbar-left" role="search" action="/Home/SearchXE1" style="height:50px">
@@ -423,12 +421,11 @@ else
                     </a>
 
 
-                    @if (type != -1 && us.Permission != 0)
-                    {
-                        <a href="@Url.Action("AddCustomerXE1", "Home", new {type = type } )" class="btn btn-default">
-                            <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
-                        </a>
-                    }
+
+                    <a href="@Url.Action("AddCustomerXE1", "Home", new {type = type } )" class="btn btn-default">
+                        <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
+                    </a>
+
 
                 </div>
                 <form class="form-horizontal" role="search" action="/Home/SearchXE1" style="height:50px; margin-bottom:50px;margin-top:10px">

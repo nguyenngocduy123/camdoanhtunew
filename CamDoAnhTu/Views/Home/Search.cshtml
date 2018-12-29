@@ -411,12 +411,11 @@
                     </a>
 
 
-                    @if (type != -1 && us.Permission != 0)
-                    {
-                        <a href="@Url.Action("AddCustomer", "Home",new{type = type})" class="btn btn-default">
-                            <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
-                        </a>
-                    }
+
+                    <a href="@Url.Action("AddCustomer", "Home",new{type = type})" class="btn btn-default">
+                        <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
+                    </a>
+
 
                 </div>
                 <form class="navbar-form navbar-left" role="search" action="/Home/Search" style="height:50px">
@@ -504,12 +503,11 @@ else
                         <i class="fa fa-home"></i>Trang góp
                     </a>
 
-                    @if (type != -1 && us.Permission != 0)
-                    {
-                        <a href="@Url.Action("AddCustomer", "Home",new{type = type})" class="btn btn-default">
-                            <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
-                        </a>
-                    }
+
+                    <a href="@Url.Action("AddCustomer", "Home",new{type = type})" class="btn btn-default">
+                        <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
+                    </a>
+
 
                 </div>
                 <form class="form-horizontal" role="search" action="/Home/Search" style="margin-top:10px">
@@ -570,8 +568,8 @@ else
 
 
                         @*<a class="btn btn-dropbox" onclick="ResetDatetime()">
-                            <i class="fa fa-ambulance"></i>&nbsp;Reset
-                        </a>*@
+                                <i class="fa fa-ambulance"></i>&nbsp;Reset
+                            </a>*@
 
                     }
                     else

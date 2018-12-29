@@ -1,4 +1,5 @@
-﻿using CamDoAnhTu.Models;
+﻿using CamDoAnhTu.Helper;
+using CamDoAnhTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -7,9 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
-using CamDoAnhTu.Helper;
 
 namespace CamDoAnhTu.Controllers
 {
@@ -21,9 +20,6 @@ namespace CamDoAnhTu.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            if (Session["User"] == null)
-                return RedirectToAction("Login", "Account");
-
             return View();
         }
 
@@ -77,8 +73,6 @@ namespace CamDoAnhTu.Controllers
         public string[] masotradungArr = { "BD", "CD", "MD", "ZD", "YD", "TD" };
         public ActionResult LoadCustomer(int? pageSize, int? type, int page = 1)
         {
-            if (Session["User"] == null)
-                return RedirectToAction("Login", "Account");
 
             int pageSz = pageSize ?? 10;
             StringBuilder str = new StringBuilder();
@@ -234,8 +228,6 @@ namespace CamDoAnhTu.Controllers
 
         public ActionResult BadCustomer(int? pageSize, int type, int page = 1)
         {
-            if (Session["User"] == null)
-                return RedirectToAction("Login", "Account");
 
             int pageSz = pageSize ?? 10;
             StringBuilder str = new StringBuilder();
@@ -338,8 +330,6 @@ namespace CamDoAnhTu.Controllers
 
         public ActionResult LoadCustomerXE1(int? pageSize, int? type, int page = 1)
         {
-            if (Session["User"] == null)
-                return RedirectToAction("Login", "Account");
 
             int pageSz = pageSize ?? 10;
 
@@ -1412,7 +1402,7 @@ namespace CamDoAnhTu.Controllers
                         ctx.Configuration.ValidateOnSaveEnabled = false;
                         Customer csCustomer = new Customer();
                         item = ctx.Loans.Where(p => p.ID == loanid && p.IDCus == idcus).FirstOrDefault();
-
+                        timetemp = item.Date.ToShortDateString();
                         item.Status = item.Status + 1;
 
                         if (item.Status >= 2)
@@ -1431,7 +1421,7 @@ namespace CamDoAnhTu.Controllers
                             t = 0;
                             WriteHistory(csCustomer, 0, loanid);
                         }
-
+                        loanid++;
                         ctx.SaveChanges();
                     }
                 }
@@ -1704,10 +1694,13 @@ namespace CamDoAnhTu.Controllers
 
         public static DateTime? chonngaylam = null;
 
-        public ActionResult ChonNgay(DateTime? chonngaylamVal)
+        public ActionResult ChonNgay(DateTime? chonngaylamSubmit)
         {
-            chonngaylam = chonngaylamVal;
-
+            if (chonngaylamSubmit.HasValue)
+            {
+                chonngaylam = chonngaylamSubmit.Value;
+            }
+            //chonngaylam = DateTime.Parse(chonngaylamVal);
             return RedirectToAction("Index");
         }
     }

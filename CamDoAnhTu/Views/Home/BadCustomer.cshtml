@@ -635,6 +635,262 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 }
                 @ViewBag.Message1
 
@@ -664,18 +920,17 @@
                         <i class="fa fa-home"></i>Trang đứng
                     </a>
                     @*<a class="btn btn-success" href="@Url.Action("BadCustomer", "Home", new {type =type })" role="button">
-            <i class="fa fa-home"></i>Nợ xấu
-        </a>*@
+                            <i class="fa fa-home"></i>Nợ xấu
+                        </a>*@
                     @*<a class="btn btn-success" href="@Url.Action("Refresh","Home")" role="button" onclick="return confirm('Bạn có thật sự muốn refresh ?')">
-            <i class="fa fa-refresh"></i>Cập nhập
-        </a>*@
+                            <i class="fa fa-refresh"></i>Cập nhập
+                        </a>*@
 
-                    @if (type != -1 && type != -2 && us.Permission != 0)
-                    {
-                        <a href="@Url.Action("AddCustomer", "Home",new{type = type})" class="btn btn-default">
-                            <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
-                        </a>
-                    }
+
+                    <a href="@Url.Action("AddCustomer", "Home",new{type = type})" class="btn btn-default">
+                        <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
+                    </a>
+
 
                 </div>
                 <form class="navbar-form navbar-left" role="search" action="/Home/Search" style="height:50px">
@@ -766,11 +1021,11 @@ else
                         <i class="fa fa-home"></i>Trang đứng
                     </a>
                     @*<a class="btn btn-success" href="@Url.Action("BadCustomer", "Home", new {type =type })" role="button">
-            <i class="fa fa-home"></i>Nợ xấu
-        </a>*@
+                            <i class="fa fa-home"></i>Nợ xấu
+                        </a>*@
                     @*<a class="btn btn-success" href="@Url.Action("Refresh","Home")" role="button" onclick="return confirm('Bạn có thật sự muốn refresh ?')">
-            <i class="fa fa-refresh"></i>Cập nhập
-        </a>*@
+                            <i class="fa fa-refresh"></i>Cập nhập
+                        </a>*@
 
                     @if (type != -1 && type != -2 && us.Permission != 0)
                     {
@@ -844,8 +1099,8 @@ margin-bottom:50px;margin-top:10px">
 
 
                         @*<a class="btn btn-dropbox" onclick="ResetDatetime()">
-                            <i class="fa fa-ambulance"></i>&nbsp;Reset
-                        </a>*@
+                                <i class="fa fa-ambulance"></i>&nbsp;Reset
+                            </a>*@
 
                     }
                     else
@@ -1093,7 +1348,7 @@ margin-bottom:50px;margin-top:10px">
                                                 }
                                                 else // chi xem
                                                 {
-                                                    
+
                                                 }
                                             </td>
                                         </tr>
@@ -1245,7 +1500,7 @@ margin-bottom:50px;margin-top:10px">
                                                 }
                                                 else // chi xem
                                                 {
-                                                    
+
                                                 }
                                             </td>
                                         </tr>
@@ -1399,7 +1654,7 @@ margin-bottom:50px;margin-top:10px">
                                                 }
                                                 else // chi xem
                                                 {
-                                                    
+
                                                 }
                                             </td>
                                         </tr>
