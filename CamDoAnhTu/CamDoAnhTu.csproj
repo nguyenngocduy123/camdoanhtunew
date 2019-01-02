@@ -267,6 +267,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\DataAjaxPostModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Admin\bower_components\bootstrap-social\bootstrap-social.css" />

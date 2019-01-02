@@ -47,7 +47,7 @@ namespace CamDoAnhTu.Controllers
                     p.type == 4 || p.type == 5 || p.type == 6 || p.type == 7
                     && p.IsDeleted == false).ToList();
                     return PartialView(list);
-                }                
+                }
                 else if (type == 1 || type == 2 || type == 3 ||
                     type == 4 || type == 5 || type == 6 || type == 7)
                 {
@@ -108,15 +108,49 @@ namespace CamDoAnhTu.Controllers
                     ViewBag.tiengoc = $"{tiengoc.Value:N0}";
 
                 var tienlai = ctx.GetTienLai(type).SingleOrDefault();
-                //DateTime startdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month-2, 1);
-                //DateTime enddate = startdate.AddMonths(1).AddDays(-1);
-
-                DateTime startdate = new DateTime(DateTime.Now.Year, 1, 1);
-                DateTime enddate = new DateTime(DateTime.Now.Year, 12, 31);
-                var tienlaithucte = ctx.GetTienLaiThatTe(type, startdate, enddate).SingleOrDefault();
 
                 if (tienlai != null)
                     ViewBag.tienlai = $"{tienlai.Value:N0}";
+
+                DateTime startdate = new DateTime(2018, 10, 1);
+                DateTime enddate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 31);
+
+                //DateTime startdate = new DateTime(DateTime.Now.Year, 1, 1);
+                //DateTime enddate = new DateTime(DateTime.Now.Year, 12, 31);
+
+                int[] arrType = { 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 16, 17 };
+
+                //foreach (int itemType in arrType)
+                //{
+                //    for (int i = 0; i < 2; i++)
+                //    {
+                //        startdate = new DateTime(2018, 10 + i, 1);
+                //        enddate = startdate.AddMonths(1).AddDays(-1);
+
+                //        var tienlaithucteTest = ctx.GetTienLaiThatTe(itemType, startdate, enddate).SingleOrDefault();
+
+                //        if (tienlaithucteTest != null)
+                //        {
+                //            //save tien lai
+
+                //            var message = ctx.Messages.Where(p => p.Date == DateTime.Now)
+                //                .FirstOrDefault();
+                //            if (message == null)
+                //            {
+                //                Message newMsg = new Message();
+                //                newMsg.Message1 = $"Tiền lãi thực tế : {tienlaithucteTest.Value:N0} ";
+                //                newMsg.type = type;
+                //                newMsg.Date = DateTime.Now;
+                //                ctx.Messages.Add(newMsg);
+
+                //            }
+                //        }
+                //    }
+
+                //    ctx.SaveChanges();
+                //}
+
+                var tienlaithucte = ctx.GetTienLaiThatTe(type, startdate, enddate).SingleOrDefault();
 
                 if (tienlaithucte != null)
                 {
@@ -127,8 +161,8 @@ namespace CamDoAnhTu.Controllers
                     if (message == null && DateTime.Now.Day == 1)
                     {
                         Message newMsg = new Message();
-                        newMsg.Message1 = $"Tiền lãi thực tế : {tienlaithucte} ";
-                        newMsg.type = 2;
+                        newMsg.Message1 = $"Tiền lãi thực tế : {tienlaithucte.Value:N0} ";
+                        newMsg.type = type;
                         newMsg.Date = DateTime.Now;
                         ctx.Messages.Add(newMsg);
                         ctx.SaveChanges();
@@ -364,9 +398,9 @@ namespace CamDoAnhTu.Controllers
                 //DateTime startdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 //DateTime enddate = startdate.AddMonths(1).AddDays(-1);
 
-                DateTime startdate = new DateTime(DateTime.Now.Year, 1, 1);
-                DateTime enddate = new DateTime(DateTime.Now.Year, 12, 31);
-                var tienlaithucte = ctx.GetTienLaiThatTe_Dung(type,startdate, enddate).SingleOrDefault();
+                DateTime startdate = new DateTime(2018, 10, 1);
+                DateTime enddate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 31);
+                var tienlaithucte = ctx.GetTienLaiThatTe_Dung(type, startdate, enddate).SingleOrDefault();
 
                 if (tienlaithucte != null)
                     ViewBag.tienlai = $"{tienlaithucte.Value:N0}";
@@ -375,13 +409,13 @@ namespace CamDoAnhTu.Controllers
                 {
                     //save tien lai
 
-                    var message = ctx.Messages.Where(p => p.Date == DateTime.Now && DateTime.Now.Day == 1)
+                    var message = ctx.Messages.Where(p => p.Date == DateTime.Now)
                         .FirstOrDefault();
-                    if (message == null)
+                    if (message == null && DateTime.Now.Day == 1)
                     {
                         Message newMsg = new Message();
-                        newMsg.Message1 = $"Tiền lãi thực tế : {tienlaithucte} ";
-                        newMsg.type = 2;
+                        newMsg.Message1 = $"Tiền lãi thực tế : {tienlaithucte.Value:N0} ";
+                        newMsg.type = type;
                         newMsg.Date = DateTime.Now;
                         ctx.Messages.Add(newMsg);
                         ctx.SaveChanges();
@@ -434,8 +468,8 @@ namespace CamDoAnhTu.Controllers
 
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {
-                DateTime startdate = new DateTime(DateTime.Now.Year, 1, 1);
-                DateTime enddate = new DateTime(DateTime.Now.Year, 12, 31);
+                DateTime startdate = new DateTime(2018, 10, 1);
+                DateTime enddate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 31);
                 var tienlai = ctx.GetTienLai(type).SingleOrDefault();
                 var tienlaithucte = ctx.GetTienLaiThatTe(type, startdate, enddate).SingleOrDefault();
                 var tiengoc = ctx.GetTienGoc(type).SingleOrDefault();
@@ -578,6 +612,24 @@ namespace CamDoAnhTu.Controllers
                 ctx.Configuration.ValidateOnSaveEnabled = false;
                 //var list = ctx.Customers.Where(p => masotradungArr.AsQueryable().Any(p.Code.Contains)).ToList();
                 var list = ctx.Customers.ToList();
+
+                var tiengoc = ctx.GetTienGoc_Dung(type).SingleOrDefault();
+
+                if (tiengoc != null)
+                    ViewBag.tiengoc = $"{tiengoc:N0}";
+
+                //DateTime startdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                //DateTime enddate = startdate.AddMonths(1).AddDays(-1);
+
+                DateTime startdate = new DateTime(2018, 10, 1);
+                DateTime enddate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 31);
+                var tienlaithucte = ctx.GetTienLaiThatTe_Dung(type, startdate, enddate).SingleOrDefault();
+
+                if (tienlaithucte != null)
+                    ViewBag.tienlai = $"{tienlaithucte.Value:N0}";
+
+                if (tienlaithucte != null)
+                    ViewBag.tienlaithucte = $"{tienlaithucte.Value:N0}";
 
                 List<Customer> lsttrave = new List<Customer>();
 
@@ -1646,7 +1698,7 @@ namespace CamDoAnhTu.Controllers
                             ctx.histories.Add(hs);
                         }
 
-                        
+
                     }
                     else
                     {

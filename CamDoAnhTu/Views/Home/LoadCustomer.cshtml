@@ -386,7 +386,7 @@
                 @ViewBag.Message1
 
             </span>
-            <a href="@Url.Action("Index", "Message",new {type=type,typemsg = 1})" class="btn btn-dropbox">
+            <a href="@Url.Action("Index", "Message",new {type=type,typemsg = type})" class="btn btn-dropbox">
                 <i class="fa fa-ambulance"></i>&nbsp;Lịch sử tiền lãi thực tế
             </a>
         </div>
@@ -472,7 +472,7 @@ else
                     @:Số tiền lãi thực tế: @ViewBag.tienlaithucte<br />
                 }
                 @ViewBag.Message1
-                <a href="@Url.Action("Index", "Message",new {type = type , typemsg = 2 })" role="button">
+                <a href="@Url.Action("Index", "Message",new {type = type , typemsg = type })" role="button">
                     Xem tiền lãi thực tế
                 </a>
             </span>
