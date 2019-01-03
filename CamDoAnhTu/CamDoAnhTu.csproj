@@ -1562,8 +1562,6 @@
     <Content Include="Views\Home\Update.cshtml" />
     <Content Include="Views\Home\Detail.cshtml" />
     <Content Include="Views\Account\ChangePassWord.cshtml" />
-    <Content Include="Views\Home\TimKiemNoKhachHang.cshtml" />
-    <Content Include="Views\Home\TimKiemNoKhachHang1.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\LoadCustomerEven.cshtml" />
     <Content Include="Views\Home\LoadCustomerOdd.cshtml" />
@@ -1575,8 +1573,6 @@
     <Content Include="Views\Home\AddCustomerXE2.cshtml" />
     <Content Include="Views\Home\UpdateXE1.cshtml" />
     <Content Include="Views\Home\SearchXE1.cshtml" />
-    <Content Include="Views\Home\TimKiemNoKhachHangEvenXE1.cshtml" />
-    <Content Include="Views\Home\TimKiemNoKhachHangOddXE1.cshtml" />
     <Content Include="Views\Home\BadCustomer.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Print\Index.cshtml" />

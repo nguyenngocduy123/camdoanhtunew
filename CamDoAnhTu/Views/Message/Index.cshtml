@@ -14,12 +14,6 @@
     <link href="~/Assets/Admin/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
     <link href="~/Assets/jquery-ui-1.11.2.custom/jquery-ui.css" rel="stylesheet" />
     <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-        .dropdown {
-            font-size: 21px;
-        }
-    </style>
-
 }
 
 @section js{
@@ -33,7 +27,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#dataTables-example').DataTable({
-                responsive: true,
+                "responsive": true,
                 "processing": true, // for show progress bar
                 "serverSide": true, // for process server side
                 "filter": true, // this is for disable filter (search box)
@@ -65,29 +59,7 @@
                 $("#frmRemoveItem").submit();
 
             });
-        function deleteCus(cusid) {
 
-            $.ajax({
-                cache: false,
-                dataType: "json",
-                type: "POST",
-                url: '@Url.Action("DeleteMessage", "Message")',
-                data: { id: cusid },
-                error: function(xhr, status, error) {
-                    alert(error);
-                },
-                success: function(result, status, xhr) {
-                    if (result != null) {
-                        if (result.status == "success") {
-                            window.location.reload(true);
-                        } else if (result.status == "error") {
-                            window.alert(result.message);
-                            window.location.reload(true);
-                        }
-                    }
-                }
-            });
-        }
     </script>
 }
 
@@ -107,9 +79,7 @@
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
-
             </table>
         </div>
-        <hr />
     </div>
 </div>

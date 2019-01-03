@@ -43,16 +43,13 @@ namespace CamDoAnhTu.Controllers
 
                 if (type == -1)
                 {
-                    list = ctx.Customers.Where(p => p.type == 1 || p.type == 2 || p.type == 3 ||
-                    p.type == 4 || p.type == 5 || p.type == 6 || p.type == 7
-                    && p.IsDeleted == false).ToList();
+                    list = ctx.Customers.Where(p => tradungArr.Contains(p.type.Value)&& p.IsDeleted == false).ToList();
+                    
                     return PartialView(list);
                 }
-                else if (type == 1 || type == 2 || type == 3 ||
-                    type == 4 || type == 5 || type == 6 || type == 7)
+                else if (tragopArr.Contains(type))
                 {
-                    list = ctx.Customers.Where(p => p.type == type
-                    && p.IsDeleted == false).ToList();
+                    list = ctx.Customers.Where(p => p.type == type && p.IsDeleted == false).ToList();
 
                     switch (type)
                     {
@@ -71,6 +68,10 @@ namespace CamDoAnhTu.Controllers
 
         public string[] masotragopArr = { "BA", "CA", "MA", "ZA", "YA", "TA", "QA" };
         public string[] masotradungArr = { "BD", "CD", "MD", "ZD", "YD", "TD" };
+
+        public int[] tragopArr = { 1, 2, 3, 4, 5, 6, 7 };
+        public int[] tradungArr = { 12, 13, 14, 15, 16, 17 };
+
         public ActionResult LoadCustomer(int? pageSize, int? type, int page = 1)
         {
 
@@ -120,35 +121,35 @@ namespace CamDoAnhTu.Controllers
 
                 int[] arrType = { 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 16, 17 };
 
-                //foreach (int itemType in arrType)
-                //{
-                //    for (int i = 0; i < 2; i++)
-                //    {
-                //        startdate = new DateTime(2018, 10 + i, 1);
-                //        enddate = startdate.AddMonths(1).AddDays(-1);
+                foreach (int itemType in arrType)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        startdate = new DateTime(2018, 10 + i, 1);
+                        enddate = startdate.AddMonths(1).AddDays(-1);
 
-                //        var tienlaithucteTest = ctx.GetTienLaiThatTe(itemType, startdate, enddate).SingleOrDefault();
+                        var tienlaithucteTest = ctx.GetTienLaiThatTe(itemType, startdate, enddate).SingleOrDefault();
 
-                //        if (tienlaithucteTest != null)
-                //        {
-                //            //save tien lai
+                        if (tienlaithucteTest != null)
+                        {
+                            //save tien lai
 
-                //            var message = ctx.Messages.Where(p => p.Date == DateTime.Now)
-                //                .FirstOrDefault();
-                //            if (message == null)
-                //            {
-                //                Message newMsg = new Message();
-                //                newMsg.Message1 = $"Tiền lãi thực tế : {tienlaithucteTest.Value:N0} ";
-                //                newMsg.type = type;
-                //                newMsg.Date = DateTime.Now;
-                //                ctx.Messages.Add(newMsg);
+                            var message = ctx.Messages.Where(p => p.Date == DateTime.Now)
+                                .FirstOrDefault();
+                            if (message == null)
+                            {
+                                Message newMsg = new Message();
+                                newMsg.Message1 = $"Tiền lãi thực tế : {tienlaithucteTest.Value:N0} ";
+                                newMsg.type = itemType;
+                                newMsg.Date = startdate;
+                                ctx.Messages.Add(newMsg);
 
-                //            }
-                //        }
-                //    }
+                            }
+                        }
+                    }
 
-                //    ctx.SaveChanges();
-                //}
+                    ctx.SaveChanges();
+                }
 
                 var tienlaithucte = ctx.GetTienLaiThatTe(type, startdate, enddate).SingleOrDefault();
 
@@ -179,8 +180,7 @@ namespace CamDoAnhTu.Controllers
                     && (p.Description == "End" || p.NgayNo < 59)).ToList();
 
                 }
-                else if (type == 1 || type == 2 || type == 3 || type == 4 ||
-                    type == 5 || type == 6 || type == 7)
+                else if (tragopArr.Contains(type.Value))
                 {
                     list1 = ctx.Customers.Where(p => p.IsDeleted == false
                                 && p.type == type
@@ -509,37 +509,6 @@ namespace CamDoAnhTu.Controllers
 
                 lsttrave = lsttrave.Where(p => p.IsDeleted == false).ToList();
 
-                //if (Noxau == 1)
-                //{
-                //    List<Customer> lstCus = ctx.Customers.Where(p => p.Price != null && p.Loan != null).ToList();
-                //    foreach (Customer p in lstCus)
-                //    {
-                //        if (p.NgayNo >= 3 + Int32.Parse(p.DayBonus.ToString()))
-                //        {
-                //            lsttrave.Add(p);
-                //        }
-                //    }
-                //}
-
-                //if (hetno == 1)
-                //{
-                //    List<Customer> lstCus = ctx.Customers.Where(p => p.Price != null && p.Loan != null).ToList();
-                //    foreach (Customer p in lstCus)
-                //    {
-                //        int day = 0;
-                //        if (Int32.Parse(p.Price.ToString()) == 0)
-                //        {
-                //            day = 0;
-                //        }
-                //        else
-                //            day = Int32.Parse(p.Loan.ToString()) / Int32.Parse(p.Price.ToString());
-
-                //        if (p.DayPaids == day || p.Description == "End")
-                //        {
-                //            lsttrave.Add(p);
-                //        }
-                //    }
-                //}
                 lsttrave = (from p in lsttrave
                             where masotragopArr.Any(val => p.Code.Contains(val))
                             select p).ToList();
@@ -559,44 +528,6 @@ namespace CamDoAnhTu.Controllers
                 ViewBag.Address = Address;
                 ViewBag.type = type;
 
-                foreach (Customer cs in lsttrave1)
-                {
-                    cs.NgayNo = 0;
-                    int count1 = 0;
-                    int countMax = 0;
-
-                    DateTime EndDate = DateTime.Now;
-
-                    List<Loan> t = ctx.Loans.Where(p => p.IDCus == cs.ID).OrderBy(p => p.Date).ToList();
-
-                    Loan t1 = new Loan();
-
-                    if (t.Count != 0)
-                    {
-                        t1 = t.First();
-                    }
-
-                    DateTime StartDate = t1.Date;
-
-                    List<Loan> query = t.Where(p => p.Date >= StartDate && p.Date <= EndDate).ToList();
-
-                    foreach (Loan temp in query)
-                    {
-                        if (temp.Status == 0)
-                        {
-                            count1++;
-                            countMax = count1;
-                        }
-                        else
-                        {
-                            count1 = 0;
-                        }
-                    }
-
-                    cs.NgayNo = countMax;
-                    ctx.SaveChanges();
-                }
-
                 return View(lsttrave1);
             }
         }
@@ -610,26 +541,23 @@ namespace CamDoAnhTu.Controllers
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {
                 ctx.Configuration.ValidateOnSaveEnabled = false;
-                //var list = ctx.Customers.Where(p => masotradungArr.AsQueryable().Any(p.Code.Contains)).ToList();
+
                 var list = ctx.Customers.ToList();
-
-                var tiengoc = ctx.GetTienGoc_Dung(type).SingleOrDefault();
-
-                if (tiengoc != null)
-                    ViewBag.tiengoc = $"{tiengoc:N0}";
-
-                //DateTime startdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                //DateTime enddate = startdate.AddMonths(1).AddDays(-1);
 
                 DateTime startdate = new DateTime(2018, 10, 1);
                 DateTime enddate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 31);
+
+                var tiengoc = ctx.GetTienGoc_Dung(type).SingleOrDefault();
+                if (tiengoc != null)
+                    ViewBag.tiengoc = $"{tiengoc:N0}";
+
                 var tienlaithucte = ctx.GetTienLaiThatTe_Dung(type, startdate, enddate).SingleOrDefault();
 
                 if (tienlaithucte != null)
-                    ViewBag.tienlai = $"{tienlaithucte.Value:N0}";
-
-                if (tienlaithucte != null)
                     ViewBag.tienlaithucte = $"{tienlaithucte.Value:N0}";
+
+                //DateTime startdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                //DateTime enddate = startdate.AddMonths(1).AddDays(-1);
 
                 List<Customer> lsttrave = new List<Customer>();
 

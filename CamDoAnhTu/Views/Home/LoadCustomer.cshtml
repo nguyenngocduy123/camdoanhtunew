@@ -35,13 +35,8 @@
 
 }
 @section js{
-    <script src="~/Assets/Admin/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="~/Assets/jquery-ui.js"></script>
 
-    <script src="~/Assets/Admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/Assets/Admin/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="~/Assets/Admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-
+    
     <script type="text/javascript">
         function filterGlobal() {
             $('#dataTables-example').DataTable().search(
@@ -90,59 +85,45 @@
         });
     </script>
 
-    <script type="text/javascript">
-        $(function () {
-            $("#logoutLink").click(function () {
-                $("#logoutForm").submit();
-            });
-        });
-    </script>
 
     <script type="text/javascript">
         $(document).ready(function () {
+
             $("#Name").autocomplete({
                 source: "/Home/SearchName",
                 select: function (event, ui) {
 
                 }
             });
-        });
-    </script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
             $("#Code").autocomplete({
                 source: "/Home/SearchCode",
                 select: function (event, ui) {
 
                 }
             });
-        });
-    </script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
             $("#Phone").autocomplete({
                 source: "/Home/SearchPhone",
                 select: function (event, ui) {
                 }
             });
-        });
-    </script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
             $("#Address").autocomplete({
                 source: "/Home/SearchAddress",
                 select: function (event, ui) {
                 }
             });
-        });
-    </script>
 
-    <script>
-        $(function () {
-            $("#datetime").datepicker({ dateFormat: "dd/mm/yy" }).val();
+            $(function () {
+                $("#datetime").datepicker({ dateFormat: "dd/mm/yy" }).val();
+            });
+
+            $(function () {
+                $("#logoutLink").click(function () {
+                    $("#logoutForm").submit();
+                });
+            });
         });
     </script>
 
@@ -286,11 +267,8 @@
                 });
             }
         }
-    </script>
 
-    <script type="text/javascript">
         function deleteCus(cusid) {
-
             $.ajax({
                 cache: false,
                 dataType: "json",
@@ -316,8 +294,6 @@
 
     <script type="text/javascript">
         $(function () {
-            // When onchange event occurs on <select id="pagesize">,
-            // simply submit the form, which will submit the new pagesize value as querystring.
             $('#pagesize').on('change',
                 function () {
                     $('#form1').submit();
