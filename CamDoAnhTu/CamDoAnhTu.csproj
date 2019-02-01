@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -28,6 +28,8 @@
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
     <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -215,9 +217,11 @@
     <Compile Include="Controllers\LoanController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\PrintController.cs" />
+    <Compile Include="Controllers\XE1Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\Const.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Helper\SessionTimeoutAttribute.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
@@ -234,6 +238,7 @@
     <Compile Include="Models\history.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\IDbContext.cs" />
     <Compile Include="Models\Loan.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -1413,6 +1418,8 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\_bootstrap-datetimepicker.less" />
+    <Content Include="Content\bootstrap-datetimepicker-build.less" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -1488,20 +1495,20 @@
     <Content Include="Content\bootstrap\bootstrap.less" />
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
-    <Content Include="Content\_bootstrap-datetimepicker.less" />
-    <Content Include="Content\bootstrap-datetimepicker-build.less" />
     <None Include="Properties\PublishProfiles\camdoducthanh.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="Rotativa\wkhtmltopdf.exe" />
+    <Content Include="Scripts\addcustomer.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\loadcustomer.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -1563,16 +1570,14 @@
     <Content Include="Views\Home\Detail.cshtml" />
     <Content Include="Views\Account\ChangePassWord.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
-    <Content Include="Views\Home\LoadCustomerEven.cshtml" />
-    <Content Include="Views\Home\LoadCustomerOdd.cshtml" />
     <Content Include="Views\Account\LoadAccount.cshtml" />
     <Content Include="Views\History\History.cshtml" />
-    <Content Include="Views\Home\XE1.cshtml" />
-    <Content Include="Views\Home\LoadCustomerXE1.cshtml" />
-    <Content Include="Views\Home\AddCustomerXE1.cshtml" />
+    <Content Include="Views\XE1\XE1.cshtml" />
+    <Content Include="Views\XE1\LoadCustomerXE1.cshtml" />
+    <Content Include="Views\XE1\AddCustomerXE1.cshtml" />
     <Content Include="Views\Home\AddCustomerXE2.cshtml" />
-    <Content Include="Views\Home\UpdateXE1.cshtml" />
-    <Content Include="Views\Home\SearchXE1.cshtml" />
+    <Content Include="Views\XE1\UpdateXE1.cshtml" />
+    <Content Include="Views\XE1\SearchXE1.cshtml" />
     <Content Include="Views\Home\BadCustomer.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Print\Index.cshtml" />

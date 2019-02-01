@@ -30,7 +30,7 @@ namespace CamDoAnhTu.Controllers
                 {
                     Session["User"] = us;
                     Session.Timeout = 2;
-                    
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -82,7 +82,7 @@ namespace CamDoAnhTu.Controllers
         }
 
         public ActionResult ChangePassWord(ChangePasswordModel model)
-        {           
+        {
             return View(model);
         }
 
@@ -90,7 +90,7 @@ namespace CamDoAnhTu.Controllers
         {
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {
-                ViewBag.type = type; 
+                ViewBag.type = type;
 
                 List<User> lstUser = ctx.Users.ToList();
 

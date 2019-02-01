@@ -3,339 +3,24 @@
 @model List<Customer>
 
 @{
-    ViewBag.Title = "LoadCustomer";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-@{
-
     int count = ((int)ViewBag.CurPage - 1) * 10;
     int type = (int)ViewBag.type;
     User us = CamDoAnhTu.Helper.Helper.GetUserInfo();
-
 
     List<Loan> t = (List<Loan>)ViewData["Loans"];
     List<Loan> loanAddManual = new List<Loan>();
 }
 
-
 @section css{
-    <!-- DataTables CSS -->
-    <link href="~/Assets/Admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-    <!-- DataTables Responsive CSS -->
 
+    <link href="~/Assets/Admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
     <link href="~/Assets/Admin/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
     <link href="~/Assets/jquery-ui-1.11.2.custom/jquery-ui.css" rel="stylesheet" />
     <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-        .dropdown {
-            font-size: 21px;
-        }
-    </style>
 
 }
 @section js{
-
-    
-    <script type="text/javascript">
-        function filterGlobal() {
-            $('#dataTables-example').DataTable().search(
-                $('#global_filter').val(),
-                $('#global_regex').prop('checked'),
-                $('#global_smart').prop('checked')
-            ).draw();
-        }
-
-        function filterColumn(i) {
-            $('#dataTables-example').DataTable().column(i).search(
-                $('#col' + i + '_filter').val(),
-                $('#col' + i + '_regex').prop('checked'),
-                $('#col' + i + '_smart').prop('checked')
-            ).draw();
-        }
-
-        $(document).ready(function () {
-            $('#dataTables-example').DataTable({
-                "aaSorting": [[0, "asc"]],
-                "sPaginationType": "full_numbers",
-                "paging": false,
-                "searching": false,
-                //"bProcessing": true,
-                "bDeferRender": true,
-
-                "order": [[0, "asc"]],
-                "responsive": true,
-                "ordering": true,
-                "iDisplayLength": 10,
-                "aLengthMenu": [[1, 10, 25, 50, 100, 500, 1000, -1], [1, 10, 25, 50, 100, 500, 1000, "All"]],
-                "columnDefs": [
-                    { "visible": false, "targets": 0 }
-                ]
-            });
-
-            $('input.global_filter').on('keyup click',
-                function () {
-                    filterGlobal();
-                });
-
-            $('input.column_filter').on('keyup click',
-                function () {
-                    filterColumn($(this).parents('tr').attr('data-column'));
-                });
-        });
-    </script>
-
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $("#Name").autocomplete({
-                source: "/Home/SearchName",
-                select: function (event, ui) {
-
-                }
-            });
-
-            $("#Code").autocomplete({
-                source: "/Home/SearchCode",
-                select: function (event, ui) {
-
-                }
-            });
-
-            $("#Phone").autocomplete({
-                source: "/Home/SearchPhone",
-                select: function (event, ui) {
-                }
-            });
-
-            $("#Address").autocomplete({
-                source: "/Home/SearchAddress",
-                select: function (event, ui) {
-                }
-            });
-
-            $(function () {
-                $("#datetime").datepicker({ dateFormat: "dd/mm/yy" }).val();
-            });
-
-            $(function () {
-                $("#logoutLink").click(function () {
-                    $("#logoutForm").submit();
-                });
-            });
-        });
-    </script>
-
-    <script>
-        function chuadongtien(idLoan, permission) {
-            if (permission == 0) {
-                return;
-            }
-
-            $("#divLoader").show();
-            var idcus = document.getElementById("IDCUS_" + idLoan).value;
-            var songaydong = document.getElementById("songaydong_" + idcus).value;
-            var ct = document.getElementById('ct_' + idcus).value;
-            if (ct == "") {
-                ct = 0;
-            } else {
-                ct = parseInt(ct);
-            }
-            $.ajax({
-                type: 'get',
-                dataType: 'json',
-                cache: false,
-                url: '/Home/UpdateLoan',
-                data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
-                success: function (data) {
-                    debugger;
-                    if (data.success) {
-                        $("#divLoader").hide();
-                        $('#amount_' + idcus).val(data.amount);
-                        $('#remain_' + idcus).val(data.remainingamount);
-
-                        if (data.status == 1) {
-                            ct = ct + data.ct;
-                        }
-                        $('#ct_' + idcus).val(ct);
-                        if (data.songay > 0) {
-                            for (var i = 0; i < data.songay; i++) {
-                                var a = idLoan + i;
-                                document.getElementById("item_" + a).className = "btn btn-success";
-
-                                document.getElementById("item_" + a)
-                                    .setAttribute("onclick", "return chuadongtien1(" + idLoan + "," + permission + ");");
-
-                            }
-                        } else {
-                            document.getElementById("item_" + idLoan).className = "btn btn-success";
-
-                            document.getElementById("item_" + idLoan)
-                                .setAttribute("onclick", "return chuadongtien1(" + idLoan + "," + permission + ");");
-
-                        }
-
-                    } else {
-                        $("#divLoader").hide();
-                        alert(data.message);
-                    }
-
-                },
-                error: function (textStatus, errorThrown) {
-                    alert('Error - ' + errorThrown);
-                }
-            });
-        }
-
-        function chuadongtien1(idLoan, permission) {
-            if (permission != 1) {
-                return;
-            }
-
-            $("#divLoader").show();
-            var idcus = document.getElementById("IDCUS_" + idLoan).value;
-            var songaydong = document.getElementById("songaydong_" + idcus).value;
-            var ct = document.getElementById('ct_' + idcus).value;
-            if (ct == "") {
-                ct = 0;
-            } else {
-                ct = parseInt(ct);
-            }
-
-            $.ajax({
-                type: 'get',
-                dataType: 'json',
-                url: '/Home/UpdateLoan',
-                data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
-                success: function (data) {
-                    debugger;
-                    if (data.success) {
-                        $("#divLoader").hide();
-                        $('#amount_' + idcus).val(data.amount);
-                        $('#remain_' + idcus).val(data.remainingamount);
-
-                        if (data.status == 0) {
-                            ct = ct - data.ct;
-                        }
-                        $('#ct_' + idcus).val(ct);
-
-                        if (data.songay > 0) {
-                            for (var i = 0; i < data.songay; i++) {
-                                var a = idLoan + i;
-                                document.getElementById("item_" + a).className = "btn btn-danger";
-                                document.getElementById("item_" + a)
-                                    .setAttribute("onclick", "return chuadongtien(" + idLoan + "," + permission + ");");
-                            }
-                        } else {
-                            document.getElementById("item_" + idLoan).className = "btn btn-danger";
-                            document.getElementById("item_" + idLoan)
-                                .setAttribute("onclick", "return chuadongtien(" + idLoan + "," + permission + ");");
-                        }
-
-                    } else {
-                        $("#divLoader").hide();
-                        alert(data.message);
-                    }
-                },
-                error: function (textStatus, errorThrown) {
-                    alert('Error - ' + errorThrown);
-                }
-            });
-        }
-
-        function effect(idLoan) {
-
-            if (confirm('Bạn có thật sự muốn kết thúc dây nợ không ? ')) {
-                var idcus = document.getElementById("IDCUS_" + idLoan).value;
-                $.ajax({
-                    type: 'get',
-                    dataType: 'json',
-                    url: '/Home/Reset',
-                    data: { id: idcus },
-                    success: function (data) {
-                        if (data.success) {
-                            document.getElementById("effect_" + idcus).style.color = "green";
-                            document.getElementById("item_" + idLoan).setAttribute("onclick", "");
-                            location.reload();
-                        } else
-                            alert('có lỗi xảy ra');
-                    },
-                    error: function (textStatus, errorThrown) {
-                        alert('Error - ' + errorThrown);
-                    }
-                });
-            }
-        }
-
-        function deleteCus(cusid) {
-            $.ajax({
-                cache: false,
-                dataType: "json",
-                type: "POST",
-                url: '@Url.Action("DeleteCustomer", "Home")',
-                data: { id: cusid },
-                error: function(xhr, status, error) {
-                    alert(error);
-                },
-                success: function(result, status, xhr) {
-                    if (result != null) {
-                        if (result.status == "success") {
-                            window.location.reload(true);
-                        } else if (result.status == "error") {
-                            window.alert(result.message);
-                            window.location.reload(true);
-                        }
-                    }
-                }
-            });
-        }
-    </script>
-
-    <script type="text/javascript">
-        $(function () {
-            $('#pagesize').on('change',
-                function () {
-                    $('#form1').submit();
-                });
-        });
-
-        function SumMoneyByCode() {
-            var type = $("input[name=type]").val();
-            var finaldate = $("input[name=datetime]").val();
-
-            $.ajax({
-                url: '/History/History',
-                type: 'POST',
-                data: { id: null, type: type, datetime: finaldate },
-                error: function (xhr) {
-                    alert('Error: ' + xhr.statusText);
-                },
-                success: function (result) {
-                    window.location.href = '/Home/LoadCustomer?type=' + result;
-                }
-            });
-        }
-
-        function ResetDatetime() {
-            var type = $("input[name=type]").val();
-            var message = document.getElementById("message").innerText;
-            var finaldate = $("input[name=datetime]").val();
-
-            $.ajax({
-                url: '/Home/ResetDatetime',
-                type: 'POST',
-                data: { type: type, message: message, datetime: finaldate },
-                error: function (xhr) {
-                    alert('Error: ' + xhr.statusText);
-                },
-                success: function (result) {
-                    window.location.href = '/Home/LoadCustomer?type=' + result;
-                }
-            });
-        }
-    </script>
-
+    <script src="~/Scripts/loadcustomer.js"></script>
 }
 
 @if (Model.Count == 0)
@@ -345,10 +30,6 @@
         <form method="post" id="frmUpdateLoan" action="">
             <input id="txtloanId" type="hidden" name="loanid" />
         </form>
-
-        <div class="col-sm-3">
-            <h2>Quản lí cầm đồ Anh Tú</h2>
-        </div>
 
         <div class="col-lg-6">
             <span style="text-align:center;font-size:15px;color:red">
@@ -367,13 +48,6 @@
             </a>
         </div>
 
-        <div class="col-lg-3" style="text-align: right; padding-right: 30px; padding-top: 20px">
-            @if (us.Permission == 1)
-            {
-                <a href="@Url.Action("LoadAccount","Account", new {type = type})">Danh sách tài khoản</a><span>|</span>
-            }
-            <a id="logoutLink" href="#"><i class="glyphicon glyphicon-log-out"></i>Thoát</a>
-        </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
@@ -418,10 +92,6 @@
                         <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
                     </span>
                 </form>
-
-                <!-- /.panel-heading -->
-                <text>Không có khách hàng !!</text>
-                <!-- /.panel-body -->
             </div>
         </div>
     </div>
@@ -433,10 +103,6 @@ else
         <form method="post" id="frmUpdateLoan" action="">
             <input id="txtloanId" type="hidden" name="loanid" />
         </form>
-
-        <div class="col-sm-3">
-            <h2>Quản lí cầm đồ Anh Tú</h2>
-        </div>
 
         <div class="col-lg-6">
             <span style="text-align:center;font-size:15px;color:red">
@@ -453,14 +119,6 @@ else
                 </a>
             </span>
         </div>
-
-        <div class="col-lg-3" style="text-align: right; padding-right: 30px; padding-top: 20px">
-            @if (us.Permission == 1)
-            {
-                <a href="@Url.Action("LoadAccount","Account", new {type = type})">Danh sách tài khoản</a><span>|</span>
-            }
-            <a id="logoutLink" href="#"><i class="glyphicon glyphicon-log-out"></i>Thoát</a>
-        </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
@@ -474,8 +132,6 @@ else
                     <a href="@Url.Action("AddCustomer", "Home",new{type = type})" class="btn btn-default">
                         <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
                     </a>
-
-
                 </div>
                 <form class="form-horizontal" role="search" action="/Home/Search" style="margin-top:10px">
                     <input type="hidden" name="type" value="@type" />
@@ -511,9 +167,7 @@ else
                                 <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
                             </span>
                         </div>
-
                     </div>
-
                 </form>
                 <div style="margin-left:25%">
                     @if (us.UserName == "admin")
@@ -533,12 +187,6 @@ else
                                        name="datetime" id="datetime" />
                             </div>
                         }
-
-
-                        @*<a class="btn btn-dropbox" onclick="ResetDatetime()">
-                                <i class="fa fa-ambulance"></i>&nbsp;Reset
-                            </a>*@
-
                     }
                     else
                     {
@@ -655,7 +303,8 @@ else
                                                 }
                                             </td>
                                             <td>
-                                                @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
+                                                @p.StartDate.ToString("dd/MM/yyyy")
+                                                <p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
                                                     <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
@@ -672,7 +321,8 @@ else
                                             else
                                             {
                                                 <td>
-                                                    @string.Format("{0:N0}", p.Loan)<p>@p.DayBonus</p>
+                                                    @string.Format("{0:N0}", p.Loan)
+                                                    <p>@p.DayBonus</p>
                                                     <p style="color: blue">@p.Note</p>
                                                 </td>
                                             }
@@ -684,7 +334,8 @@ else
                                             else
                                             {
                                                 <td>
-                                                    @string.Format("{0:N0}", p.Price)<p>
+                                                    @string.Format("{0:N0}", p.Price)
+                                                    <p>
                                                         <font color="red">@day</font>
                                                     </p>
                                                 </td>
@@ -790,7 +441,8 @@ else
                                                 }
                                             </td>
                                             <td>
-                                                @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
+                                                @p.StartDate.ToString("dd/MM/yyyy")
+                                                <p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
                                                     <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
@@ -807,7 +459,8 @@ else
                                             else
                                             {
                                                 <td>
-                                                    @string.Format("{0:N0}", p.Loan)<p>@p.DayBonus</p>
+                                                    @string.Format("{0:N0}", p.Loan)
+                                                    <p>@p.DayBonus</p>
                                                     <p style="color: blue">@p.Note</p>
                                                 </td>
                                             }
@@ -819,7 +472,8 @@ else
                                             else
                                             {
                                                 <td>
-                                                    @string.Format("{0:N0}", p.Price)<p>
+                                                    @string.Format("{0:N0}", p.Price)
+                                                    <p>
                                                         <font color="red">@day</font>
                                                     </p>
                                                 </td>
@@ -926,7 +580,8 @@ else
                                                 }
                                             </td>
                                             <td>
-                                                @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
+                                                @p.StartDate.ToString("dd/MM/yyyy")
+                                                <p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
                                                     <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
@@ -943,7 +598,8 @@ else
                                             else
                                             {
                                                 <td>
-                                                    @string.Format("{0:N0}", p.Loan)<p>@p.DayBonus</p>
+                                                    @string.Format("{0:N0}", p.Loan)
+                                                    <p>@p.DayBonus</p>
                                                     <p style="color: blue">@p.Note</p>
                                                 </td>
                                             }
@@ -955,7 +611,8 @@ else
                                             else
                                             {
                                                 <td>
-                                                    @string.Format("{0:N0}", p.Price)<p>
+                                                    @string.Format("{0:N0}", p.Price)
+                                                    <p>
                                                         <font color="red">@day</font>
                                                     </p>
                                                 </td>
@@ -1066,10 +723,7 @@ else
                     </div>
                     <hr />
                 </div>
-                <!-- /.panel-body -->
             </div>
-            <!-- /.panel -->
         </div>
-        <!-- /.col-lg-12 -->
     </div>
 }

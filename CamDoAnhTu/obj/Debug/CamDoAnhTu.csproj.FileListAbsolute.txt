@@ -714,6 +714,7 @@ E:\CamDoAnhTuNew\CamDoAnhTu\bin\PagedList.dll
 E:\CamDoAnhTuNew\CamDoAnhTu\bin\PagedList.Mvc.dll
 E:\CamDoAnhTuNew\CamDoAnhTu\bin\Rotativa.Core.dll
 E:\CamDoAnhTuNew\CamDoAnhTu\bin\Rotativa.MVC.dll
+E:\CamDoAnhTuNew\CamDoAnhTu\bin\System.Linq.Dynamic.dll
 E:\CamDoAnhTuNew\CamDoAnhTu\bin\System.Net.Http.Formatting.dll
 E:\CamDoAnhTuNew\CamDoAnhTu\bin\System.Web.Helpers.dll
 E:\CamDoAnhTuNew\CamDoAnhTu\bin\System.Web.Http.dll
@@ -763,5 +764,4 @@ E:\CamDoAnhTuNew\CamDoAnhTu\obj\Debug\CamDoAnhTu.csproj.CoreCompileInputs.cache
 E:\CamDoAnhTuNew\CamDoAnhTu\obj\Debug\CamDoAnhTu.csproj.CopyComplete
 E:\CamDoAnhTuNew\CamDoAnhTu\obj\Debug\CamDoAnhTu.dll
 E:\CamDoAnhTuNew\CamDoAnhTu\obj\Debug\CamDoAnhTu.pdb
-E:\CamDoAnhTuNew\CamDoAnhTu\bin\System.Linq.Dynamic.dll
 E:\CamDoAnhTuNew\CamDoAnhTu\obj\Debug\CamDoAnhTu.csprojAssemblyReference.cache

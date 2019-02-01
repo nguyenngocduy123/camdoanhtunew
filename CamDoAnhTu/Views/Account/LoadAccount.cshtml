@@ -4,7 +4,6 @@
     ViewBag.Title = "LoadAccount";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    int type = (int)ViewBag.type;
 }
 
 @section css{
@@ -33,9 +32,7 @@
         });
     </script>
 }
-<a class="btn btn-success" href="@Url.Action("LoadCustomer", "Home",new {type = type})" role="button" style="margin:10px">
-    <i class="fa fa-home"></i>Trang chủ
-</a>
+
 <hr />
 <table id="example" class="display" cellspacing="0" width="100%">
     <thead>

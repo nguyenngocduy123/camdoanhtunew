@@ -1,6 +1,5 @@
 ﻿@using CamDoAnhTu.Models;
 <!DOCTYPE html>
-<html lang="en">
 
 @{
 
@@ -18,73 +17,109 @@
     <link href="/Assets/Admin/dist/css/sb-admin-2.css" rel="stylesheet">
     <link href="/Assets/Admin//bower_components/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Assets/Admin/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet" />
     @RenderSection("css", required: false)
 </head>
 <body>
-    <a class="btn btn-success" href="@Url.Action("Index","Home")" role="button">
-        <i class="fa fa-home"></i>Trang chính
-    </a>
-    @us.UserName
-    @using (Html.BeginForm("ChonNgay", "Home", FormMethod.Post, null))
-    {
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a type="button" class="navbar-brand btn btn-primary" href="@Url.Action("Index","Home")">Trang chủ</a>
 
-        <div class="col-md-2">
-            <input type="text" class="col-lg-2 form-control"
-                   name="chonngaylamVal" id="chonngaylamVal" />
-
-            <input type="hidden" name="chonngaylamSubmit" id="chonngaylamSubmit" />
-        </div>
-        <button type="submit" class="btn btn-dropbox">
-            Chọn ngày
-        </button>
-    }
+            </div>
 
 
-    @RenderBody()
+            <ul class="nav navbar-top-links navbar-right">
 
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="#">@us.UserName</a>
+                        </li>
+                        <li>
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Thêm ngày nợ</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label class="col-sm-3">ID Khách hàng</label>
-                                <div class="col-sm-9 bolder blue">
-                                    <input type="text" class="form-control" id="Customercode" name="Customercode" readonly />
+                            @if (us.Permission == 1)
+                            {
+                                <a href="@Url.Action("LoadAccount","Account")">Danh sách tài khoản</a>
+                            }
+
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <form id="logoutForm" method="post" action="@Url.Action("Logout", "Account")"></form>
+                            <a id="logoutLink"><i class="fa fa-sign-out fa-fw"></i> Thoát</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        @using (Html.BeginForm("ChonNgay", "Home", FormMethod.Post, null))
+        {
+            <div class="col-md-2">
+                <input type="text" class="col-lg-2 form-control"
+                       name="chonngaylamVal" id="chonngaylamVal" />
+
+                <input type="hidden" name="chonngaylamSubmit" id="chonngaylamSubmit" />
+            </div>
+            <button type="submit" class="btn btn-dropbox">
+                Chọn ngày
+            </button>
+        }
+        @RenderBody()
+
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Thêm ngày nợ</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class="col-sm-3">ID Khách hàng</label>
+                                    <div class="col-sm-9 bolder blue">
+                                        <input type="text" class="form-control" id="Customercode" name="Customercode" readonly />
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3">Ngày đóng nợ</label>
-                                <div class="col-sm-9 bolder blue">
-                                    <input type="text" class="form-control" id="txtStartDate" name="StartDate" value="@string.Format("{0:dd/MM/yyyy}",DateTime.Now)" />
+                                <div class="form-group">
+                                    <label class="col-sm-3">Ngày đóng nợ</label>
+                                    <div class="col-sm-9 bolder blue">
+                                        <input type="text" class="form-control" id="txtStartDate" name="StartDate" value="@string.Format("{0:dd/MM/yyyy}",DateTime.Now)" />
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3">Số tiền</label>
-                                <div class="col-sm-9 bolder blue">
-                                    <input type="text" class="form-control auto" id="txtPrice" name="txtPrice" />
+                                <div class="form-group">
+                                    <label class="col-sm-3">Số tiền</label>
+                                    <div class="col-sm-9 bolder blue">
+                                        <input type="text" class="form-control auto" id="txtPrice" name="txtPrice" />
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3"></label>
-                                <div class="col-sm-9">
-                                    <button type="button" class="btn btn-primary btn-sm no-border" id="buttonId">
-                                        <i class="icon-save bigger-110"></i>
-                                        Lưu
-                                    </button>
+                                <div class="form-group">
+                                    <label class="col-sm-3"></label>
+                                    <div class="col-sm-9">
+                                        <button type="button" class="btn btn-primary btn-sm no-border" id="buttonId">
+                                            <i class="icon-save bigger-110"></i>
+                                            Lưu
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,8 +138,9 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Assets/Admin/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/Assets/Admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-
-
+    <script src="~/Assets/Admin/dist/js/sb-admin-2.js"></script>
+    <script src="~/Assets/Admin/bower_components/metisMenu/src/metisMenu.js"></script>
+    
     <script>
         $(document).on("click", ".open-AddBookDialog", function () {
             $('#txtPrice').val('');
@@ -185,9 +221,12 @@
             });
         });
 
+        $("#logoutLink").click(function () {
+            $("#logoutForm").submit();
+        });
+
     </script>
 
 
     @RenderSection("js", required: false)
 </body>
-</html>

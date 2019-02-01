@@ -17,11 +17,11 @@ namespace CamDoAnhTu.Controllers
         {
             ViewBag.type = type;
 
-            //using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
-            //{
-            //    var result = ctx.Messages.Where(p=> p.type == typemsg).ToList();
-            //    return View(result);
-            //}
+            using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
+            {
+                var result = ctx.Messages.Where(p => p.type == typemsg).ToList();
+                return View(result);
+            }
             return View();
         }
 
@@ -45,6 +45,7 @@ namespace CamDoAnhTu.Controllers
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {
                 var customerData = (from tempcustomer in ctx.Messages
+                                    where tempcustomer.type == model.type
                                     select tempcustomer);
 
                 //Search    

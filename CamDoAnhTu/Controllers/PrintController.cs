@@ -1,7 +1,6 @@
 ﻿using CamDoAnhTu.Models;
 using Rotativa.MVC;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Web.Mvc;
 
 namespace CamDoAnhTu.Controllers

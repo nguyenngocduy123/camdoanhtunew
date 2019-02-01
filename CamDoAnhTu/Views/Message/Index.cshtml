@@ -4,6 +4,7 @@
 @{
 
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int type = ViewBag.type;
 }
 
 @section css{
@@ -24,6 +25,7 @@
     <!-- DataTables JavaScript -->
     <script src="~/Assets/Admin/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/Assets/Admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/moment.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#dataTables-example').DataTable({
@@ -36,7 +38,10 @@
                 "ajax": {
                     "url": "/Message/LoadData",
                     "type": "POST",
-                    "datatype": "json"
+                    "datatype": "json",
+                    "data": function (d) {
+                        d.type = @type;
+                    }
                 },
                 "columns": [
                     { "data": "Id", "name": "Id", "autoWidth": true },
@@ -44,11 +49,14 @@
                     { "data": "Date", "name": "Date", "autoWidth": true },
 
                 ],
-                "columnDefs": [{
-                    targets: 2, render: function (data) {
-                        return moment(data).format('DD/MM/YYYY HH:MM:SS');
+                "columnDefs": [
+                    {
+                        targets: 2, render: function (data) {
+                            
+                            return moment(data).format('DD/MM/YYYY HH:MM:SS');
+                        }
                     }
-                }]
+                ]
             });
         });
 
@@ -76,7 +84,6 @@
                         <th>ID</th>
                         <th>Message</th>
                         <th>Ngày</th>
-                        <th>&nbsp;</th>
                     </tr>
                 </thead>
             </table>

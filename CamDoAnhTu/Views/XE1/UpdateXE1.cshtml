@@ -1,5 +1,4 @@
-﻿@using CamDoAnhTu.Models
-@model CamDoAnhTu.Models.MyViewModel
+﻿@model CamDoAnhTu.Models.MyViewModel
 
 @{
     ViewBag.Title = "AddCustomer";
@@ -12,10 +11,15 @@
     <link href="~/Assets/silviomoreto-bootstrap-select-a8ed49e/dist/css/bootstrap-select.min.css" rel="stylesheet" />
     <link href="~/Assets/jquery-ui-1.11.2.custom/jquery-ui.css" rel="stylesheet" />
 }
+
 @section js{
     <script src="~/Assets/Simple-Date-Picker-for-Bootstrap/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="~/autoNumeric-master/autoNumeric-master/autoNumeric.js"></script>
     <script src="~/Assets/jquery-ui-1.11.2.custom/jquery-ui.js"></script>
+    @*<script src="~/Assets/bootstrap-fileinput-master/js/fileinput.min.js"></script>*@
+    @*<script src="~/Assets/silviomoreto-bootstrap-select-a8ed49e/dist/js/bootstrap-select.min.js"></script>*@
+
     <script src="~/Scripts/jquery.validate.min.js"></script>
 
     <script>
@@ -104,7 +108,7 @@
 
         });
 
-        //$('.selectpicker').selectpicker();
+        $('.selectpicker').selectpicker();
         $('input[type=file]').bootstrapFileInput();
 
         $("#fuMain").fileinput({
@@ -140,84 +144,17 @@
     <script>
 
         $(function () {
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1; //Month starts from 0
-            var yyyy = today.getFullYear();
-
-            if (dd < 10) {
-                dd = '0' + dd
-            }
-
-            if (mm < 10) {
-                mm = '0' + mm
-            }
-            today = dd + '/' + mm + '/' + yyyy;
-
-            $("#model_StartDate").val(today);
-
             $("#model_StartDate").datepicker({ dateFormat: "dd/mm/yy" }).val();
-
         });
 
     </script>
-    <script>
-        $(document).ready(function () {
-            $("#abcd").autocomplete({
-           source: function(request,response) {
-               $.ajax({
-                   url: "/Home/SearchCode",
-                   type: "POST",
-                   data: "{ 'term': '" + request.term + "'}",
-                   dataType: "json",
-                   contentType: "application/json; charset=utf-8",
-                   success: function (data) {
-                       response($.map(data, function (item) {
-                           return item;
-                       }))
-                   },
-                   error: function (response) {
-                       console.log(response.responseText);
-                   },
-                   failure: function (response) {
-                       console.log(response.responseText);
-                   }
-               })
-           },
-           select: function (event, ui) {
-             $.ajax({
-                 cache: false, async: false, type: "POST",
-                 url: "@(Url.Action("GetCusDetail", "Home"))",
-                 data: { "code": ui.item.id },
-                success: function (data) {
-                    var item = data[0];
-                    $("#model_Name").val(item.Name);
-                    $("#model_Phone").val(item.Phone);
-                    $("#model_Address").val(item.Address);
-                    $("#model_Loan").val(item.Loan);
-                    $("#model_Price").val(item.Price);
-                    $("#SelectedLoaiGiayTo").val(item.loaigiayto);
-                    $("#model_Note").val(item.Note);
-                    $("#model_OldCode").val(item.OldCode);
 
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                     console.log('Failed to retrieve Item.');
-                }
-            });
-        }
-       });
-    })
-
-        jQuery(function ($) {
-            $('.auto').autoNumeric('init');
-        });
-    </script>
 }
+
 
 <h2 style="font-size: 30px; color: red;border: firebrick">Thêm Khách hàng</h2>
 <form class="form-horizontal" method="post" action="" id="frmaAddCustomer" enctype="multipart/form-data">
-    @*<input type="hidden" class="form-control" id="txtStartDate" name="StartDate" value="@DateTime.Now" />*@
+    @Html.HiddenFor(m => m.model.type, new { @value = @Model.model.type })
     <div class="form-group">
         <div class="col-sm-10 col-sm-offset-2">
             <div class="alert alert-warning alert-dismissable hidden" role="alert">
@@ -227,26 +164,22 @@
             </div>
         </div>
     </div>
-    @Html.HiddenFor(m => m.model.type, new { @value = @Model.model.type })
     <div class="form-group">
-        <label class="col-sm-2 control-label">Hình ảnh:</label>
-        <input type="file" data-filename-placement="inside" id="fuMain" class="file" name="fuMain" />
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">Mã số cũ:</label>
-        <div class="col-sm-2">
-            <input type="text" id="abcd" name="abcd" class="form-control" />
+        <div class="col-sm-10 col-sm-offset-2">
+            <img class="file-preview-image" style="height: 160px;width: auto" title="@Model.model.Name" alt="@Model.model.Name" src="~/image/@Model.model.Code/main.jpg" />
         </div>
 
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Hình ảnh:</label>
+        @Html.TextBoxFor(model => model.fuMain, new { @type = "file", @class = "file" })
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">Mã số:</label>
         <div class="col-sm-2">
-
             @Html.TextBoxFor(m => m.model.Code, new { @class = "form-control", @readonly = "readonly" })
             <span id="userError"></span>
         </div>
-
         <label class="col-sm-2 control-label">Tên khách hàng:</label>
         <div class="col-sm-2">
             @Html.TextBoxFor(m => m.model.Name, new { @class = "form-control" })
@@ -260,7 +193,8 @@
 
         <label class="col-sm-2 control-label">Ngày bắt đầu:</label>
         <div class="col-sm-2">
-            @Html.TextBoxFor(m => m.model.StartDate, DateTime.Now.ToString("dd/MM/yyyy"), new { @class = "form-control", @value = DateTime.Now.ToString("dd/MM/yyyy") })
+            @Html.TextBoxFor(m => m.model.StartDate, Model.model.StartDate.ToString("dd/MM/yyyy"),
+               new { @class = "form-control" })
         </div>
         <label class="col-sm-2 control-label">Địa chỉ:</label>
         <div class="col-sm-2">
@@ -268,17 +202,18 @@
         </div>
         <label class="col-sm-2 control-label">Số tiền vay:</label>
         <div class="col-sm-2">
-            @Html.TextBoxFor(m => m.model.Loan, new { @class = "form-control auto" })
+            @Html.TextBoxFor(m => m.model.Loan, new { @class = "form-control", @readonly = "readonly" })
         </div>
     </div>
     <div class="form-group">
+
         <label class="col-sm-2 control-label">Tên tài sản:</label>
         <div class="col-sm-2">
-            @Html.TextBoxFor(m => m.model.tentaisan, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.model.tentaisan, new { @class = "form-control", @readonly = "readonly" })
         </div>
         <label class="col-sm-2 control-label">Lãi k/ngày:</label>
         <div class="col-sm-2">
-            @Html.TextBoxFor(m => m.model.Price, new { @class = "form-control auto" })
+            @Html.TextBoxFor(m => m.model.Price, new { @class = "form-control auto", @readonly = "readonly" })
         </div>
         <label class="col-sm-2 control-label">Loại giấy tờ:</label>
         <div class="col-sm-2">
@@ -291,7 +226,7 @@
             @Html.TextBoxFor(m => m.model.OldCode, new { @class = "form-control" })
         </div>
     </div>
-    <div class="form-group">
+    <div>
         <label class="col-sm-2 control-label">Ghi chú:</label>
         @Html.TextAreaFor(m => m.model.Note, 10, 55, null)
     </div>
@@ -300,10 +235,9 @@
             <button type="submit" class="btn btn-danger">
                 <i class="fa fa-check"></i>&nbsp;Lưu
             </button>
-            <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","Home",new {type=@Model.model.type})" role="button">
+            <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","XE1",new {type=@Model.model.type})" role="button">
                 <i class="fa fa-mail-reply"></i>Trang khách hàng
             </a>
         </div>
     </div>
-
 </form>

@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="camcdb3d_camdothanhluanModelStoreContainer" CdmEntityContainer="CamdoAnhTuEntities1">
+  <EntityContainerMapping StorageEntityContainer="camdoanhtuModelStoreContainer" CdmEntityContainer="CamdoAnhTuEntities1">
     <EntitySetMapping Name="histories">
-      <EntityTypeMapping TypeName="camcdb3d_camdothanhluanModel.history">
+      <EntityTypeMapping TypeName="camdoanhtuModel.history">
         <MappingFragment StoreEntitySet="history">
+          <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
           <ScalarProperty Name="Ngaydongtien" ColumnName="Ngaydongtien" />
@@ -14,8 +15,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="camdoanhtuModel.Message">
+        <MappingFragment StoreEntitySet="Message">
+          <ScalarProperty Name="Message1" ColumnName="Message" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="type" ColumnName="type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Customers">
-      <EntityTypeMapping TypeName="camcdb3d_camdothanhluanModel.Customer">
+      <EntityTypeMapping TypeName="camdoanhtuModel.Customer">
         <MappingFragment StoreEntitySet="Customer">
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -25,7 +36,6 @@
           <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
           <ScalarProperty Name="RemainingAmount" ColumnName="RemainingAmount" />
           <ScalarProperty Name="DayPaids" ColumnName="DayPaids" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="NgayNo" ColumnName="NgayNo" />
@@ -41,11 +51,13 @@
           <ScalarProperty Name="loaigiayto" ColumnName="loaigiayto" />
           <ScalarProperty Name="tiengoc" ColumnName="tiengoc" />
           <ScalarProperty Name="lai" ColumnName="lai" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Loans">
-      <EntityTypeMapping TypeName="camcdb3d_camdothanhluanModel.Loan">
+      <EntityTypeMapping TypeName="camdoanhtuModel.Loan">
         <MappingFragment StoreEntitySet="Loan">
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="IDCus" ColumnName="IDCus" />
@@ -57,8 +69,9 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="camcdb3d_camdothanhluanModel.User">
+      <EntityTypeMapping TypeName="camdoanhtuModel.User">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Enabled" ColumnName="Enabled" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="PassWord" ColumnName="PassWord" />
           <ScalarProperty Name="Permission" ColumnName="Permission" />
@@ -67,18 +80,72 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="GetCustomerEven" FunctionName="camcdb3d_camdothanhluanModel.Store.GetCustomerEven" />
-    <FunctionImportMapping FunctionImportName="GetCustomerOdd" FunctionName="camcdb3d_camdothanhluanModel.Store.GetCustomerOdd" />
-    <FunctionImportMapping FunctionImportName="GetTienGoc" FunctionName="camcdb3d_camdothanhluanModel.Store.GetTienGoc" />
-    <FunctionImportMapping FunctionImportName="GetTienLai" FunctionName="camcdb3d_camdothanhluanModel.Store.GetTienLai" />
-    <FunctionImportMapping FunctionImportName="GetTienLaiThatTe" FunctionName="camcdb3d_camdothanhluanModel.Store.GetTienLaiThatTe" />
-    <FunctionImportMapping FunctionImportName="SumMoneyByCode" FunctionName="camcdb3d_camdothanhluanModel.Store.SumMoneyByCode">
+    <FunctionImportMapping FunctionImportName="GetCustomerEven" FunctionName="camdoanhtuModel.Store.GetCustomerEven">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="camcdb3d_camdothanhluanModel.SumMoneyByCode_Result">
-          <ScalarProperty Name="subcode" ColumnName="subcode" />
-          <ScalarProperty Name="sumval" ColumnName="sumval" />
+        <ComplexTypeMapping TypeName="camdoanhtuModel.GetCustomerEven_Result">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Loan" ColumnName="Loan" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
+          <ScalarProperty Name="RemainingAmount" ColumnName="RemainingAmount" />
+          <ScalarProperty Name="DayPaids" ColumnName="DayPaids" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="NgayNo" ColumnName="NgayNo" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DayBonus" ColumnName="DayBonus" />
+          <ScalarProperty Name="OldCode" ColumnName="OldCode" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="CodeSort" ColumnName="CodeSort" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="songayno" ColumnName="songayno" />
+          <ScalarProperty Name="nodung" ColumnName="nodung" />
+          <ScalarProperty Name="tentaisan" ColumnName="tentaisan" />
+          <ScalarProperty Name="loaigiayto" ColumnName="loaigiayto" />
+          <ScalarProperty Name="tiengoc" ColumnName="tiengoc" />
+          <ScalarProperty Name="lai" ColumnName="lai" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetCustomerOdd" FunctionName="camdoanhtuModel.Store.GetCustomerOdd">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="camdoanhtuModel.GetCustomerOdd_Result">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Loan" ColumnName="Loan" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
+          <ScalarProperty Name="RemainingAmount" ColumnName="RemainingAmount" />
+          <ScalarProperty Name="DayPaids" ColumnName="DayPaids" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="NgayNo" ColumnName="NgayNo" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DayBonus" ColumnName="DayBonus" />
+          <ScalarProperty Name="OldCode" ColumnName="OldCode" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="CodeSort" ColumnName="CodeSort" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="songayno" ColumnName="songayno" />
+          <ScalarProperty Name="nodung" ColumnName="nodung" />
+          <ScalarProperty Name="tentaisan" ColumnName="tentaisan" />
+          <ScalarProperty Name="loaigiayto" ColumnName="loaigiayto" />
+          <ScalarProperty Name="tiengoc" ColumnName="tiengoc" />
+          <ScalarProperty Name="lai" ColumnName="lai" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetTienGoc" FunctionName="camdoanhtuModel.Store.GetTienGoc" />
+    <FunctionImportMapping FunctionImportName="GetTienLai" FunctionName="camdoanhtuModel.Store.GetTienLai" />
+    <FunctionImportMapping FunctionImportName="GetTienLaiThatTe" FunctionName="camdoanhtuModel.Store.GetTienLaiThatTe" />
+    <FunctionImportMapping FunctionImportName="GetTienGoc_Dung" FunctionName="camdoanhtuModel.Store.GetTienGoc_Dung" />
+    <FunctionImportMapping FunctionImportName="GetTienLaiThatTe_Dung" FunctionName="camdoanhtuModel.Store.GetTienLaiThatTe_Dung" />
   </EntityContainerMapping>
 </Mapping>

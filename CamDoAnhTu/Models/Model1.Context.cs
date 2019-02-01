@@ -15,11 +15,12 @@ namespace CamDoAnhTu.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class CamdoAnhTuEntities1 : DbContext
+    public partial class CamdoAnhTuEntities1 : DbContext , IDbContext
     {
         public CamdoAnhTuEntities1()
             : base("name=CamdoAnhTuEntities1")
         {
+            Configuration.ValidateOnSaveEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

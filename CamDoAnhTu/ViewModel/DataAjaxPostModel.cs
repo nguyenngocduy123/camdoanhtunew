@@ -14,6 +14,7 @@ namespace CamDoAnhTu.ViewModel
         public List<Column> columns { get; set; }
         public Search search { get; set; }
         public List<Order> order { get; set; }
+        public int? type { get; set; }
     }
 
     public class Column
