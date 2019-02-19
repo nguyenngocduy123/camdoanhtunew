@@ -185,7 +185,7 @@ function chuadongtien(idLoan, permission) {
         url: '/Home/UpdateLoan',
         data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
         success: function (data) {
-            debugger;
+            
             if (data.success) {
                 $("#divLoader").hide();
                 $('#amount_' + idcus).val(data.amount);
@@ -245,7 +245,7 @@ function chuadongtien1(idLoan, permission) {
         url: '/Home/UpdateLoan',
         data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
         success: function (data) {
-            debugger;
+            
             if (data.success) {
                 $("#divLoader").hide();
                 $('#amount_' + idcus).val(data.amount);

@@ -103,7 +103,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Name").autocomplete({
-                source: "/Home/SearchName",
+                source: "/Default/SearchName",
                 select: function (event, ui) {
 
                 }
@@ -114,7 +114,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Code").autocomplete({
-                source: "/Home/SearchCode",
+                source: "/Default/SearchCode",
                 select: function (event, ui) {
 
                 }
@@ -125,7 +125,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Phone").autocomplete({
-                source: "/Home/SearchPhone",
+                source: "/Default/SearchPhone",
                 select: function (event, ui) {
                 }
             });
@@ -135,7 +135,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Address").autocomplete({
-                source: "/Home/SearchAddress",
+                source: "/Default/SearchAddress",
                 select: function (event, ui) {
                 }
             });
@@ -170,7 +170,7 @@
                 url: '/Home/UpdateLoan',
                 data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
                 success: function (data) {
-                    debugger;
+                    
                     if (data.success) {
                         $("#divLoader").hide();
                         $('#amount_' + idcus).val(data.amount);
@@ -230,7 +230,7 @@
                 url: '/Home/UpdateLoan',
                 data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
                 success: function (data) {
-                    debugger;
+                    
                     if (data.success) {
                         $("#divLoader").hide();
                         $('#amount_' + idcus).val(data.amount);
@@ -674,7 +674,7 @@ else
                                                 @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
-                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
+                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
                                                 }
                                             </td>
                                             @if (p.Loan == null)
@@ -809,7 +809,7 @@ else
                                                 @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
-                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
+                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
                                                 }
                                             </td>
                                             @if (p.Loan == null)
@@ -945,7 +945,7 @@ else
                                                 @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
-                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
+                                            <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
                                                 }
                                             </td>
                                             @if (p.Loan == null)

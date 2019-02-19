@@ -3,6 +3,11 @@
 @model List<Customer>
 
 @{
+    ViewBag.Title = "LoadCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
     int count = ((int)ViewBag.CurPage - 1) * 10;
     int type = (int)ViewBag.type;
     User us = CamDoAnhTu.Helper.Helper.GetUserInfo();
@@ -20,6 +25,15 @@
 
 }
 @section js{
+    @*<script src="~/Assets/Admin/bower_components/jquery/dist/jquery.min.js"></script>*@
+    <script src="~/Assets/jquery-ui.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Assets/Admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="~/Assets/Admin/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Assets/Admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/loadcustomer.js"></script>
 }
 
@@ -307,7 +321,7 @@ else
                                                 <p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
-                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
+                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
                                                 }
                                             </td>
                                             @if (p.Loan == null)
@@ -445,7 +459,7 @@ else
                                                 <p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
-                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
+                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
                                                 }
                                             </td>
                                             @if (p.Loan == null)
@@ -584,7 +598,7 @@ else
                                                 <p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
-                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
+                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
                                                 }
                                             </td>
                                             @if (p.Loan == null)

@@ -1,10 +1,12 @@
-﻿using CamDoAnhTu.Models;
+﻿using CamDoAnhTu.Helper;
+using CamDoAnhTu.Models;
 using Rotativa.MVC;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace CamDoAnhTu.Controllers
 {
+    [SessionTimeout]
     public class PrintController : Controller
     {
         // GET: Print

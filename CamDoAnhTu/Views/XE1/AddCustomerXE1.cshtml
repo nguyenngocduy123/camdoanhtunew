@@ -166,7 +166,7 @@
             $("#abcd").autocomplete({
            source: function(request,response) {
                $.ajax({
-                   url: "/Home/SearchCode",
+                   url: "/Default/SearchCode",
                    type: "POST",
                    data: "{ 'term': '" + request.term + "'}",
                    dataType: "json",

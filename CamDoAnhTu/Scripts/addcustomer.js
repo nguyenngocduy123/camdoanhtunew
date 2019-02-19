@@ -2,7 +2,7 @@
     $("#abcd").autocomplete({
         source: function (request, response) {
             $.ajax({
-                url: "/Home/SearchCode",
+                url: "/Default/SearchCode",
                 type: "POST",
                 data: "{ 'term': '" + request.term + "'}",
                 dataType: "json",
@@ -21,9 +21,10 @@
             })
         },
         select: function (event, ui) {
+            
             $.ajax({
                 cache: false, async: false, type: "POST",
-                url: "@(Url.Action('GetCusDetail', 'Home'))",
+                url: "/Home/GetCusDetail",
                 data: { "code": ui.item.id },
                 success: function (data) {
                     var item = data[0];

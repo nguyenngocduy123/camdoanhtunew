@@ -8,6 +8,7 @@
     <link href="~/Assets/Simple-Date-Picker-for-Bootstrap/css/datepicker.css" rel="stylesheet" />
     <link href="~/Assets/silviomoreto-bootstrap-select-a8ed49e/dist/css/bootstrap-select.min.css" rel="stylesheet" />
     <link href="~/Assets/jquery-ui-1.11.2.custom/jquery-ui.css" rel="stylesheet" />
+
 }
 @section js{
     <script src="~/Assets/Simple-Date-Picker-for-Bootstrap/js/bootstrap-datepicker.js"></script>
@@ -35,7 +36,7 @@
 
     <div class="form-group">
         <label class="col-sm-2 control-label">Hình ảnh:</label>
-        
+
         @Html.TextBoxFor(model => model.fuMain, new { @type = "file", @class = "file" })
     </div>
     <div class="form-group">
@@ -43,7 +44,7 @@
         <div class="col-sm-2">
             <input type="text" id="abcd" name="abcd" class="form-control" />
         </div>
-       
+
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">Mã số:</label>
@@ -111,7 +112,7 @@
             <button type="submit" class="btn btn-danger">
                 <i class="fa fa-check"></i>&nbsp;Lưu
             </button>
-            <a class="btn btn-success" href="@Url.Action(" LoadCustomer","Home",new {type=@Model.model.type})" role="button">
+            <a class="btn btn-success" href="@Url.Action("LoadCustomer","Home",new {type=@Model.model.type})" role="button">
                 <i class="fa fa-mail-reply"></i>Trang khách hàng
             </a>
         </div>

@@ -1,7 +1,4 @@
 ﻿@using CamDoAnhTu.Models;
-@*@model PagedList.IPagedList<Customer>
-*@
-@*@using PagedList.Mvc;*@
 
 @model List<Customer>
 @{
@@ -37,7 +34,7 @@ t = (List<Loan>
 
 }
 @section js{
-    <script src="~/Assets/Admin/bower_components/jquery/dist/jquery.min.js"></script>
+    @*<script src="~/Assets/Admin/bower_components/jquery/dist/jquery.min.js"></script>*@
     <script src="~/Assets/jquery-ui.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -146,7 +143,7 @@ t = (List<Loan>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Address").autocomplete({
-                source: "/Home/SearchAddress",
+                source: "/Default/SearchAddress",
                 select: function (event, ui) {
                 }
             });
@@ -175,7 +172,7 @@ t = (List<Loan>
                 url: '/Home/UpdateNodung',
                 data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
                 success: function (data) {
-                    debugger;
+                    
                     if (data.success) {
                         if (data.songay > 0) {
                             for (var i = 0; i < data.songay; i++) {
@@ -213,7 +210,7 @@ t = (List<Loan>
                 url: '/Home/UpdateNodung',
                 data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
                 success: function (data) {
-                    debugger;
+                    
                     if (data.success) {
                         if (data.songay > 0) {
                             for (var i = 0; i < data.songay; i++) {
@@ -323,7 +320,7 @@ t = (List<Loan>
 
 
                 </div>
-                <form class="navbar-form navbar-left" role="search" action="/Home/SearchXE1" style="height:50px">
+                <form class="navbar-form navbar-left" role="search" action="/XE1/SearchXE1" style="height:50px">
                     <input type="hidden" name="type" value="@type" />
                     <div class="form-group">
                         <label for="txtName" class="col-sm-2 control-label">Mã số:</label>
@@ -408,7 +405,7 @@ else
 
 
                 </div>
-                <form class="form-horizontal" role="search" action="/Home/SearchXE1" style="height:50px; margin-bottom:50px;margin-top:10px">
+                <form class="form-horizontal" role="search" action="/XE1/SearchXE1" style="height:50px; margin-bottom:50px;margin-top:10px">
                     <input type="hidden" value="@type" name="type" id="type" />
                     <div class="form-group">
                         <label for="txtName" class="col-sm-2 control-label">Tên khách hàng:</label>
@@ -515,7 +512,7 @@ else
                                                 <p>@p.tentaisan</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
-                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
+                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
                                                 }
                                             </td>
                                             <td>
@@ -612,7 +609,7 @@ else
                                                     <p>@p.tentaisan</p>
                                                     @foreach (var item in loanAddManual)
                                                     {
-                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
+                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
                                                     }
                                                 </td>
                                                 <td>
@@ -721,7 +718,7 @@ else
                                                     <p>@p.tentaisan</p>
                                                     @foreach (var item in loanAddManual)
                                                     {
-                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
+                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
                                                     }
                                                 </td>
                                                 <td>

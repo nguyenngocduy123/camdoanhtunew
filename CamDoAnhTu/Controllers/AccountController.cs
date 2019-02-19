@@ -86,12 +86,11 @@ namespace CamDoAnhTu.Controllers
             return View(model);
         }
 
-        public ActionResult LoadAccount(int type)
+        public ActionResult LoadAccount()
         {
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {
-                ViewBag.type = type;
-
+                
                 List<User> lstUser = ctx.Users.ToList();
 
                 return View(lstUser);
