@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using CamDoAnhTu.Models;
 using DocumentFormat.OpenXml.Spreadsheet;
 
@@ -28,8 +29,12 @@ namespace CamDoAnhTu.Controllers
 
                 if (us != null)
                 {
-                    Session["User"] = us;
-                    Session.Timeout = 2;
+                    string jsonItem = JsonConvert.SerializeObject(us, Formatting.Indented);
+                    //cookie
+                    HttpCookie cookie = new HttpCookie("userInfo");
+                    cookie.Expires = DateTime.Now.AddMinutes(2);
+                    cookie.Value = jsonItem;
+                    HttpContext.Response.Cookies.Add(cookie);
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -48,9 +53,8 @@ namespace CamDoAnhTu.Controllers
             Session["CurUser"] = null;
             Session["User"] = null;
 
-            //Response.Cookies["Username"].Expires = DateTime.Now.AddDays(-1);
-            //HttpCookie reqCookies = Request.Cookies["userInfo"];
-            //reqCookies.Expires = DateTime.Now.AddDays(-1);
+            HttpCookie reqCookies = Request.Cookies["userInfo"];
+            reqCookies.Expires = DateTime.Now.AddDays(-1);
             return RedirectToAction("Login", "Account");
         }
 

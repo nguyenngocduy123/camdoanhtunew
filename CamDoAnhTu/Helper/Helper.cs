@@ -5,7 +5,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
-
+using Newtonsoft.Json;
+using System.Web.Mvc;
 
 namespace CamDoAnhTu.Helper
 {
@@ -414,6 +415,13 @@ namespace CamDoAnhTu.Helper
             if (HttpContext.Current.Session["User"] != null)
             {
                 return HttpContext.Current.Session["User"] as User;
+            }
+            HttpCookie cookie = HttpContext.Current.Request.Cookies["userInfo"];
+            if (cookie != null)
+            {
+                string valueCookie = cookie.Value;
+                var user = JsonConvert.DeserializeObject<User>(valueCookie);
+                return user;
             }
 
             return null;

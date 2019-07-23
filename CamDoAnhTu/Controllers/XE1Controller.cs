@@ -108,7 +108,7 @@ namespace CamDoAnhTu.Controllers
 
                 return View(list);
             }
-           
+
 
         }
 
@@ -121,7 +121,7 @@ namespace CamDoAnhTu.Controllers
 
                 return PartialView(list);
             }
-            
+
         }
 
         public ActionResult AddCustomerXE1(int type)
@@ -177,7 +177,7 @@ namespace CamDoAnhTu.Controllers
                 mvViewModel.model.Code = temp.Trim();
                 return View(mvViewModel);
             }
-            
+
         }
 
         [HttpPost]
@@ -193,16 +193,18 @@ namespace CamDoAnhTu.Controllers
                 dbcontext.Customers.Add(model);
                 dbcontext.SaveChanges();
 
+                int day = model.songayno.HasValue ? (int)model.songayno :1;
                 DateTime k = model.StartDate;
 
-                for (int i = 0; i < 90; i++)
+                for (int i = 1; i <= 60; i++)
                 {
                     Loan temp = new Loan();
-                    temp.Date = k.AddDays(i);
+                    temp.Date = k.AddDays(day);
                     temp.IDCus = model.ID;
                     temp.Status = 0;
-                    dbcontext.Loans.Add(temp);
 
+                    k = temp.Date;
+                    dbcontext.Loans.Add(temp);
                 }
                 ViewData["Loans"] = lstLoan;
                 dbcontext.SaveChanges();
@@ -223,7 +225,7 @@ namespace CamDoAnhTu.Controllers
                 }
                 return RedirectToAction("LoadCustomerXE1", "Xe1", new { type = myViewModel.model.type });
             }
-            
+
         }
 
         public ActionResult UpdateXE1(string id)
@@ -252,7 +254,7 @@ namespace CamDoAnhTu.Controllers
                 viewModel.SelectedLoaiGiayTo = pro.loaigiayto.Value;
                 return View(viewModel);
             }
-            
+
 
         }
 
@@ -287,26 +289,26 @@ namespace CamDoAnhTu.Controllers
                     foreach (var item in lstTong)
                         dbcontext.Loans.Remove(item);
 
-                    //int day = model.songayno == 0 ? 0 : (int)model.songayno;
-                    //DateTime k = model.StartDate;
+                    int day = model.songayno.HasValue ? (int)model.songayno : 1;
+                    DateTime k = model.StartDate;
 
-                    //for (int i = 0; i < 90; i++)
-                    //{
-                    //    Loan temp = new Loan();
-                    //    temp.Date = k.AddDays(i);
-                    //    temp.IDCus = model.ID;
-                    //    temp.Status = 0;
-                    //    dbcontext.Loans.Add(temp);
+                    for (int i = 1; i <= 60; i++)
+                    {
+                        Loan temp = new Loan();
+                        temp.Date = k.AddDays(i);
+                        temp.IDCus = model.ID;
+                        temp.Status = 0;
+                        dbcontext.Loans.Add(temp);
 
-                    //    k = temp.Date;
-                    //    lstLoan.Add(temp);
-                    //}
+                        k = temp.Date;
+                        lstLoan.Add(temp);
+                    }
 
-                    //for (int i = 0; i < sldadong; i++)
-                    //{
-                    //    var temp = lstLoan.ElementAt(i);
-                    //    temp.Status = 1;
-                    //}
+                    for (int i = 0; i < sldadong; i++)
+                    {
+                        var temp = lstLoan.ElementAt(i);
+                        temp.Status = 1;
+                    }
 
                     dbcontext.SaveChanges();
                     ViewData["Loans"] = lstLoan;
@@ -331,7 +333,7 @@ namespace CamDoAnhTu.Controllers
 
                 return RedirectToAction("LoadCustomerXE1", "XE1", new { type = myViewModel.model.type });
             }
-            
+
         }
 
         public ActionResult SearchXE1(string Code, string Name, string Phone, string Address,
@@ -436,7 +438,7 @@ namespace CamDoAnhTu.Controllers
 
                 return View(lsttrave1);
             }
-            
+
 
         }
     }

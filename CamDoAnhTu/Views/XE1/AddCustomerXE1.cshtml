@@ -290,6 +290,10 @@
         <div class="col-sm-2">
             @Html.TextBoxFor(m => m.model.OldCode, new { @class = "form-control" })
         </div>
+        <label class="col-sm-2 control-label">Số ngày phải trả:</label>
+        <div class="col-sm-2">
+            @Html.TextBoxFor(m => m.model.songayno, new { @class = "form-control", value = 0 })
+        </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">Ghi chú:</label>

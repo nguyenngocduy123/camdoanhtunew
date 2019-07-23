@@ -7,8 +7,8 @@ namespace CamDoAnhTu.Helper
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            HttpContext ctx = HttpContext.Current;
-            if (HttpContext.Current.Session["User"] == null)
+            HttpCookie cookie = HttpContext.Current.Request.Cookies["userInfo"];
+            if (cookie == null)
             {
                 filterContext.Result = new RedirectResult("~/Account/Login");
                 return;
