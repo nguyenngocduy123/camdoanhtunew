@@ -416,10 +416,10 @@ namespace CamDoAnhTu.Helper
             {
                 return HttpContext.Current.Session["User"] as User;
             }
-            HttpCookie cookie = HttpContext.Current.Request.Cookies["userInfo"];
+            var cookie = HttpContext.Current.Request.Cookies["userInfo"]["username"];
             if (cookie != null)
             {
-                string valueCookie = cookie.Value;
+                string valueCookie = cookie;
                 var user = JsonConvert.DeserializeObject<User>(valueCookie);
                 return user;
             }

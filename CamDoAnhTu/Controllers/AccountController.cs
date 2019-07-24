@@ -29,11 +29,11 @@ namespace CamDoAnhTu.Controllers
 
                 if (us != null)
                 {
-                    string jsonItem = JsonConvert.SerializeObject(us, Formatting.Indented);
+                    string jsonItem = JsonConvert.SerializeObject(us);
                     //cookie
                     HttpCookie cookie = new HttpCookie("userInfo");
-                    cookie.Expires = DateTime.Now.AddMinutes(2);
-                    cookie.Value = jsonItem;
+                    cookie.Expires = DateTime.Now.AddMinutes(5);
+                    cookie.Values["username"] = jsonItem;
                     HttpContext.Response.Cookies.Add(cookie);
 
                     return RedirectToAction("Index", "Home");
@@ -55,6 +55,11 @@ namespace CamDoAnhTu.Controllers
 
             HttpCookie reqCookies = Request.Cookies["userInfo"];
             reqCookies.Expires = DateTime.Now.AddDays(-1);
+            HttpContext.Response.Cookies.Add(reqCookies);
+
+            HttpCookie reqCookies1 = Request.Cookies["Chonngaylam"];
+            reqCookies1.Expires = DateTime.Now.AddDays(-1);
+            HttpContext.Response.Cookies.Add(reqCookies1);
             return RedirectToAction("Login", "Account");
         }
 

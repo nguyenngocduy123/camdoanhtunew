@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.Mvc;
 
 namespace CamDoAnhTu.Controllers
@@ -1049,10 +1050,11 @@ namespace CamDoAnhTu.Controllers
         {
             using (CamdoAnhTuEntities1 dbcontext = new CamdoAnhTuEntities1())
             {
+                var cookie = Request.Cookies["Chonngaylam"];
                 StringBuilder str = new StringBuilder();
                 int type = 0;
 
-                if (Const.chonngaylam.HasValue == false)
+                if (cookie.Value == null || string.IsNullOrEmpty(cookie.Value))
                     throw new Exception("chua chọn ngày làm");
 
                 if (loanid != -1)
@@ -1070,7 +1072,7 @@ namespace CamDoAnhTu.Controllers
                             hs.CustomerId = p.ID;
                             hs.CustomerCode = p.Code;
                             hs.Detail = str.ToString();
-                            hs.Ngaydongtien = Const.chonngaylam.HasValue ? Const.chonngaylam : throw new Exception("Chưa chọn ngày làm"); ;
+                            hs.Ngaydongtien = cookie.Value != null ? DateTime.Parse(cookie.Value) : throw new Exception("Chưa chọn ngày làm");
                             hs.price = money == 0 ? p.Price : money;
                             hs.status = type;
                             hs.loanid = loanid;
@@ -1084,7 +1086,7 @@ namespace CamDoAnhTu.Controllers
                             hs.CustomerId = p.ID;
                             hs.CustomerCode = p.Code;
                             hs.Detail = str.ToString();
-                            hs.Ngaydongtien = Const.chonngaylam.HasValue ? Const.chonngaylam : throw new Exception("Chưa chọn ngày làm"); ;
+                            hs.Ngaydongtien = cookie.Value != null ? DateTime.Parse(cookie.Value) : throw new Exception("Chưa chọn ngày làm");
                             hs.price = money == 0 ? p.Price : money;
                             hs.status = type;
                             hs.loanid = loanid;
@@ -1098,7 +1100,7 @@ namespace CamDoAnhTu.Controllers
                         if (oldtype == 1) // xóa dong tien
                         {
                             str.Append("Xóa đóng tiền cho ngày: " + Const.timetemp);
-                            checkhs.Ngaydongtien = Const.chonngaylam.HasValue ? Const.chonngaylam : throw new Exception("Chưa chọn ngày làm");
+                            checkhs.Ngaydongtien = cookie.Value != null ? DateTime.Parse(cookie.Value) : throw new Exception("Chưa chọn ngày làm");
                             type = 0;
                             checkhs.status = type;
                             checkhs.Detail = str.ToString();
@@ -1107,8 +1109,7 @@ namespace CamDoAnhTu.Controllers
                         {
                             str.Append("Đóng tiền cho ngày: " + Const.timetemp);
                             type = 1;
-                            checkhs.Ngaydongtien = Const.chonngaylam.HasValue ?
-                                Const.chonngaylam : throw new Exception("Chưa chọn ngày làm");
+                            checkhs.Ngaydongtien = cookie.Value != null ? DateTime.Parse(cookie.Value) : throw new Exception("Chưa chọn ngày làm");
                             checkhs.status = type;
                             checkhs.Detail = str.ToString();
                         }
@@ -1122,7 +1123,7 @@ namespace CamDoAnhTu.Controllers
                     hs.CustomerId = p.ID;
                     hs.Detail = str.ToString();
                     hs.CustomerCode = p.Code;
-                    hs.Ngaydongtien = Const.chonngaylam.HasValue ? Const.chonngaylam : throw new Exception("Chưa chọn ngày làm");
+                    hs.Ngaydongtien = cookie.Value != null ? DateTime.Parse(cookie.Value) : throw new Exception("Chưa chọn ngày làm");
                     hs.price = money == 0 ? p.Price : money;
                     hs.status = 0;
                     hs.loanid = -1;
@@ -1137,8 +1138,14 @@ namespace CamDoAnhTu.Controllers
 
         public ActionResult ChonNgay(DateTime? chonngaylamSubmit)
         {
+            HttpCookie cookie = new HttpCookie("Chonngaylam");
+           
             if (chonngaylamSubmit.HasValue)
-                Const.chonngaylam = chonngaylamSubmit.Value;
+            {
+                cookie.Expires = DateTime.Now.AddMinutes(5);
+                cookie.Value = chonngaylamSubmit.Value.ToString(); ;
+                HttpContext.Response.Cookies.Add(cookie);
+            }
 
             //chonngaylam = DateTime.Parse(chonngaylamVal);
             return RedirectToAction("Index");
