@@ -168,10 +168,11 @@ function chuadongtien(idLoan, permission) {
     if (permission == 0) {
         return;
     }
-
+    
     $("#divLoader").show();
     var idcus = document.getElementById("IDCUS_" + idLoan).value;
-    var songaydong = document.getElementById("songaydong_" + idcus).value;
+    //var songaydong = document.getElementById("songaydong_" + idcus).value;
+    var songaydong = 0;
     var ct = document.getElementById('ct_' + idcus).value;
     if (ct == "") {
         ct = 0;
@@ -228,10 +229,11 @@ function chuadongtien1(idLoan, permission) {
     if (permission != 1) {
         return;
     }
-
+    
     $("#divLoader").show();
     var idcus = document.getElementById("IDCUS_" + idLoan).value;
-    var songaydong = document.getElementById("songaydong_" + idcus).value;
+    //var songaydong = document.getElementById("songaydong_" + idcus).value;
+    var songaydong = 0;
     var ct = document.getElementById('ct_' + idcus).value;
     if (ct == "") {
         ct = 0;

@@ -317,7 +317,7 @@ t = (List<Loan>
                     </a>
 
 
-                    <a href="@Url.Action("AddCustomerXE1", "Home",new{type = type})" class="btn btn-default">
+                    <a href="@Url.Action("AddCustomerXE1", "XE1",new{type = type})" class="btn btn-default">
                         <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
                     </a>
 
@@ -525,7 +525,7 @@ else
                                                 <p style="color: blue">@p.Note</p>
                                             </td>
                                             <td>
-                                                <input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />
+                                                @*<input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />*@
 
                                                 @foreach (Loan i in t)
                                                 {
@@ -621,7 +621,7 @@ else
                                                     <p style="color: blue">@p.Note</p>
                                                 </td>
                                                 <td>
-                                                    <input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />
+                                                    @*<input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />*@
 
                                                     @foreach (Loan i in t)
                                                     {
@@ -730,7 +730,7 @@ else
                                                     <p style="color: blue">@p.Note</p>
                                                 </td>
                                                 <td>
-                                                    <input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />
+                                                    @*<input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />*@
                                                     @foreach (Loan i in t)
                                                     {
                                                         <input type="hidden" id="IDCUS_@(i.ID)" name="IDCUS_@(i.ID)" value="@p.ID" />

@@ -32,7 +32,7 @@ namespace CamDoAnhTu.Controllers
                     string jsonItem = JsonConvert.SerializeObject(us);
                     //cookie
                     HttpCookie cookie = new HttpCookie("userInfo");
-                    cookie.Expires = DateTime.Now.AddMinutes(5);
+                    cookie.Expires = DateTime.Now.AddMinutes(1);
                     cookie.Values["username"] = jsonItem;
                     HttpContext.Response.Cookies.Add(cookie);
 
@@ -53,13 +53,19 @@ namespace CamDoAnhTu.Controllers
             Session["CurUser"] = null;
             Session["User"] = null;
 
-            HttpCookie reqCookies = Request.Cookies["userInfo"];
-            reqCookies.Expires = DateTime.Now.AddDays(-1);
-            HttpContext.Response.Cookies.Add(reqCookies);
+            if (Request.Cookies["userInfo"] != null)
+            {
+                HttpCookie reqCookies = Request.Cookies["userInfo"];
+                reqCookies.Expires = DateTime.Now.AddDays(-1);
+                HttpContext.Response.Cookies.Add(reqCookies);
+            }
 
-            HttpCookie reqCookies1 = Request.Cookies["Chonngaylam"];
-            reqCookies1.Expires = DateTime.Now.AddDays(-1);
-            HttpContext.Response.Cookies.Add(reqCookies1);
+            if (Request.Cookies["Chonngaylam"] != null)
+            {
+                HttpCookie reqCookies1 = Request.Cookies["Chonngaylam"];
+                reqCookies1.Expires = DateTime.Now.AddDays(-1);
+                HttpContext.Response.Cookies.Add(reqCookies1);
+            }            
             return RedirectToAction("Login", "Account");
         }
 

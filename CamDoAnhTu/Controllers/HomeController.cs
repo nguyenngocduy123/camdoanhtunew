@@ -780,7 +780,7 @@ namespace CamDoAnhTu.Controllers
                             return Json(new { success = false, message = "Ngày đóng không hợp lệ" },
                                 JsonRequestBehavior.AllowGet);
 
-                        loanid++;
+                        
                         item.Status = item.Status + 1;
 
                         if (item.Status >= 2)
@@ -815,6 +815,7 @@ namespace CamDoAnhTu.Controllers
                             WriteHistory(csCustomer, 0, loanid);
                             dbcontext.SaveChanges();
                         }
+                        loanid++;
                         ct = csCustomer.Price * songay;
                         amount = csCustomer.AmountPaid ?? 0;
                         remainingamount = csCustomer.RemainingAmount.Value;
@@ -1142,7 +1143,7 @@ namespace CamDoAnhTu.Controllers
            
             if (chonngaylamSubmit.HasValue)
             {
-                cookie.Expires = DateTime.Now.AddMinutes(5);
+                cookie.Expires = DateTime.Now.AddDays(1);
                 cookie.Value = chonngaylamSubmit.Value.ToString(); ;
                 HttpContext.Response.Cookies.Add(cookie);
             }
