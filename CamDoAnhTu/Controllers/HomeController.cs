@@ -152,6 +152,8 @@ namespace CamDoAnhTu.Controllers
                     int countMax = 0;
                     DateTime EndDate = DateTime.Now;
                     List<Loan> t = dbcontext.Loans.Where(p => p.IDCus == cs.ID).OrderBy(p => p.Date).ToList();
+                    List<Loan> lstSongaydatra = dbcontext.Loans.Where(p => p.IDCus == cs.ID && p.Status == 1 && p.Type == false).ToList();
+                    cs.DayPaids = lstSongaydatra.Count;
 
                     Loan t1 = new Loan();
 
@@ -338,6 +340,13 @@ namespace CamDoAnhTu.Controllers
                 List<Customer> lsttrave1 = lsttrave.OrderBy(p => p.CodeSort)
                     .Skip((page - 1) * pageSz)
                      .Take(pageSz).ToList();
+
+                foreach (var cs in lsttrave1)
+                {
+                    List<Loan> lstSongaydatra = dbcontext.Loans.Where(p => p.IDCus == cs.ID && p.Status == 1 && p.Type == false).ToList();
+                    cs.DayPaids = lstSongaydatra.Count;
+                    dbcontext.SaveChanges();
+                }
 
                 ViewBag.PageCount = nPages;
                 ViewBag.CurPage = page;
