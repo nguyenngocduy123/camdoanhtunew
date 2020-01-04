@@ -1,4 +1,5 @@
 use camcdb3d_camdothanhluan
+use camdoanhtu;
 
 select * from Customer cs
 where cs.DayPaids != (
@@ -9,12 +10,17 @@ and cs.type !=12 and cs.type !=13 and cs.type !=14 and cs.type !=15 and cs.type 
 select * from Customer cs
 where cs.AmountPaid != (
 select (count(*)*c.Price) as amountpaid from Loan l,Customer c 
-where l.Status = 1 and l.Type = 0 and c.Code = l.IDCus and c.Code = cs.Code  and cs.type !=12 
-group by c.Price)
+where l.Status = 1 and l.Type = 0 and c.ID = l.IDCus and c.Code = cs.Code
+and cs.type !=12 and cs.type !=13 and cs.type !=14 and cs.type !=15 and cs.type !=16 and cs.type !=17 
+group by c.Price);
+
 
 
 select * from Message;
 
-select * from Customer where Code = '002H';
+select Id,* from Customer where Code = 'MA448';
 
-select * from Loan where IDCus = 4390;
+select * from Loan where IDCus = 5781;
+
+select * from History where customerid = 5781;
+

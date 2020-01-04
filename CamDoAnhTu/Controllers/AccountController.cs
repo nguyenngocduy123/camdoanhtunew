@@ -32,7 +32,7 @@ namespace CamDoAnhTu.Controllers
                     string jsonItem = JsonConvert.SerializeObject(us);
                     //cookie
                     HttpCookie cookie = new HttpCookie("userInfo");
-                    cookie.Expires = DateTime.Now.AddMinutes(1);
+                    cookie.Expires = DateTime.Now.AddMinutes(5);
                     cookie.Values["username"] = jsonItem;
                     HttpContext.Response.Cookies.Add(cookie);
 

@@ -15,12 +15,12 @@ namespace CamDoAnhTu.Helper
                 filterContext.Result = new RedirectResult("~/Account/Login");
                 return;
             }
-            else
-            {
-                HttpCookie newcookie = HttpContext.Current.Request.Cookies["userInfo"];
-                newcookie.Expires = DateTime.Now.AddMinutes(1);
-                HttpContext.Current.Request.Cookies.Add(newcookie);
-            }
+            //else
+            //{
+            //    HttpCookie newcookie = HttpContext.Current.Request.Cookies["userInfo"];
+            //    newcookie.Expires = DateTime.Now.AddMinutes(1);
+            //    HttpContext.Current.Request.Cookies.Add(newcookie);
+            //}
             base.OnActionExecuting(filterContext);
         }
     }

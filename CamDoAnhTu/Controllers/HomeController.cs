@@ -28,7 +28,7 @@ namespace CamDoAnhTu.Controllers
             {
                 ViewBag.type = type;
                 List<Customer> list = new List<Customer>();
-
+                var lstCustomer = dbcontext.Customers;
                 if (type == -1)
                 {
                     list = dbcontext.Customers.Where(p => Const.tragopArr.Contains(p.type.Value) && p.IsDeleted == false).ToList();
@@ -39,15 +39,14 @@ namespace CamDoAnhTu.Controllers
                 {
                     list = dbcontext.Customers.Where(p => p.type == type && p.IsDeleted == false).ToList();
 
-                    switch (type)
-                    {
-                        case 1:
-                            var list1 = dbcontext.Customers.Where(p => p.type == type).ToList();
-
-                            break;
-                        default:
-                            break;
-                    }
+                    //switch (type)
+                    //{
+                    //    case 1:
+                    //        var list1 = dbcontext.Customers.Where(p => p.type == type).ToList();
+                    //        break;
+                    //    default:
+                    //        break;
+                    //}
                 }
                 return PartialView(list);
             }
@@ -154,6 +153,8 @@ namespace CamDoAnhTu.Controllers
                     List<Loan> t = dbcontext.Loans.Where(p => p.IDCus == cs.ID).OrderBy(p => p.Date).ToList();
                     List<Loan> lstSongaydatra = dbcontext.Loans.Where(p => p.IDCus == cs.ID && p.Status == 1 && p.Type == false).ToList();
                     cs.DayPaids = lstSongaydatra.Count;
+                    cs.AmountPaid = lstSongaydatra.Count * cs.Price;
+                    cs.RemainingAmount = cs.Loan.Value - cs.AmountPaid.Value;
 
                     Loan t1 = new Loan();
 
@@ -345,6 +346,9 @@ namespace CamDoAnhTu.Controllers
                 {
                     List<Loan> lstSongaydatra = dbcontext.Loans.Where(p => p.IDCus == cs.ID && p.Status == 1 && p.Type == false).ToList();
                     cs.DayPaids = lstSongaydatra.Count;
+                    cs.DayPaids = lstSongaydatra.Count;
+                    cs.AmountPaid = lstSongaydatra.Count * cs.Price;
+                    cs.RemainingAmount = cs.Loan.Value - cs.AmountPaid.Value;
                     dbcontext.SaveChanges();
                 }
 
@@ -754,6 +758,7 @@ namespace CamDoAnhTu.Controllers
                         csCustomer.DayPaids = songaydatra;
 
                         WriteHistory(csCustomer, 0, loanid);
+                        dbcontext.SaveChanges();
                     }
                     else
                     {
@@ -767,6 +772,7 @@ namespace CamDoAnhTu.Controllers
                         csCustomer.DayPaids = songaydatra;
 
                         WriteHistory(csCustomer, 0, loanid);
+                        dbcontext.SaveChanges();
                     }
 
                     ct = csCustomer.Price;
