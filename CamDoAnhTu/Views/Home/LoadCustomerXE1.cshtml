@@ -20,37 +20,6 @@ t = (List<Loan>
 
     List<Loan> loanAddManual = new List<Loan>();
 }
-@{
-    List<SelectListItem>
-listItems = new List<SelectListItem>
-    ();
-    listItems.Add(new SelectListItem
-    {
-        Text = "10",
-        Value = "10",
-    });
-    listItems.Add(new SelectListItem
-    {
-        Text = "15",
-        Value = "15",
-        Selected = true
-    });
-    listItems.Add(new SelectListItem
-    {
-        Text = "20",
-        Value = "20"
-    });
-    listItems.Add(new SelectListItem
-    {
-        Text = "25",
-        Value = "25"
-    });
-    listItems.Add(new SelectListItem
-    {
-        Text = "30",
-        Value = "30"
-    });
-}
 
 @section css{
     <!-- DataTables CSS -->
@@ -135,7 +104,7 @@ listItems = new List<SelectListItem>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Name").autocomplete({
-                source: "/Default/SearchName",
+                source: "/Home/SearchName",
                 select: function (event, ui) {
 
                 }
@@ -146,7 +115,7 @@ listItems = new List<SelectListItem>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Code").autocomplete({
-                source: "/Default/SearchCode",
+                source: "/Home/SearchCode",
                 select: function (event, ui) {
 
                 }
@@ -157,7 +126,7 @@ listItems = new List<SelectListItem>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Phone").autocomplete({
-                source: "/Default/SearchPhone",
+                source: "/Home/SearchPhone",
                 select: function (event, ui) {
                 }
             });
@@ -167,7 +136,7 @@ listItems = new List<SelectListItem>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Tentaisan").autocomplete({
-                source: "/Default/SearchTentaisan",
+                source: "/Home/SearchTentaisan",
                 select: function (event, ui) {
                 }
             });
@@ -177,7 +146,7 @@ listItems = new List<SelectListItem>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Address").autocomplete({
-                source: "/Default/SearchAddress",
+                source: "/Home/SearchAddress",
                 select: function (event, ui) {
                 }
             });
@@ -206,7 +175,7 @@ listItems = new List<SelectListItem>
                 url: '/Home/UpdateNodung',
                 data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
                 success: function (data) {
-                    
+                    debugger;
                     if (data.success) {
                         if (data.songay > 0) {
                             for (var i = 0; i < data.songay; i++) {
@@ -216,7 +185,7 @@ listItems = new List<SelectListItem>
                             }
                         } else {
                             document.getElementById("item_" + idLoan).className = "btn btn-success";
-                            document.getElementById("item_" + idLoan).setAttribute("onclick", "return chuadongtien1(" + idLoan + "," + permission + ");");
+                            document.getElementById("item_" + a).setAttribute("onclick", "return chuadongtien1(" + idLoan + "," + permission + ");");
                         }
 
                     } else
@@ -244,7 +213,7 @@ listItems = new List<SelectListItem>
                 url: '/Home/UpdateNodung',
                 data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
                 success: function (data) {
-                    
+                    debugger;
                     if (data.success) {
                         if (data.songay > 0) {
                             for (var i = 0; i < data.songay; i++) {
@@ -254,7 +223,7 @@ listItems = new List<SelectListItem>
                             }
                         } else {
                             document.getElementById("item_" + idLoan).className = "btn btn-danger";
-                            document.getElementById("item_" + idLoan).setAttribute("onclick", "return chuadongtien(" + idLoan + "," + permission + ");");
+                            document.getElementById("item_" + a).setAttribute("onclick", "return chuadongtien(" + idLoan + "," + permission + ");");
                         }
 
                     } else
@@ -337,29 +306,35 @@ listItems = new List<SelectListItem>
         <form method="post" id="frmUpdateLoan" action="">
             <input id="txtloanId" type="hidden" name="loanid" />
         </form>
-
+        <div class="col-lg-6">
+            <h2>Quản lí cầm đồ Anh Tú</h2>
+        </div>
+        <div class="col-lg-6" style="text-align: right; padding-right: 30px; padding-top: 20px">
+            @if (us.Permission == 1)
+            {
+                <a href="@Url.Action("LoadAccount","Account")">Danh sách tài khoản</a><span>|</span>
+            }
+            <a id="logoutLink" href="#"><i class="glyphicon glyphicon-log-out"></i>Thoát</a>
+        </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default" style="background-color:antiquewhite">
                 <div class="panel-heading">
                     @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductsModal"><i class="fa fa-plus"></i>  Thêm</button>*@
-                    <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","Home")" role="button">
+                    <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","Home", new {type = type })" role="button">
                         <i class="fa fa-home"></i>Trang đứng
                     </a>
-                    <a class="btn btn-success" href="@Url.Action("LoadCustomer", "Home",new {type = -1})" role="button">
-                        <i class="fa fa-home"></i>Trang góp
-                    </a>
-
 
 
                     <a href="@Url.Action("AddCustomerXE1", "Home",new{type = type})" class="btn btn-default">
                         <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
                     </a>
 
+
                 </div>
-                <form class="navbar-form navbar-left" role="search" action="/XE1/SearchXE1" style="height:50px">
-                    <input type="hidden" value="@type" name="type" id="type" />
+                <form class="navbar-form navbar-left" role="search" action="/Home/SearchXE1" style="height:50px">
+                    <input type="hidden" name="type" value="@type" />
                     <div class="form-group">
                         <label for="txtName" class="col-sm-2 control-label">Mã số:</label>
                         <div class="col-sm-2">
@@ -411,7 +386,9 @@ else
         <form method="post" id="frmUpdateLoan" action="">
             <input id="txtloanId" type="hidden" name="loanid" />
         </form>
-
+        <div class="col-lg-4">
+            <h2>Quản lí cầm đồ Anh Tú</h2>
+        </div>
         <div class="col-lg-2">
             <span style="text-align:center;font-size:15px;color:red">
 
@@ -426,21 +403,32 @@ else
 
         </div>
 
+        <div class="col-lg-6" style="text-align: right; padding-right: 30px; padding-top: 20px">
+            @if (us.Permission == 1)
+            {
+                <a href="@Url.Action("LoadAccount","Account")">Danh sách tài khoản</a><span>|</span>
+            }
+            <a id="logoutLink" href="#"><i class="glyphicon glyphicon-log-out"></i>Thoát</a>
+        </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default" style="background-color:antiquewhite">
                 <div class="panel-heading">
-                    <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","Home", new {type =type })" role="button">
+                    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductsModal"><i class="fa fa-plus"></i>  Thêm</button>*@
+                    <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","Home",new { type = type })" role="button">
                         <i class="fa fa-home"></i>Trang đứng
                     </a>
 
-                    <a href="@Url.Action("AddCustomerXE1", "Home",new{type = type})" class="btn btn-default">
+
+
+                    <a href="@Url.Action("AddCustomerXE1", "Home", new {type = type } )" class="btn btn-default">
                         <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
                     </a>
 
+
                 </div>
-                <form class="form-horizontal" role="search" action="/XE1/SearchXE1" style="height:50px; margin-bottom:50px;margin-top:10px">
+                <form class="form-horizontal" role="search" action="/Home/SearchXE1" style="height:50px; margin-bottom:50px;margin-top:10px">
                     <input type="hidden" value="@type" name="type" id="type" />
                     <div class="form-group">
                         <label for="txtName" class="col-sm-2 control-label">Tên khách hàng:</label>
@@ -466,16 +454,6 @@ else
                         <div class="col-sm-2">
                             <input type="text" class="form-control" id="Tentaisan" name="Tentaisan" />
                         </div>
-                    </div>
-                    <div class="form-group">
-                        @*<label for="txtName" class="col-sm-2 control-label">Nợ xấu: </label>
-                            <div class="col-sm-2">
-                                <input type="checkbox" class="checkbox" id="Noxau" name="Noxau" value="1" />
-                            </div>*@
-                        @*<label for="txtName" class="col-sm-2 control-label">Hết nợ: </label>
-                            <div class="col-sm-2">
-                                <input type="checkbox" class="checkbox" id="hetno" name="hetno" value="1" />
-                            </div>*@
                     </div>
                     <div class="form-group">
 
@@ -557,7 +535,7 @@ else
                                                 <p>@p.tentaisan</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
-                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
+                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
                                                 }
                                             </td>
                                             <td>
@@ -591,23 +569,23 @@ else
                                                 </a>
                                             </td>
                                             <td style="width: 100px">
-                                                <a href="@Url.Action(" Detail", "Home" , new {id=@p.ID})" role="button" title="Chi tiết">
+                                                <a href="@Url.Action("Detail", "Home", new {id = @p.ID})" role="button" title="Chi tiết">
                                                     <i class="glyphicon glyphicon-eye-open"></i>
                                                 </a>
-                                                <a href="@Url.Action(" History", "History" , new {id=@p.Code})" role="button" title="Lịch sử">
+                                                <a href="@Url.Action("History", "History", new {id = @p.Code})" role="button" title="Lịch sử">
                                                     <i class="fa fa-history"></i>
                                                 </a>
-                                                <a href="@Url.Action(" Index", "Print" , new {code=@p.Code})" role="button" title="In">
+                                                <a href="@Url.Action("Index", "Print", new {code = @p.Code})" role="button" title="In">
                                                     <i class="fa fa-print"></i>
                                                 </a>
                                                 @if (us.Permission == 1)
                                                 {
                                                     <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID') : null"><i class="fa fa-remove"></i></a>
 
-                                                    <a class="btn btn-primary btn-xs" href="@Url.Action(" UpdateXE1", "Home" , new {id=@p.Code,type =type})" role="button" title="Chỉnh sửa">
+                                                    <a class="btn btn-primary btn-xs" href="@Url.Action("UpdateXE1", "Home", new {id = @p.Code,type = type})" role="button" title="Chỉnh sửa">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
-                                                    <a href="@Url.Action(" Index", "Loan" , new {idcus=@p.ID})" role="button" title="Quản lí nợ">
+                                                    <a href="@Url.Action("Index", "Loan", new {idcus = @p.ID})" role="button" title="Quản lí nợ">
                                                         <i class="fa fa-adjust"></i>
                                                     </a>
                                                     <a class="btn btn-primary btn-xs" role="button" title="Kết thúc dây nợ" onclick="return effect(@k.ID);">
@@ -654,7 +632,7 @@ else
                                                     <p>@p.tentaisan</p>
                                                     @foreach (var item in loanAddManual)
                                                     {
-                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
+                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
                                                     }
                                                 </td>
                                                 <td>
@@ -707,23 +685,23 @@ else
                                                     </a>
                                                 </td>
                                                 <td style="width: 100px">
-                                                    <a href="@Url.Action(" Detail", "Home" , new {id=@p.ID})" role="button" title="Chi tiết">
+                                                    <a href="@Url.Action("Detail", "Home", new {id = @p.ID})" role="button" title="Chi tiết">
                                                         <i class="glyphicon glyphicon-eye-open"></i>
                                                     </a>
-                                                    <a href="@Url.Action(" History", "History" , new {id=@p.Code})" role="button" title="Lịch sử">
+                                                    <a href="@Url.Action("History", "History", new {id = @p.Code})" role="button" title="Lịch sử">
                                                         <i class="fa fa-history"></i>
                                                     </a>
-                                                    <a href="@Url.Action(" Index", "Print" , new {code=@p.Code})" role="button" title="In">
+                                                    <a href="@Url.Action("Index", "Print", new {code = @p.Code})" role="button" title="In">
                                                         <i class="fa fa-print"></i>
                                                     </a>
                                                     @if (us.Permission == 1)
                                                     {
                                                         <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID') : null"><i class="fa fa-remove"></i></a>
 
-                                                        <a class="btn btn-primary btn-xs" href="@Url.Action(" UpdateXE1", "Home" , new {id=@p.Code,type =type})" role="button" title="Chỉnh sửa">
+                                                        <a class="btn btn-primary btn-xs" href="@Url.Action("UpdateXE1", "Home", new {id = @p.Code,type = type})" role="button" title="Chỉnh sửa">
                                                             <i class="fa fa-pencil"></i>
                                                         </a>
-                                                        <a href="@Url.Action(" Index", "Loan" , new {idcus=@p.ID})" role="button" title="Quản lí nợ">
+                                                        <a href="@Url.Action("Index", "Loan", new {idcus = @p.ID})" role="button" title="Quản lí nợ">
                                                             <i class="fa fa-adjust"></i>
                                                         </a>
                                                         <a class="btn btn-primary btn-xs" role="button" title="Kết thúc dây nợ" onclick="return effect(@k.ID);">
@@ -763,7 +741,7 @@ else
                                                     <p>@p.tentaisan</p>
                                                     @foreach (var item in loanAddManual)
                                                     {
-                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
+                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
                                                     }
                                                 </td>
                                                 <td>
@@ -813,23 +791,23 @@ else
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a href="@Url.Action(" Detail", "Home" , new {id=@p.ID})" role="button" title="Chi tiết">
+                                                    <a href="@Url.Action("Detail", "Home", new {id = @p.ID})" role="button" title="Chi tiết">
                                                         <i class="glyphicon glyphicon-eye-open"></i>
                                                     </a>
-                                                    <a href="@Url.Action(" History", "History" , new {id=@p.Code})" role="button" title="Lịch sử">
+                                                    <a href="@Url.Action("History", "History", new {id = @p.Code})" role="button" title="Lịch sử">
                                                         <i class="fa fa-history"></i>
                                                     </a>
-                                                    <a href="@Url.Action(" Index", "Print" , new {code=@p.Code})" role="button" title="In">
+                                                    <a href="@Url.Action("Index", "Print", new {code = @p.Code})" role="button" title="In">
                                                         <i class="fa fa-print"></i>
                                                     </a>
                                                     @if (us.Permission == 1)
                                                     {
                                                         <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID') : null"><i class="fa fa-remove"></i></a>
 
-                                                        <a class="btn btn-primary btn-xs" href="@Url.Action(" UpdateXE1", "Home" , new {id=@p.Code,type =type})" role="button" title="Chỉnh sửa">
+                                                        <a class="btn btn-primary btn-xs" href="@Url.Action("UpdateXE1", "Home", new {id = @p.Code,type = type})" role="button" title="Chỉnh sửa">
                                                             <i class="fa fa-pencil"></i>
                                                         </a>
-                                                        <a href="@Url.Action(" Index", "Loan" , new {idcus=@p.ID})" role="button" title="Quản lí nợ">
+                                                        <a href="@Url.Action("Index", "Loan", new {idcus = @p.ID})" role="button" title="Quản lí nợ">
                                                             <i class="fa fa-adjust"></i>
                                                         </a>
                                                         <a class="btn btn-primary btn-xs" role="button" title="Kết thúc dây nợ" onclick="return effect(@k.ID);">
@@ -847,18 +825,18 @@ else
                         <nav style="margin-top:20px; margin-left:50px">
                             <ul class="pagination">
                                 <li class="@(ViewBag.CurPage==1 ? "disabled": "")">
-                                    <a href="@Url.Action("SearchXE1", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = ViewBag.CurPage - 1 })" aria-label="Pre aria-label=" previous">
+                                    <a href="@Url.Action("LoadCustomerXE1", "Home", new { page = ViewBag.CurPage - 1,type = ViewBag.type })" aria-label="Pre aria-label=" previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
                                 @for (int i = 1; i <= ViewBag.PageCount; i++)
                                 {
                                     <li class="@(ViewBag.CurPage==i ? "active": "")">
-                                        <a href="@Url.Action("SearchXE1", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = i})">@i</a>
+                                        <a href="@Url.Action("LoadCustomerXE1", "Home", new {page = i,type = ViewBag.type })">@i</a>
                                     </li>
                                 }
                                 <li class="@(ViewBag.CurPage==ViewBag.PageCount ? "disabled": "")">
-                                    <a href="@Url.Action("SearchXE1", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = ViewBag.CurPage + 1 })" aria-label="Nex aria-label=" next">
+                                    <a href="@Url.Action("LoadCustomerXE1", "Home", new { page = ViewBag.CurPage + 1,type = ViewBag.type })" aria-label="Nex aria-label=" next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>

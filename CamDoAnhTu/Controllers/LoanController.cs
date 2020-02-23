@@ -1,5 +1,4 @@
-﻿using CamDoAnhTu.Helper;
-using CamDoAnhTu.Models;
+﻿using CamDoAnhTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,11 +13,10 @@ using System.Web.Mvc;
 
 namespace CamDoAnhTu.Controllers
 {
-    [SessionTimeout]
     public class LoanController : Controller
     {
         // GET: Loan
-        public ActionResult Index(int idcus, int type = 0)
+        public ActionResult Index(int idcus,int type = 0)
         {
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {
@@ -26,7 +24,7 @@ namespace CamDoAnhTu.Controllers
                 var list = ctx.Loans.Where(p => p.IDCus == idcus && p.Type == true).ToList();
 
                 return View(list);
-            }
+            }                
         }
         [HttpPost]
         public JsonResult DeteleLoan(int id)

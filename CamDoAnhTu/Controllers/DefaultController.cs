@@ -1,5 +1,4 @@
-﻿using CamDoAnhTu.Helper;
-using CamDoAnhTu.Models;
+﻿using CamDoAnhTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,7 +8,6 @@ using System.Web.Mvc;
 
 namespace CamDoAnhTu.Controllers
 {
-    [SessionTimeout]
     public class DefaultController : Controller
     {
         // GET: Default
@@ -73,7 +71,7 @@ namespace CamDoAnhTu.Controllers
                 foreach (Customer cs in lst1)
                 {
                     cs.NgayNo = 0;
-
+                    
                     int countMax = 0;
 
                     DateTime EndDate = DateTime.Now;
@@ -209,7 +207,7 @@ namespace CamDoAnhTu.Controllers
                 foreach (Customer cs in lst1)
                 {
                     cs.NgayNo = 0;
-
+                    
                     int countMax = 0;
 
                     DateTime EndDate = DateTime.Now;
@@ -246,29 +244,6 @@ namespace CamDoAnhTu.Controllers
 
                 return View(lst1);
             }
-        }
-        public ActionResult SearchName(String term)
-        {
-            var products = Helper.Helper.GetCustomer(term).Select(c => new { id = c.Code, value = c.Name });
-            return Json(products, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult SearchCode(String term)
-        {
-            var products = Helper.Helper.GetCustomer1(term).Select(c => new { id = c.Code, value = c.Code });
-            return Json(products, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult SearchPhone(String term)
-        {
-            var products = Helper.Helper.GetCustomer2(term).Select(c => new { id = c.Code, value = c.Phone });
-            return Json(products, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult SearchAddress(String term)
-        {
-            var products = Helper.Helper.GetCustomer3(term).Select(c => new { id = c.Code, value = c.Address });
-            return Json(products, JsonRequestBehavior.AllowGet);
         }
     }
 }

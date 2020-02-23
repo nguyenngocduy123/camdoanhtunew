@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Newtonsoft.Json;
 using CamDoAnhTu.Models;
 using DocumentFormat.OpenXml.Spreadsheet;
 
@@ -29,13 +28,9 @@ namespace CamDoAnhTu.Controllers
 
                 if (us != null)
                 {
-                    string jsonItem = JsonConvert.SerializeObject(us);
-                    //cookie
-                    HttpCookie cookie = new HttpCookie("userInfo");
-                    cookie.Expires = DateTime.Now.AddMinutes(5);
-                    cookie.Values["username"] = jsonItem;
-                    HttpContext.Response.Cookies.Add(cookie);
-
+                    Session["User"] = us;
+                    Session.Timeout = 2;
+                    
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -53,19 +48,9 @@ namespace CamDoAnhTu.Controllers
             Session["CurUser"] = null;
             Session["User"] = null;
 
-            if (Request.Cookies["userInfo"] != null)
-            {
-                HttpCookie reqCookies = Request.Cookies["userInfo"];
-                reqCookies.Expires = DateTime.Now.AddDays(-1);
-                HttpContext.Response.Cookies.Add(reqCookies);
-            }
-
-            if (Request.Cookies["Chonngaylam"] != null)
-            {
-                HttpCookie reqCookies1 = Request.Cookies["Chonngaylam"];
-                reqCookies1.Expires = DateTime.Now.AddDays(-1);
-                HttpContext.Response.Cookies.Add(reqCookies1);
-            }            
+            //Response.Cookies["Username"].Expires = DateTime.Now.AddDays(-1);
+            //HttpCookie reqCookies = Request.Cookies["userInfo"];
+            //reqCookies.Expires = DateTime.Now.AddDays(-1);
             return RedirectToAction("Login", "Account");
         }
 
@@ -97,15 +82,16 @@ namespace CamDoAnhTu.Controllers
         }
 
         public ActionResult ChangePassWord(ChangePasswordModel model)
-        {
+        {           
             return View(model);
         }
 
-        public ActionResult LoadAccount()
+        public ActionResult LoadAccount(int type)
         {
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {
-                
+                ViewBag.type = type; 
+
                 List<User> lstUser = ctx.Users.ToList();
 
                 return View(lstUser);

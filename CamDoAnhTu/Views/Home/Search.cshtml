@@ -34,7 +34,7 @@
 
 }
 @section js{
-    @*<script src="~/Assets/Admin/bower_components/jquery/dist/jquery.min.js"></script>*@
+    <script src="~/Assets/Admin/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="~/Assets/jquery-ui.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -156,8 +156,7 @@
 
             $("#divLoader").show();
             var idcus = document.getElementById("IDCUS_" + idLoan).value;
-            //var songaydong = document.getElementById("songaydong_" + idcus).value;
-            var songaydong = 0;
+            var songaydong = document.getElementById("songaydong_" + idcus).value;
             var ct = document.getElementById('ct_' + idcus).value;
             if (ct == "") {
                 ct = 0;
@@ -217,8 +216,7 @@
 
             $("#divLoader").show();
             var idcus = document.getElementById("IDCUS_" + idLoan).value;
-            //var songaydong = document.getElementById("songaydong_" + idcus).value;
-            var songaydong = 0;
+            var songaydong = document.getElementById("songaydong_" + idcus).value;
             var ct = document.getElementById('ct_' + idcus).value;
             if (ct == "") {
                 ct = 0;
@@ -676,7 +674,7 @@ else
                                                 @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
-                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
+                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
                                                 }
                                             </td>
                                             @if (p.Loan == null)
@@ -722,7 +720,7 @@ else
                                                 <p>Số ngày đã trả : @p.DayPaids</p>
                                             </td>
                                             <td>
-                                                @*<input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />*@
+                                                <input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />
                                                 @foreach (Loan i in t)
                                                 {
                                                     <input type="hidden" id="IDCUS_@(i.ID)" name="IDCUS_@(i.ID)" value="@p.ID" />
@@ -811,7 +809,7 @@ else
                                                 @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
-                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
+                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
                                                 }
                                             </td>
                                             @if (p.Loan == null)
@@ -857,7 +855,7 @@ else
                                                 <p>Số ngày đã trả : @p.DayPaids</p>
                                             </td>
                                             <td>
-                                                @*<input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />*@
+                                                <input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />
                                                 @foreach (Loan i in t)
                                                 {
                                                     <input type="hidden" id="IDCUS_@(i.ID)" name="IDCUS_@(i.ID)" value="@p.ID" />
@@ -947,7 +945,7 @@ else
                                                 @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
-                                            <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
+                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
                                                 }
                                             </td>
                                             @if (p.Loan == null)
@@ -993,7 +991,7 @@ else
                                                 <p>Số ngày đã trả : @p.DayPaids</p>
                                             </td>
                                             <td>
-                                                @*<input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />*@
+                                                <input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />
                                                 @foreach (Loan i in t)
                                                 {
                                                     <input type="hidden" id="IDCUS_@(i.ID)" name="IDCUS_@(i.ID)" value="@p.ID" />
@@ -1064,18 +1062,18 @@ else
                         <nav style="margin-top:20px; margin-left:50px">
                             <ul class="pagination">
                                 <li class="@(ViewBag.CurPage==1 ? "disabled": "")">
-                                    <a href="@Url.Action("Search", "Home", new { page = ViewBag.CurPage - 1,type = ViewBag.type })" aria-label="Pre aria-label=" previous">
+                                    <a href="@Url.Action("Search", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = ViewBag.CurPage - 1 })" aria-label="Pre aria-label=" previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
                                 @for (int i = 1; i <= ViewBag.PageCount; i++)
                                 {
                                     <li class="@(ViewBag.CurPage==i ? "active": "")">
-                                        <a href="@Url.Action("Search", "Home", new {page = i,type = ViewBag.type })">@i</a>
+                                        <a href="@Url.Action("Search", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = i})">@i</a>
                                     </li>
                                 }
                                 <li class="@(ViewBag.CurPage==ViewBag.PageCount ? "disabled": "")">
-                                    <a href="@Url.Action("Search", "Home", new { page = ViewBag.CurPage + 1,type = ViewBag.type })" aria-label="Nex aria-label=" next">
+                                    <a href="@Url.Action("Search", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = ViewBag.CurPage + 1 })" aria-label="Nex aria-label=" next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
