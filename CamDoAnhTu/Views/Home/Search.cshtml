@@ -1062,18 +1062,18 @@ else
                         <nav style="margin-top:20px; margin-left:50px">
                             <ul class="pagination">
                                 <li class="@(ViewBag.CurPage==1 ? "disabled": "")">
-                                    <a href="@Url.Action("Search", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = ViewBag.CurPage - 1 })" aria-label="Pre aria-label=" previous">
+                                    <a href="@Url.Action("Search", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone,Address = ViewBag.Address ,Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = ViewBag.CurPage - 1,type = type })" aria-label="Pre aria-label=" previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
                                 @for (int i = 1; i <= ViewBag.PageCount; i++)
                                 {
                                     <li class="@(ViewBag.CurPage==i ? "active": "")">
-                                        <a href="@Url.Action("Search", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = i})">@i</a>
+                                        <a href="@Url.Action("Search", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone,Address = ViewBag.Address ,Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = i,type = type})">@i</a>
                                     </li>
                                 }
                                 <li class="@(ViewBag.CurPage==ViewBag.PageCount ? "disabled": "")">
-                                    <a href="@Url.Action("Search", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = ViewBag.CurPage + 1 })" aria-label="Nex aria-label=" next">
+                                    <a href="@Url.Action("Search", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone,Address = ViewBag.Address, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = ViewBag.CurPage + 1,type = type })" aria-label="Nex aria-label=" next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
