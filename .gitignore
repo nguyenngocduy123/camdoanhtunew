@@ -1,5 +1,12 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
 /.vs
+CamDoAnhTu/bin/CamDoAnhTu.dll
+CamDoAnhTu/bin/CamDoAnhTu.dll.config
+CamDoAnhTu/bin/CamDoAnhTu.pdb
+CamDoAnhTu/obj/Debug/CamDoAnhTu.csproj.CoreCompileInputs.cache
+CamDoAnhTu/obj/Debug/CamDoAnhTu.csproj.FileListAbsolute.txt
+CamDoAnhTu/obj/Debug/CamDoAnhTu.dll
+CamDoAnhTu/obj/Debug/CamDoAnhTu.pdb
