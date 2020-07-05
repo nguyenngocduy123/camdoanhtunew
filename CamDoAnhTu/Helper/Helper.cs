@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace CamDoAnhTu.Helper
 {
@@ -412,19 +413,8 @@ namespace CamDoAnhTu.Helper
 
         public static User GetUserInfo()
         {
-            if (HttpContext.Current.Session["User"] != null)
-            {
-                return HttpContext.Current.Session["User"] as User;
-            }
-            var cookie = HttpContext.Current.Request.Cookies["userInfo"]["username"];
-            if (cookie != null)
-            {
-                string valueCookie = cookie;
-                var user = JsonConvert.DeserializeObject<User>(valueCookie);
-                return user;
-            }
-
-            return null;
+            var data = (HttpContext.Current?.User.Identity as FormsIdentity)?.Ticket.UserData;
+            return JsonConvert.DeserializeObject<User>(data);
         }
     }
 }

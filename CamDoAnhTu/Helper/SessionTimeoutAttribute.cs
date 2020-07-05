@@ -1,6 +1,11 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using System;
+using System.Web.Security;
+using CamDoAnhTu.Models;
+using Newtonsoft.Json;
+using System.Security.Principal;
+using System.Security.Claims;
 
 namespace CamDoAnhTu.Helper
 {
@@ -8,20 +13,16 @@ namespace CamDoAnhTu.Helper
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            HttpCookie cookie = HttpContext.Current.Request.Cookies["userInfo"];
-            
-            if (cookie == null)
+            var authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+
+            if (authCookie == null)
             {
                 filterContext.Result = new RedirectResult("~/Account/Login");
                 return;
             }
-            //else
-            //{
-            //    HttpCookie newcookie = HttpContext.Current.Request.Cookies["userInfo"];
-            //    newcookie.Expires = DateTime.Now.AddMinutes(1);
-            //    HttpContext.Current.Request.Cookies.Add(newcookie);
-            //}
-            base.OnActionExecuting(filterContext);
+            var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+            var userData = JsonConvert.DeserializeObject<User>(authTicket.UserData);            
+            filterContext.HttpContext.User = new GenericPrincipal(new FormsIdentity(authTicket), null);
         }
     }
 }

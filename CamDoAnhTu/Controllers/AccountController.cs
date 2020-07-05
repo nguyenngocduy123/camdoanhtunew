@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using CamDoAnhTu.Models;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Newtonsoft.Json;
 
 namespace CamDoAnhTu.Controllers
 {
@@ -25,12 +27,17 @@ namespace CamDoAnhTu.Controllers
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {
                 User us = ctx.Users.Where(u => u.UserName == Username && u.PassWord == password && u.Enabled == true).FirstOrDefault();
-
+                
                 if (us != null)
                 {
-                    Session["User"] = us;
-                    Session.Timeout = 2;
-                    
+                    string jsondata = JsonConvert.SerializeObject(us);
+                    var ticket = new FormsAuthenticationTicket(1, us.UserName,
+                        DateTime.Now, DateTime.Now.AddMinutes(3), model.Remember, jsondata);
+                    string encryptedTicket = FormsAuthentication.Encrypt(ticket);
+                    Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket));
+
+                    //Session["User"] = us;
+                    //Session.Timeout = 2;
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -47,7 +54,7 @@ namespace CamDoAnhTu.Controllers
             Session["IsLogin"] = 0;
             Session["CurUser"] = null;
             Session["User"] = null;
-
+            FormsAuthentication.SignOut();
             //Response.Cookies["Username"].Expires = DateTime.Now.AddDays(-1);
             //HttpCookie reqCookies = Request.Cookies["userInfo"];
             //reqCookies.Expires = DateTime.Now.AddDays(-1);
