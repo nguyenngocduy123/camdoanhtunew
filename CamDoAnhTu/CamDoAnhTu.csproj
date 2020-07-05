@@ -1593,6 +1593,13 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Home\AddCustomerXE1.cshtml" />
+    <Content Include="Views\Home\LoadCustomerXE1.cshtml" />
+    <Content Include="Views\Home\SearchXE1.cshtml" />
+    <Content Include="Views\Home\TimKiemNoKhachHang.cshtml" />
+    <Content Include="Views\Home\TimKiemNoKhachHang1.cshtml" />
+    <Content Include="Views\Home\UpdateXE1.cshtml" />
+    <Content Include="Views\Home\XE1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
