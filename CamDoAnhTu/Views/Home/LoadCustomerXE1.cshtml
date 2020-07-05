@@ -1,7 +1,4 @@
 ﻿@using CamDoAnhTu.Models;
-@*@model PagedList.IPagedList<Customer>
-*@
-@*@using PagedList.Mvc;*@
 
 @model List<Customer>
 @{
@@ -37,7 +34,7 @@ t = (List<Loan>
 
 }
 @section js{
-    <script src="~/Assets/Admin/bower_components/jquery/dist/jquery.min.js"></script>
+    @*<script src="~/Assets/Admin/bower_components/jquery/dist/jquery.min.js"></script>*@
     <script src="~/Assets/jquery-ui.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -104,7 +101,7 @@ t = (List<Loan>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Name").autocomplete({
-                source: "/Home/SearchName",
+                source: "/Default/SearchName",
                 select: function (event, ui) {
 
                 }
@@ -115,7 +112,7 @@ t = (List<Loan>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Code").autocomplete({
-                source: "/Home/SearchCode",
+                source: "/Default/SearchCode",
                 select: function (event, ui) {
 
                 }
@@ -126,7 +123,7 @@ t = (List<Loan>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Phone").autocomplete({
-                source: "/Home/SearchPhone",
+                source: "/Default/SearchPhone",
                 select: function (event, ui) {
                 }
             });
@@ -136,7 +133,7 @@ t = (List<Loan>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Tentaisan").autocomplete({
-                source: "/Home/SearchTentaisan",
+                source: "/Default/SearchTentaisan",
                 select: function (event, ui) {
                 }
             });
@@ -146,7 +143,7 @@ t = (List<Loan>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Address").autocomplete({
-                source: "/Home/SearchAddress",
+                source: "/Default/SearchAddress",
                 select: function (event, ui) {
                 }
             });
@@ -167,7 +164,7 @@ t = (List<Loan>
 
             var idcus = document.getElementById("IDCUS_" + idLoan).value;
             var songaydong = document.getElementById("songaydong_" + idcus).value;
-
+            debugger
             $.ajax({
                 type: 'get',
                 dataType: 'json',
@@ -175,7 +172,7 @@ t = (List<Loan>
                 url: '/Home/UpdateNodung',
                 data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
                 success: function (data) {
-                    debugger;
+
                     if (data.success) {
                         if (data.songay > 0) {
                             for (var i = 0; i < data.songay; i++) {
@@ -185,7 +182,7 @@ t = (List<Loan>
                             }
                         } else {
                             document.getElementById("item_" + idLoan).className = "btn btn-success";
-                            document.getElementById("item_" + a).setAttribute("onclick", "return chuadongtien1(" + idLoan + "," + permission + ");");
+                            document.getElementById("item_" + idLoan).setAttribute("onclick", "return chuadongtien1(" + idLoan + "," + permission + ");");
                         }
 
                     } else
@@ -205,7 +202,7 @@ t = (List<Loan>
 
             var idcus = document.getElementById("IDCUS_" + idLoan).value;
             var songaydong = document.getElementById("songaydong_" + idcus).value;
-
+            debugger
             $.ajax({
                 type: 'get',
                 dataType: 'json',
@@ -213,7 +210,7 @@ t = (List<Loan>
                 url: '/Home/UpdateNodung',
                 data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
                 success: function (data) {
-                    debugger;
+
                     if (data.success) {
                         if (data.songay > 0) {
                             for (var i = 0; i < data.songay; i++) {
@@ -221,9 +218,11 @@ t = (List<Loan>
                                 document.getElementById("item_" + a).className = "btn btn-danger";
                                 document.getElementById("item_" + a).setAttribute("onclick", "return chuadongtien(" + idLoan + "," + permission + ");");
                             }
-                        } else {
+                        }
+                        else {
                             document.getElementById("item_" + idLoan).className = "btn btn-danger";
-                            document.getElementById("item_" + a).setAttribute("onclick", "return chuadongtien(" + idLoan + "," + permission + ");");
+                            document.getElementById("item_" + idLoan) .setAttribute("onclick", "return chuadongtien(" + idLoan + "," + permission + ");");
+                               
                         }
 
                     } else
@@ -295,7 +294,8 @@ t = (List<Loan>
                 $('#form1').submit();
             });
         });
-    </script>
+
+/**/</script>
 
 }
 
@@ -306,16 +306,6 @@ t = (List<Loan>
         <form method="post" id="frmUpdateLoan" action="">
             <input id="txtloanId" type="hidden" name="loanid" />
         </form>
-        <div class="col-lg-6">
-            <h2>Quản lí cầm đồ Anh Tú</h2>
-        </div>
-        <div class="col-lg-6" style="text-align: right; padding-right: 30px; padding-top: 20px">
-            @if (us.Permission == 1)
-            {
-                <a href="@Url.Action("LoadAccount","Account")">Danh sách tài khoản</a><span>|</span>
-            }
-            <a id="logoutLink" href="#"><i class="glyphicon glyphicon-log-out"></i>Thoát</a>
-        </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
@@ -333,7 +323,7 @@ t = (List<Loan>
 
 
                 </div>
-                <form class="navbar-form navbar-left" role="search" action="/Home/SearchXE1" style="height:50px">
+                <form class="navbar-form navbar-left" role="search" action="/XE1/SearchXE1" style="height:50px">
                     <input type="hidden" name="type" value="@type" />
                     <div class="form-group">
                         <label for="txtName" class="col-sm-2 control-label">Mã số:</label>
@@ -402,14 +392,6 @@ else
             </span>
 
         </div>
-
-        <div class="col-lg-6" style="text-align: right; padding-right: 30px; padding-top: 20px">
-            @if (us.Permission == 1)
-            {
-                <a href="@Url.Action("LoadAccount","Account")">Danh sách tài khoản</a><span>|</span>
-            }
-            <a id="logoutLink" href="#"><i class="glyphicon glyphicon-log-out"></i>Thoát</a>
-        </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
@@ -420,15 +402,13 @@ else
                         <i class="fa fa-home"></i>Trang đứng
                     </a>
 
-
-
-                    <a href="@Url.Action("AddCustomerXE1", "Home", new {type = type } )" class="btn btn-default">
+                    <a href="@Url.Action("AddCustomerXE1", "XE1", new {type = type } )" class="btn btn-default">
                         <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
                     </a>
 
 
                 </div>
-                <form class="form-horizontal" role="search" action="/Home/SearchXE1" style="height:50px; margin-bottom:50px;margin-top:10px">
+                <form class="form-horizontal" role="search" action="/XE1/SearchXE1" style="height:50px; margin-bottom:50px;margin-top:10px">
                     <input type="hidden" value="@type" name="type" id="type" />
                     <div class="form-group">
                         <label for="txtName" class="col-sm-2 control-label">Tên khách hàng:</label>
@@ -535,7 +515,7 @@ else
                                                 <p>@p.tentaisan</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
-                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
+                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
                                                 }
                                             </td>
                                             <td>
@@ -582,7 +562,7 @@ else
                                                 {
                                                     <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID') : null"><i class="fa fa-remove"></i></a>
 
-                                                    <a class="btn btn-primary btn-xs" href="@Url.Action("UpdateXE1", "Home", new {id = @p.Code,type = type})" role="button" title="Chỉnh sửa">
+                                                    <a class="btn btn-primary btn-xs" href="@Url.Action("UpdateXE1", "Xe1", new {id = @p.Code,type = type})" role="button" title="Chỉnh sửa">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
                                                     <a href="@Url.Action("Index", "Loan", new {idcus = @p.ID})" role="button" title="Quản lí nợ">
@@ -632,7 +612,7 @@ else
                                                     <p>@p.tentaisan</p>
                                                     @foreach (var item in loanAddManual)
                                                     {
-                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
+                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
                                                     }
                                                 </td>
                                                 <td>
@@ -698,7 +678,7 @@ else
                                                     {
                                                         <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID') : null"><i class="fa fa-remove"></i></a>
 
-                                                        <a class="btn btn-primary btn-xs" href="@Url.Action("UpdateXE1", "Home", new {id = @p.Code,type = type})" role="button" title="Chỉnh sửa">
+                                                        <a class="btn btn-primary btn-xs" href="@Url.Action("UpdateXE1", "XE1", new {id = @p.Code,type = type})" role="button" title="Chỉnh sửa">
                                                             <i class="fa fa-pencil"></i>
                                                         </a>
                                                         <a href="@Url.Action("Index", "Loan", new {idcus = @p.ID})" role="button" title="Quản lí nợ">
@@ -741,7 +721,7 @@ else
                                                     <p>@p.tentaisan</p>
                                                     @foreach (var item in loanAddManual)
                                                     {
-                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
+                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
                                                     }
                                                 </td>
                                                 <td>
@@ -804,7 +784,7 @@ else
                                                     {
                                                         <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID') : null"><i class="fa fa-remove"></i></a>
 
-                                                        <a class="btn btn-primary btn-xs" href="@Url.Action("UpdateXE1", "Home", new {id = @p.Code,type = type})" role="button" title="Chỉnh sửa">
+                                                        <a class="btn btn-primary btn-xs" href="@Url.Action("UpdateXE1", "Xe1", new {id = @p.Code,type = type})" role="button" title="Chỉnh sửa">
                                                             <i class="fa fa-pencil"></i>
                                                         </a>
                                                         <a href="@Url.Action("Index", "Loan", new {idcus = @p.ID})" role="button" title="Quản lí nợ">

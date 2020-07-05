@@ -409,20 +409,20 @@ namespace CamDoAnhTu.Helper
             return lso_chu.ToString().Trim();
 
         }
-
+        [SessionTimeout]
         public static User GetUserInfo()
         {
             if (HttpContext.Current.Session["User"] != null)
             {
                 return HttpContext.Current.Session["User"] as User;
             }
-            var cookie = HttpContext.Current.Request.Cookies["userInfo"]["username"];
-            if (cookie != null)
-            {
-                string valueCookie = cookie;
-                var user = JsonConvert.DeserializeObject<User>(valueCookie);
-                return user;
-            }
+            //var cookie = HttpContext.Current.Request.Cookies["userInfo"]["username"];
+            //if (cookie != null)
+            //{
+            //    string valueCookie = cookie;
+            //    var user = JsonConvert.DeserializeObject<User>(valueCookie);
+            //    return user;
+            //}
 
             return null;
         }

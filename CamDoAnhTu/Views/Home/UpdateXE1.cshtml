@@ -225,6 +225,10 @@
         <div class="col-sm-2">
             @Html.TextBoxFor(m => m.model.OldCode, new { @class = "form-control" })
         </div>
+        <label class="col-sm-2 control-label">Số ngày phải trả:</label>
+        <div class="col-sm-2">
+            @Html.TextBoxFor(m => m.model.songayno, new { @class = "form-control" })
+        </div>
     </div>
     <div>
         <label class="col-sm-2 control-label">Ghi chú:</label>
@@ -235,7 +239,7 @@
             <button type="submit" class="btn btn-danger">
                 <i class="fa fa-check"></i>&nbsp;Lưu
             </button>
-            <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","Home",new {type=@Model.model.type})" role="button">
+            <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","XE1",new {type=@Model.model.type})" role="button">
                 <i class="fa fa-mail-reply"></i>Trang khách hàng
             </a>
         </div>
