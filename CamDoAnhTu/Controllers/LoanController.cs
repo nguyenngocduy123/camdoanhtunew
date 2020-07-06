@@ -1,4 +1,5 @@
-﻿using CamDoAnhTu.Models;
+﻿using CamDoAnhTu.Helper;
+using CamDoAnhTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,6 +14,7 @@ using System.Web.Mvc;
 
 namespace CamDoAnhTu.Controllers
 {
+    [SessionTimeout]
     public class LoanController : Controller
     {
         // GET: Loan
