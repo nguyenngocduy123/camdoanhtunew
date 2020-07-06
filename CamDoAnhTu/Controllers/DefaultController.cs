@@ -245,5 +245,36 @@ namespace CamDoAnhTu.Controllers
                 return View(lst1);
             }
         }
+
+        public ActionResult SearchName(string term)
+        {
+            var products = Helper.Helper.GetCustomer(term).Select(c => new { id = c.Code, value = c.Name });
+            return Json(products, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SearchCode(string term)
+        {
+            var products = Helper.Helper.GetCustomer1(term).Select(c => new { id = c.Code, value = c.Code });
+
+            return Json(products, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SearchPhone(string term)
+        {
+            var products = Helper.Helper.GetCustomer2(term).Select(c => new { id = c.Code, value = c.Phone });
+            return Json(products, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SearchAddress(string term)
+        {
+            var products = Helper.Helper.GetCustomer3(term).Select(c => new { id = c.Code, value = c.Address });
+            return Json(products, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SearchTentaisan(string term)
+        {
+            var products = Helper.Helper.Gettentaisan(term).Select(c => new { id = c.Code, value = c.tentaisan });
+            return Json(products, JsonRequestBehavior.AllowGet);
+        }
     }
 }

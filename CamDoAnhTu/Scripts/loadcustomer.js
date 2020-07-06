@@ -14,112 +14,109 @@ function filterColumn(i) {
     ).draw();
 }
 
-$(document).ready(function () {
-    $('#dataTables-example').DataTable({
-        "aaSorting": [[0, "asc"]],
-        "sPaginationType": "full_numbers",
-        "paging": false,
-        "searching": false,
-        //"bProcessing": true,
-        "bDeferRender": true,
+$('#dataTables-example').DataTable({
+    "aaSorting": [[0, "asc"]],
+    "sPaginationType": "full_numbers",
+    "paging": false,
+    "searching": false,
+    //"bProcessing": true,
+    "bDeferRender": true,
 
-        "order": [[0, "asc"]],
-        "responsive": true,
-        "ordering": true,
-        "iDisplayLength": 10,
-        "aLengthMenu": [[1, 10, 25, 50, 100, 500, 1000, -1], [1, 10, 25, 50, 100, 500, 1000, "All"]],
-        "columnDefs": [
-            { "visible": false, "targets": 0 }
-        ]
+    "order": [[0, "asc"]],
+    "responsive": true,
+    "ordering": true,
+    "iDisplayLength": 10,
+    "aLengthMenu": [[1, 10, 25, 50, 100, 500, 1000, -1], [1, 10, 25, 50, 100, 500, 1000, "All"]],
+    "columnDefs": [
+        { "visible": false, "targets": 0 }
+    ]
+});
+
+$('input.global_filter').on('keyup click',
+    function () {
+        filterGlobal();
     });
 
-    $('input.global_filter').on('keyup click',
-        function () {
-            filterGlobal();
-        });
+$('input.column_filter').on('keyup click',
+    function () {
+        filterColumn($(this).parents('tr').attr('data-column'));
+    });
 
-    $('input.column_filter').on('keyup click',
-        function () {
-            filterColumn($(this).parents('tr').attr('data-column'));
-        });
+function effect(idLoan) {
 
-    function effect(idLoan) {
-
-        if (confirm('Bạn có thật sự muốn kết thúc dây nợ không ? ')) {
-            var idcus = document.getElementById("IDCUS_" + idLoan).value;
-            $.ajax({
-                type: 'get',
-                dataType: 'json',
-                url: '/Home/Reset',
-                data: { id: idcus },
-                success: function (data) {
-                    if (data.success) {
-                        document.getElementById("effect_" + idcus).style.color = "green";
-                        document.getElementById("item_" + idLoan).setAttribute("onclick", "");
-                        location.reload();
-                    } else
-                        alert('có lỗi xảy ra');
-                },
-                error: function (textStatus, errorThrown) {
-                    alert('Error - ' + errorThrown);
-                }
-            });
-        }
-    }
-
-    function deleteCus(cusid) {
+    if (confirm('Bạn có thật sự muốn kết thúc dây nợ không ? ')) {
+        var idcus = document.getElementById("IDCUS_" + idLoan).value;
         $.ajax({
-            cache: false,
-            dataType: "json",
-            type: "POST",
-            url: '@Url.Action("DeleteCustomer", "Home")',
-            data: { id: cusid },
-            error: function (xhr, status, error) {
-                alert(error);
+            type: 'get',
+            dataType: 'json',
+            url: '/Home/Reset',
+            data: { id: idcus },
+            success: function (data) {
+                if (data.success) {
+                    document.getElementById("effect_" + idcus).style.color = "green";
+                    document.getElementById("item_" + idLoan).setAttribute("onclick", "");
+                    location.reload();
+                } else
+                    alert('có lỗi xảy ra');
             },
-            success: function (result, status, xhr) {
-                if (result != null) {
-                    if (result.status == "success") {
-                        window.location.reload(true);
-                    } else if (result.status == "error") {
-                        window.alert(result.message);
-                        window.location.reload(true);
-                    }
-                }
+            error: function (textStatus, errorThrown) {
+                alert('Error - ' + errorThrown);
             }
         });
     }
+}
 
-    $("#Name").autocomplete({
-        source: "/Default/SearchName",
-        select: function (event, ui) {
-
+function deleteCus(cusid) {
+    $.ajax({
+        cache: false,
+        dataType: "json",
+        type: "POST",
+        url: '/Home/DeleteCustomer',
+        data: { id: cusid },
+        error: function (xhr, status, error) {
+            alert(error);
+        },
+        success: function (result, status, xhr) {
+            if (result != null) {
+                if (result.status == "success") {
+                    window.location.reload(true);
+                } else if (result.status == "error") {
+                    window.alert(result.message);
+                    window.location.reload(true);
+                }
+            }
         }
     });
+}
 
-    $("#Code").autocomplete({
-        source: "/Default/SearchCode",
-        select: function (event, ui) {
+$("#Name").autocomplete({
+    source: "/Default/SearchName",
+    select: function (event, ui) {
 
-        }
-    });
+    }
+});
 
-    $("#Phone").autocomplete({
-        source: "/Default/SearchPhone",
-        select: function (event, ui) {
-        }
-    });
+$("#Code").autocomplete({
+    source: "/Default/SearchCode",
+    select: function (event, ui) {
 
-    $("#Address").autocomplete({
-        source: "/Default/SearchAddress",
-        select: function (event, ui) {
-        }
-    });
+    }
+});
 
-    $(function () {
-        $("#datetime").datepicker({ dateFormat: "dd/mm/yy" }).val();
-    });
+$("#Phone").autocomplete({
+    source: "/Default/SearchPhone",
+    select: function (event, ui) {
+    }
+});
 
+$("#Address").autocomplete({
+    source: "/Default/SearchAddress",
+    select: function (event, ui) {
+    }
+});
+
+$(function () {
+    $("#datetime").datepicker({ dateFormat: "dd/mm/yy" }).val();
 });
 
 $(function () {
@@ -168,7 +165,7 @@ function chuadongtien(idLoan, permission) {
     if (permission == 0) {
         return;
     }
-    
+
     $("#divLoader").show();
     var idcus = document.getElementById("IDCUS_" + idLoan).value;
     //var songaydong = document.getElementById("songaydong_" + idcus).value;
@@ -186,7 +183,7 @@ function chuadongtien(idLoan, permission) {
         url: '/Home/UpdateLoan',
         data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
         success: function (data) {
-            
+
             if (data.success) {
                 $("#divLoader").hide();
                 $('#amount_' + idcus).val(data.amount);
@@ -229,7 +226,7 @@ function chuadongtien1(idLoan, permission) {
     if (permission != 1) {
         return;
     }
-    
+
     $("#divLoader").show();
     var idcus = document.getElementById("IDCUS_" + idLoan).value;
     //var songaydong = document.getElementById("songaydong_" + idcus).value;
@@ -247,7 +244,7 @@ function chuadongtien1(idLoan, permission) {
         url: '/Home/UpdateLoan',
         data: { loanid: idLoan, songaydong: songaydong, idcus: idcus },
         success: function (data) {
-            
+
             if (data.success) {
                 $("#divLoader").hide();
                 $('#amount_' + idcus).val(data.amount);
