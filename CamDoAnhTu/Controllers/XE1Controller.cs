@@ -27,22 +27,22 @@ namespace CamDoAnhTu.Controllers
                 int pageSz = pageSize ?? 10;
                 var lishExample = dbcontext.Customers.Where(p => p.type == type && p.IsDeleted == false).ToList();
 
-                foreach (var cs in lishExample)
-                {
-                    if (Const.masotradungArr.Any(cs.Code.Contains))
-                    {
-                        int code = Int32.Parse(cs.Code.Substring(2, cs.Code.Length - 2));
+                //foreach (var cs in lishExample)
+                //{
+                //    if (Const.masotradungArr.Any(cs.Code.Contains))
+                //    {
+                //        int code = Int32.Parse(cs.Code.Substring(2, cs.Code.Length - 2));
 
-                        if (cs.Code[0] == 'A')
-                            cs.CodeSort = code + 1000;
-                        else
-                            cs.CodeSort = (((cs.Code[0] - 'A') + 1) * 1000) + code;
+                //        if (cs.Code[0] == 'A')
+                //            cs.CodeSort = code + 1000;
+                //        else
+                //            cs.CodeSort = (((cs.Code[0] - 'A') + 1) * 1000) + code;
 
-                    }
-                    else
-                        cs.CodeSort = Int32.Parse(cs.Code);
+                //    }
+                //    else
+                //        cs.CodeSort = Int32.Parse(cs.Code);
 
-                }
+                //}
 
                 var tiengoc = dbcontext.GetTienGoc_Dung(type).SingleOrDefault();
 
@@ -82,7 +82,7 @@ namespace CamDoAnhTu.Controllers
                 int count1 = list1.Count();
                 int nPages = count1 / pageSz + (count1 % pageSz > 0 ? 1 : 0);
 
-                List<Customer> list = list1.OrderBy(p => p.CodeSort).Skip((page - 1) * pageSz).Take(pageSz).ToList();
+                List<Customer> list = list1.OrderBy(p => p.Code).Skip((page - 1) * pageSz).Take(pageSz).ToList();
 
                 ViewBag.PageCount = nPages;
                 ViewBag.CurPage = page;
@@ -148,33 +148,8 @@ namespace CamDoAnhTu.Controllers
                 {
                     id = lstType.Count;
                     newId = id + 1;
-                }
-                string temp = "";
-                switch (type)
-                {
-                    case 12:
-                        temp = "BD" + newId;
-                        break;
-                    case 13:
-                        temp = "CD" + newId;
-                        break;
-                    case 14:
-                        temp = "MD" + newId;
-                        break;
-                    case 15:
-                        temp = "ZD" + newId;
-                        break;
-                    case 16:
-                        temp = "YD" + newId;
-                        break;
-                    case 17:
-                        temp = "TD" + newId;
-                        break;
-                    default:
-                        break;
-                }
+                }                
 
-                mvViewModel.model.Code = temp.Trim();
                 return View(mvViewModel);
             }
 
@@ -385,7 +360,7 @@ namespace CamDoAnhTu.Controllers
                             select p).ToList();
                 int count = lsttrave.Count();
                 int nPages = count / pageSz + (count % pageSz > 0 ? 1 : 0);
-                List<Customer> lsttrave1 = lsttrave.OrderBy(p => p.CodeSort)
+                List<Customer> lsttrave1 = lsttrave.OrderBy(p => p.Code)
                     .Skip((page - 1) * pageSz)
                      .Take(pageSz).ToList();
 

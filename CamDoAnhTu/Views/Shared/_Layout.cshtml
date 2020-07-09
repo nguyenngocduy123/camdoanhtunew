@@ -62,18 +62,7 @@
                 </li>
             </ul>
         </nav>
-        @using (Html.BeginForm("ChonNgay", "Home", FormMethod.Post, null))
-        {
-            <div class="col-md-2">
-                <input type="text" class="col-lg-2 form-control"
-                       name="chonngaylamVal" id="chonngaylamVal" />
-
-                <input type="hidden" name="chonngaylamSubmit" id="chonngaylamSubmit" />
-            </div>
-            <button type="submit" class="btn btn-dropbox">
-                Chọn ngày
-            </button>
-        }
+        
         @RenderBody()
 
         <div id="myModal" class="modal fade" role="dialog">

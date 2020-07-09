@@ -88,20 +88,20 @@ namespace CamDoAnhTu.Controllers
                 ctx.Configuration.ValidateOnSaveEnabled = false;
                 var lishExample = ctx.Customers.Where(p => p.type == type && p.IsDeleted == false).ToList();
 
-                foreach (var cs in lishExample)
-                {
-                    if (masotragopArr.Any(cs.Code.Contains))
-                    {
-                        int code = Int32.Parse(cs.Code.Substring(2, cs.Code.Length - 2));
+                //foreach (var cs in lishExample)
+                //{
+                //    if (masotragopArr.Any(cs.Code.Contains))
+                //    {
+                //        int code = Int32.Parse(cs.Code.Substring(2, cs.Code.Length - 2));
 
-                        if (cs.Code[0] == 'A')
-                            cs.CodeSort = code + 1000;
-                        else
-                            cs.CodeSort = (((cs.Code[0] - 'A') + 1) * 1000) + code;
-                    }
-                    else
-                        cs.CodeSort = Int32.Parse(cs.Code);
-                }
+                //        if (cs.Code[0] == 'A')
+                //            cs.CodeSort = code + 1000;
+                //        else
+                //            cs.CodeSort = (((cs.Code[0] - 'A') + 1) * 1000) + code;
+                //    }
+                //    else
+                //        cs.CodeSort = Int32.Parse(cs.Code);
+                //}
 
                 var tiengoc = ctx.GetTienGoc(type).SingleOrDefault();
                 if (tiengoc != null)
@@ -157,7 +157,7 @@ namespace CamDoAnhTu.Controllers
                 int count1 = list1.Count();
                 int nPages = count1 / pageSz + (count1 % pageSz > 0 ? 1 : 0);
 
-                List<Customer> list = list1.OrderBy(p => p.CodeSort)
+                List<Customer> list = list1.OrderBy(p => p.Code)
                     .Skip((page - 1) * pageSz)
                      .Take(pageSz).ToList();
 
@@ -256,7 +256,7 @@ namespace CamDoAnhTu.Controllers
                 int count1 = list1.Count();
                 int nPages = count1 / pageSz + (count1 % pageSz > 0 ? 1 : 0);
 
-                List<Customer> list = list1.OrderBy(p => p.CodeSort)
+                List<Customer> list = list1.OrderBy(p => p.Code)
                     .Skip((page - 1) * pageSz)
                      .Take(pageSz).ToList();
 
@@ -339,22 +339,22 @@ namespace CamDoAnhTu.Controllers
 
                 var lishExample = ctx.Customers.Where(p => p.type == type && p.IsDeleted == false).ToList();
 
-                foreach (var cs in lishExample)
-                {
-                    if (masotradungArr.Any(cs.Code.Contains))
-                    {
-                        int code = Int32.Parse(cs.Code.Substring(2, cs.Code.Length - 2));
+                //foreach (var cs in lishExample)
+                //{
+                //    if (masotradungArr.Any(cs.Code.Contains))
+                //    {
+                //        int code = Int32.Parse(cs.Code.Substring(2, cs.Code.Length - 2));
 
-                        if (cs.Code[0] == 'A')
-                            cs.CodeSort = code + 1000;
-                        else
-                            cs.CodeSort = (((cs.Code[0] - 'A') + 1) * 1000) + code;
+                //        if (cs.Code[0] == 'A')
+                //            cs.CodeSort = code + 1000;
+                //        else
+                //            cs.CodeSort = (((cs.Code[0] - 'A') + 1) * 1000) + code;
 
-                    }
-                    else
-                        cs.CodeSort = Int32.Parse(cs.Code);
+                //    }
+                //    else
+                //        cs.CodeSort = Int32.Parse(cs.Code);
 
-                }
+                //}
 
                 var tiengoc = ctx.GetTienGoc_Dung(type).SingleOrDefault();
 
@@ -395,7 +395,7 @@ namespace CamDoAnhTu.Controllers
                 int count1 = list1.Count();
                 int nPages = count1 / pageSz + (count1 % pageSz > 0 ? 1 : 0);
 
-                List<Customer> list = list1.OrderBy(p => p.CodeSort)
+                List<Customer> list = list1.OrderBy(p => p.Code)
                     .Skip((page - 1) * pageSz)
                      .Take(pageSz).ToList();
 
@@ -511,7 +511,7 @@ namespace CamDoAnhTu.Controllers
                             select p).ToList();
                 int count = lsttrave.Count();
                 int nPages = count / pageSz + (count % pageSz > 0 ? 1 : 0);
-                List<Customer> lsttrave1 = lsttrave.OrderBy(p => p.CodeSort)
+                List<Customer> lsttrave1 = lsttrave.OrderBy(p => p.Code)
                     .Skip((page - 1) * pageSz)
                      .Take(pageSz).ToList();
 
@@ -603,7 +603,7 @@ namespace CamDoAnhTu.Controllers
                             select p).ToList();
                 int count = lsttrave.Count();
                 int nPages = count / pageSz + (count % pageSz > 0 ? 1 : 0);
-                List<Customer> lsttrave1 = lsttrave.OrderBy(p => p.CodeSort)
+                List<Customer> lsttrave1 = lsttrave.OrderBy(p => p.Code)
                     .Skip((page - 1) * pageSz)
                      .Take(pageSz).ToList();
 
@@ -716,50 +716,6 @@ namespace CamDoAnhTu.Controllers
             MyViewModel mvViewModel = new MyViewModel();
             mvViewModel.model.type = type;
 
-            using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
-            {
-                int newId = 0;
-                int id = 0;
-
-                var lstType = ctx.Customers.Where(p => p.type == type).ToList();
-
-                if (lstType.Count <= 0)
-                    newId = 1;
-                else
-                {
-                    id = lstType.Count;
-                    newId = id + 1;
-                }
-                string temp = "";
-                switch (type)
-                {
-                    case 1:
-                        temp = "BA" + newId;
-                        break;
-                    case 2:
-                        temp = "CA" + newId;
-                        break;
-                    case 3:
-                        temp = "MA" + newId;
-                        break;
-                    case 4:
-                        temp = "ZA" + newId;
-                        break;
-                    case 5:
-                        temp = "YA" + newId;
-                        break;
-                    case 6:
-                        temp = "TA" + newId;
-                        break;
-                    case 7:
-                        temp = "QA" + newId;
-                        break;
-                    default:
-                        break;
-                }
-
-                mvViewModel.model.Code = temp.Trim();
-            }
             return View(mvViewModel);
         }
 
@@ -959,47 +915,6 @@ namespace CamDoAnhTu.Controllers
                 }, "Value", "Text");
             MyViewModel mvViewModel = new MyViewModel();
             mvViewModel.model.type = type;
-
-            using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
-            {
-                int newId = 0;
-                int id = 0;
-
-                var lstType = ctx.Customers.Where(p => p.type == type).ToList();
-                if (lstType.Count <= 0)
-                    newId = 1;
-                else
-                {
-                    id = lstType.Count;
-                    newId = id + 1;
-                }
-                string temp = "";
-                switch (type)
-                {
-                    case 12:
-                        temp = "BD" + newId;
-                        break;
-                    case 13:
-                        temp = "CD" + newId;
-                        break;
-                    case 14:
-                        temp = "MD" + newId;
-                        break;
-                    case 15:
-                        temp = "ZD" + newId;
-                        break;
-                    case 16:
-                        temp = "YD" + newId;
-                        break;
-                    case 17:
-                        temp = "TD" + newId;
-                        break;
-                    default:
-                        break;
-                }
-
-                mvViewModel.model.Code = temp.Trim();
-            }
 
             return View(mvViewModel);
         }
@@ -1625,7 +1540,7 @@ namespace CamDoAnhTu.Controllers
                             hs.CustomerId = p.ID;
                             hs.CustomerCode = p.Code;
                             hs.Detail = str.ToString();
-                            hs.Ngaydongtien = chonngaylam.HasValue ? chonngaylam : throw new Exception("Chưa chọn ngày làm"); ;
+                            hs.Ngaydongtien = DateTime.Now;
                             hs.price = money == 0 ? p.Price : money;
                             hs.status = type;
                             hs.loanid = loanid;
@@ -1639,7 +1554,7 @@ namespace CamDoAnhTu.Controllers
                             hs.CustomerId = p.ID;
                             hs.CustomerCode = p.Code;
                             hs.Detail = str.ToString();
-                            hs.Ngaydongtien = chonngaylam.HasValue ? chonngaylam : throw new Exception("Chưa chọn ngày làm"); ;
+                            hs.Ngaydongtien = DateTime.Now;
                             hs.price = money == 0 ? p.Price : money;
                             hs.status = type;
                             hs.loanid = loanid;
@@ -1656,8 +1571,7 @@ namespace CamDoAnhTu.Controllers
                         if (oldtype == 1) // xóa dong tien
                         {
                             str.Append("Xóa đóng tiền cho ngày: " + timetemp);
-                            checkhs.Ngaydongtien = chonngaylam.HasValue ?
-                                chonngaylam : throw new Exception("Chưa chọn ngày làm");
+                            checkhs.Ngaydongtien = DateTime.Now;
                             type = 0;
                             checkhs.status = type;
                             checkhs.Detail = str.ToString();
@@ -1666,8 +1580,7 @@ namespace CamDoAnhTu.Controllers
                         {
                             str.Append("Đóng tiền cho ngày: " + timetemp);
                             type = 1;
-                            checkhs.Ngaydongtien = chonngaylam.HasValue ?
-                                chonngaylam : throw new Exception("Chưa chọn ngày làm");
+                            checkhs.Ngaydongtien = DateTime.Now;
                             checkhs.status = type;
                             checkhs.Detail = str.ToString();
                         }
@@ -1681,7 +1594,7 @@ namespace CamDoAnhTu.Controllers
                     hs.CustomerId = p.ID;
                     hs.Detail = str.ToString();
                     hs.CustomerCode = p.Code;
-                    hs.Ngaydongtien = chonngaylam.HasValue ? chonngaylam : throw new Exception("Chưa chọn ngày làm");
+                    hs.Ngaydongtien = DateTime.Now;
                     hs.price = money == 0 ? p.Price : money;
                     hs.status = 0;
                     hs.loanid = -1;

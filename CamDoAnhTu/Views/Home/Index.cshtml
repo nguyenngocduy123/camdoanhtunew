@@ -12,28 +12,26 @@
     @if (us.id_cuahang == -1)
     {
         <div class="row">
-            @Html.Action("Management", "Home", new { type = -1 })
             @Html.Action("Management", "Home", new { type = 1 })
             @Html.Action("Management", "Home", new { type = 2 })
             @Html.Action("Management", "Home", new { type = 3 })
+            @Html.Action("Management", "Home", new { type = 4 })
         </div>
         <div class="row">
-            @Html.Action("Management", "Home", new { type = 4 })
             @Html.Action("Management", "Home", new { type = 5 })
             @Html.Action("Management", "Home", new { type = 6 })
-            @Html.Action("Management", "Home", new { type = 7 })
-
-        </div>
-        <div class="row">
             @Html.Action("XE1", "Home", new { type = 12 })
             @Html.Action("XE1", "Home", new { type = 13 })
-            @Html.Action("XE1", "Home", new { type = 14 })
-            @Html.Action("XE1", "Home", new { type = 15 })
-
         </div>
         <div class="row">
+            @Html.Action("XE1", "Home", new { type = 14 })
+            @Html.Action("XE1", "Home", new { type = 15 })
             @Html.Action("XE1", "Home", new { type = 16 })
             @Html.Action("XE1", "Home", new { type = 17 })
+        </div>
+        <div class="row">
+            @Html.Action("XE1", "Home", new { type = 18 })
+            
         </div>
 
     }
