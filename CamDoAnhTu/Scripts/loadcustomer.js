@@ -15,21 +15,21 @@ function filterColumn(i) {
 }
 
 $('#dataTables-example').DataTable({
-    "aaSorting": [[0, "asc"]],
+    //"aaSorting": [[0, "asc"]],
     "sPaginationType": "full_numbers",
     "paging": false,
     "searching": false,
     //"bProcessing": true,
     "bDeferRender": true,
 
-    "order": [[0, "asc"]],
+    //"order": [[0, "asc"]],
     "responsive": true,
     "ordering": true,
     "iDisplayLength": 10,
     "aLengthMenu": [[1, 10, 25, 50, 100, 500, 1000, -1], [1, 10, 25, 50, 100, 500, 1000, "All"]],
-    "columnDefs": [
-        { "visible": false, "targets": 0 }
-    ]
+    //"columnDefs": [
+    //    { "visible": false, "targets": 0 }
+    //]
 });
 
 $('input.global_filter').on('keyup click',

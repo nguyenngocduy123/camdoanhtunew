@@ -344,7 +344,7 @@ listItems = new List<SelectListItem>
             <div class="panel panel-default" style="background-color:antiquewhite">
                 <div class="panel-heading">
                     @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductsModal"><i class="fa fa-plus"></i>  Thêm</button>*@
-                    <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","Home")" role="button">
+                    <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","XE1")" role="button">
                         <i class="fa fa-home"></i>Trang đứng
                     </a>
                     <a class="btn btn-success" href="@Url.Action("LoadCustomer", "Home",new {type = -1})" role="button">
@@ -353,7 +353,7 @@ listItems = new List<SelectListItem>
 
 
 
-                    <a href="@Url.Action("AddCustomerXE1", "Home",new{type = type})" class="btn btn-default">
+                    <a href="@Url.Action("AddCustomerXE1", "XE1",new{type = type})" class="btn btn-default">
                         <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
                     </a>
 
@@ -435,7 +435,7 @@ else
                         <i class="fa fa-home"></i>Trang đứng
                     </a>
 
-                    <a href="@Url.Action("AddCustomerXE1", "Home",new{type = type})" class="btn btn-default">
+                    <a href="@Url.Action("AddCustomerXE1", "XE1",new{type = type})" class="btn btn-default">
                         <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
                     </a>
 

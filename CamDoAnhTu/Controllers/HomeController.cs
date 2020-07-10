@@ -1437,7 +1437,6 @@ namespace CamDoAnhTu.Controllers
                         temp.Code = Helper.Helper.RandomString(4);
                         temp.Loan = cus.Loan;
                         temp.tiengoc = cus.tiengoc;
-                        ctx.Customers.Add(temp);
                         foreach (var item in lstLoans)
                         {
                             ctx.Loans.Remove(item);
@@ -1516,11 +1515,6 @@ namespace CamDoAnhTu.Controllers
         {
             StringBuilder str = new StringBuilder();
             int type = 0;
-
-            if (chonngaylam.HasValue == false)
-            {
-                throw new Exception("chua chọn ngày làm");
-            }
 
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {

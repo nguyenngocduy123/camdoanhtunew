@@ -8,7 +8,7 @@
 @{
 
     int count = 0;
-
+    int type = (int)ViewBag.type;
     User us = new User();
     us = (User)Session["CurUser"];
 
@@ -314,7 +314,7 @@
                     </a>
                     @if (us != null && us.Permission == 1)
                     {
-                        <a href="@Url.Action("AddCustomerXE1", "Home")" class="btn btn-default">
+                        <a href="@Url.Action("AddCustomerXE1", "XE1",new{type = type} )" class="btn btn-default">
                             <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
                         </a>
                     }
@@ -421,7 +421,7 @@ else
             <div class="panel panel-default">
                 <div class="panel-heading">
                     @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductsModal"><i class="fa fa-plus"></i>  Thêm</button>*@
-                    <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","Home")" role="button">
+                    <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","XE1")" role="button">
                         <i class="fa fa-home"></i>Trang chủ
                     </a>
                     <a class="btn btn-success" href="@Url.Action("Refresh","Home")" role="button" onclick="return confirm('Bạn có thật sự muốn refresh ?')">
@@ -429,7 +429,7 @@ else
                     </a>
                     @if (us != null && us.Permission == 1)
                     {
-                        <a href="@Url.Action("AddCustomerXE2", "Home")" class="btn btn-default">
+                        <a href="@Url.Action("AddCustomerXE1", "XE1")" class="btn btn-default">
                             <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
                         </a>
                     }

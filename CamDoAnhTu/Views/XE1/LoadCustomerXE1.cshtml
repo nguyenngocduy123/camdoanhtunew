@@ -296,7 +296,7 @@ t = (List<Loan>
             <input id="txtloanId" type="hidden" name="loanid" />
         </form>
         <div class="col-lg-6">
-            <h2>Quản lí cầm đồ Đức Thành</h2>
+            <h2>Quản lí cầm đồ</h2>
         </div>
         <div class="col-lg-6" style="text-align: right; padding-right: 30px; padding-top: 20px">
             <a href="@Url.Action("ChangePassWord","Account")">Đổi password</a><span>|</span>
@@ -316,7 +316,7 @@ t = (List<Loan>
                     </a>
                     @if (us != null && us.Permission == 1)
                     {
-                        <a href="@Url.Action("AddCustomerXE1", "Home")" class="btn btn-default">
+                        <a href="@Url.Action("AddCustomerXE1", "XE1", new{type = type})" class="btn btn-default">
                             <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
                         </a>
                     }
@@ -411,7 +411,7 @@ else
             <input id="txtloanId" type="hidden" name="loanid" />
         </form>
         <div class="col-lg-6">
-            <h2>Quản lí cầm đồ Đức Thành</h2>
+            <h2>Quản lí cầm đồ</h2>
         </div>
         <div class="col-lg-6" style="text-align: right; padding-right: 30px; padding-top: 20px">
             <a href="@Url.Action("ChangePassWord","Account")">Đổi password</a><span>|</span>
@@ -423,7 +423,7 @@ else
             <div class="panel panel-default">
                 <div class="panel-heading">
                     @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductsModal"><i class="fa fa-plus"></i>  Thêm</button>*@
-                    <a class="btn btn-success" href="@Url.Action("LoadCustomerXE2","Home")" role="button">
+                    <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","XE1")" role="button">
                         <i class="fa fa-home"></i>Trang chủ
                     </a>
                     <a class="btn btn-success" href="@Url.Action("Refresh","Home")" role="button" onclick="return confirm('Bạn có thật sự muốn refresh ?')">
@@ -431,7 +431,7 @@ else
                     </a>
                     @if (us != null && us.Permission == 1)
                     {
-                        <a href="@Url.Action("AddCustomerXE2", "Home")" class="btn btn-default">
+                        <a href="@Url.Action("AddCustomerXE1", "XE1")" class="btn btn-default">
                             <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
                         </a>
                     }
@@ -442,7 +442,7 @@ else
                         <i class="fa fa-search"></i>&nbsp;Tìm khách hàng nợ ngày lẻ
                     </a>
                 </div>
-                <form class="form-horizontal" role="search" action="/Home/SearchXE2" style="height:50px; margin-bottom:50px;margin-top:10px">
+                <form class="form-horizontal" role="search" action="/XE1/SearchXE1" style="height:50px; margin-bottom:50px;margin-top:10px">
                     <div class="form-group">
                         <label for="txtName" class="col-sm-2 control-label">Tên khách hàng:</label>
                         <div class="col-sm-2">
@@ -675,18 +675,18 @@ else
                         <nav style="margin-top:20px; margin-left:50px">
                             <ul class="pagination">
                                 <li class="@(ViewBag.CurPage==1 ? "disabled": "")">
-                                    <a href="@Url.Action("LoadCustomerXE2", "Home", new { page = ViewBag.CurPage - 1 })" aria-label="Pre aria-label=" previous">
+                                    <a href="@Url.Action("LoadCustomerXE1", "XE1", new { page = ViewBag.CurPage - 1 })" aria-label="Pre aria-label=" previous">
                                         <span aria-hidden="true">&laquo;</span>
-                                    </a>
+                                    </a>sto
                                 </li>
                                 @for (int i = 1; i <= ViewBag.PageCount; i++)
                                 {
                                     <li class="@(ViewBag.CurPage==i ? "active": "")">
-                                        <a href="@Url.Action("LoadCustomerXE2", "Home", new {page = i })">@i</a>
+                                        <a href="@Url.Action("LoadCustomerXE1", "XE1", new {page = i })">@i</a>
                                     </li>
                                 }
                                 <li class="@(ViewBag.CurPage==ViewBag.PageCount ? "disabled": "")">
-                                    <a href="@Url.Action("LoadCustomerXE2", "Home", new { page = ViewBag.CurPage + 1 })" aria-label="Nex aria-label=" next">
+                                    <a href="@Url.Action("LoadCustomerXE1", "XE1", new { page = ViewBag.CurPage + 1 })" aria-label="Nex aria-label=" next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
