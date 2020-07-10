@@ -431,7 +431,7 @@ else
                     </a>
                     @if (us != null && us.Permission == 1)
                     {
-                        <a href="@Url.Action("AddCustomerXE1", "XE1")" class="btn btn-default">
+                        <a href="@Url.Action("AddCustomerXE1", "XE1", new{type = type})" class="btn btn-default">
                             <i class="fa fa-plus"></i>&nbsp;Thêm khách hàng
                         </a>
                     }
