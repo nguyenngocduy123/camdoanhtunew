@@ -43,9 +43,9 @@ namespace CamDoAnhTu.Controllers
 
                 if (type == -1)
                 {
-                    list = ctx.Customers.Where(p => p.type == 1 || p.type == 2 || p.type == 3 ||
-                    p.type == 4 || p.type == 5 || p.type == 6 || p.type == 7
-                    && p.IsDeleted == false).ToList();
+                    list = ctx.Customers.Where(p => (p.type == 1 || p.type == 2 || p.type == 3 ||
+                    p.type == 4 || p.type == 5 || p.type == 6 || p.type == 7)
+                    && (p.IsDeleted == false)).ToList();
                     return PartialView(list);
                 }
                 else if (type == 1 || type == 2 || type == 3 ||
@@ -109,7 +109,7 @@ namespace CamDoAnhTu.Controllers
 
                 var tienlai = ctx.GetTienLai(type).SingleOrDefault();
                 DateTime startdate = new DateTime(2018, 10, 1);
-                DateTime enddate = startdate.AddMonths(1).AddDays(-1);
+                DateTime enddate = DateTime.Now;
 
                 //DateTime startdate = new DateTime(DateTime.Now.Year, 1, 1);
                 //DateTime enddate = new DateTime(DateTime.Now.Year, 12, 31);
