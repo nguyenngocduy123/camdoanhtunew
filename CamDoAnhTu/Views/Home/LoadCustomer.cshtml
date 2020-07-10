@@ -230,8 +230,7 @@ else
                                 <tr>
                                     <th></th>
                                     <th>Mã số</th>
-                                    <th style="width: 2px">Mã chữ cái</th>
-                                    <th style="width: 3px">Số thứ tự</th>
+                                    <th style="width: 2px">Mã số</th>
                                     <th style="width: 100px">Họ tên Đ/C</th>
                                     <th style="width: 100px">Ngày vay/SĐT</th>
                                     <th style="width: 30px">Nợ/Ngày nợ thêm</th>
@@ -300,14 +299,7 @@ else
                                     if (p.DayPaids == day || p.Description == "End")
                                     {
                                         <tr style="color:green">
-                                            <td>@p.CodeSort</td>
-                                            <td>@count</td>
-
-                                            <td @loaigiayto>
-                                                @p.Code.Substring(0, 2)
-
-                                            </td>
-                                            <td>@Int32.Parse(p.Code.Substring(2, p.Code.Length - 2))</td>
+                                            <td>@p.Code</td>
                                             <td>
                                                 <p style="text-decoration: underline">@p.Name</p>
                                                 <p>@p.Address</p>
@@ -437,13 +429,7 @@ else
                                     else if (p.NgayNo >= 3 + Int32.Parse(p.DayBonus.ToString()))
                                     {
                                         <tr style="color:red" id="effect_@(p.ID)">
-                                            <td>@p.CodeSort</td>
-                                            <td>@count</td>
-
-                                            <td @loaigiayto>
-                                                @p.Code.Substring(0, 2)
-                                            </td>
-                                            <td>@Int32.Parse(p.Code.Substring(2, p.Code.Length - 2))</td>
+                                            <td>@p.Code</td>
 
 
                                             <td>
@@ -575,16 +561,7 @@ else
                                     else
                                     {
                                         <tr id="effect_@(p.ID)">
-                                            <td>@p.CodeSort</td>
-                                            <td>@count</td>
-
-                                            <td>
-                                                @p.Code.Substring(0, 2)
-
-                                            </td>
-                                            <td>@Int32.Parse(p.Code.Substring(2, p.Code.Length - 2))</td>
-
-
+                                           <td>@p.Code</td>
                                             <td>
                                                 <p style="text-decoration: underline">@p.Name</p>
                                                 <p>@p.Address</p>
