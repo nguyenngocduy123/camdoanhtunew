@@ -582,10 +582,7 @@ else
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead style="background-color: gold">
                                 <tr>
-                                    <th></th>
-                                    <th>Mã số</th>
-                                    <th style="width: 2px">Mã chữ cái</th>
-                                    <th style="width: 3px">Số thứ tự</th>
+                                    <th style="width: 2px">Mã số</th>
                                     <th style="width: 100px">Họ tên Đ/C</th>
                                     <th style="width: 100px">Ngày vay/SĐT</th>
                                     <th style="width: 30px">Nợ/Ngày nợ thêm</th>
@@ -654,14 +651,7 @@ else
                                     if (p.DayPaids == day || p.Description == "End")
                                     {
                                         <tr style="color:green">
-                                            <td>@p.CodeSort</td>
-                                            <td>@count</td>
-
-                                            <td @loaigiayto>
-                                                @p.Code.Substring(0, 2)
-
-                                            </td>
-                                            <td>@Int32.Parse(p.Code.Substring(2, p.Code.Length - 2))</td>
+                                            <td>@p.Code</td>
                                             <td>
                                                 <p style="text-decoration: underline">@p.Name</p>
                                                 <p>@p.Address</p>
@@ -671,7 +661,8 @@ else
                                                 }
                                             </td>
                                             <td>
-                                                @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
+                                                @p.StartDate.ToString("dd/MM/yyyy")
+                                                <p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
                                                     <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
@@ -688,7 +679,8 @@ else
                                             else
                                             {
                                                 <td>
-                                                    @string.Format("{0:N0}", p.Loan)<p>@p.DayBonus</p>
+                                                    @string.Format("{0:N0}", p.Loan)
+                                                    <p>@p.DayBonus</p>
                                                     <p style="color: blue">@p.Note</p>
                                                 </td>
                                             }
@@ -700,7 +692,8 @@ else
                                             else
                                             {
                                                 <td>
-                                                    @string.Format("{0:N0}", p.Price)<p>
+                                                    @string.Format("{0:N0}", p.Price)
+                                                    <p>
                                                         <font color="red">@day</font>
                                                     </p>
                                                 </td>
@@ -788,13 +781,7 @@ else
                                     else if (p.NgayNo >= 3 + Int32.Parse(p.DayBonus.ToString()))
                                     {
                                         <tr style="color:red" id="effect_@(p.ID)">
-                                            <td>@p.CodeSort</td>
-                                            <td>@count</td>
-
-                                            <td @loaigiayto>
-                                                @p.Code.Substring(0, 2)
-                                            </td>
-                                            <td>@Int32.Parse(p.Code.Substring(2, p.Code.Length - 2))</td>
+                                            <td>@p.Code</td>
 
 
                                             <td>
@@ -806,7 +793,8 @@ else
                                                 }
                                             </td>
                                             <td>
-                                                @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
+                                                @p.StartDate.ToString("dd/MM/yyyy")
+                                                <p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
                                                     <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
@@ -823,7 +811,8 @@ else
                                             else
                                             {
                                                 <td>
-                                                    @string.Format("{0:N0}", p.Loan)<p>@p.DayBonus</p>
+                                                    @string.Format("{0:N0}", p.Loan)
+                                                    <p>@p.DayBonus</p>
                                                     <p style="color: blue">@p.Note</p>
                                                 </td>
                                             }
@@ -835,7 +824,8 @@ else
                                             else
                                             {
                                                 <td>
-                                                    @string.Format("{0:N0}", p.Price)<p>
+                                                    @string.Format("{0:N0}", p.Price)
+                                                    <p>
                                                         <font color="red">@day</font>
                                                     </p>
                                                 </td>
@@ -923,16 +913,7 @@ else
                                     else
                                     {
                                         <tr id="effect_@(p.ID)">
-                                            <td>@p.CodeSort</td>
-                                            <td>@count</td>
-
-                                            <td>
-                                                @p.Code.Substring(0, 2)
-
-                                            </td>
-                                            <td>@Int32.Parse(p.Code.Substring(2, p.Code.Length - 2))</td>
-
-
+                                            <td>@p.Code</td>
                                             <td>
                                                 <p style="text-decoration: underline">@p.Name</p>
                                                 <p>@p.Address</p>
@@ -942,7 +923,8 @@ else
                                                 }
                                             </td>
                                             <td>
-                                                @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
+                                                @p.StartDate.ToString("dd/MM/yyyy")
+                                                <p>@p.Phone</p>
                                                 @foreach (var item in loanAddManual)
                                                 {
                                                     <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + item.money) </p>
@@ -959,7 +941,8 @@ else
                                             else
                                             {
                                                 <td>
-                                                    @string.Format("{0:N0}", p.Loan)<p>@p.DayBonus</p>
+                                                    @string.Format("{0:N0}", p.Loan)
+                                                    <p>@p.DayBonus</p>
                                                     <p style="color: blue">@p.Note</p>
                                                 </td>
                                             }
@@ -971,7 +954,8 @@ else
                                             else
                                             {
                                                 <td>
-                                                    @string.Format("{0:N0}", p.Price)<p>
+                                                    @string.Format("{0:N0}", p.Price)
+                                                    <p>
                                                         <font color="red">@day</font>
                                                     </p>
                                                 </td>
@@ -1062,18 +1046,18 @@ else
                         <nav style="margin-top:20px; margin-left:50px">
                             <ul class="pagination">
                                 <li class="@(ViewBag.CurPage==1 ? "disabled": "")">
-                                    <a href="@Url.Action("Search", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone,Address = ViewBag.Address ,Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = ViewBag.CurPage - 1,type = type })" aria-label="Pre aria-label=" previous">
+                                    <a href="@Url.Action("Search", "Home", new { page = ViewBag.CurPage - 1,type = ViewBag.type })" aria-label="Pre aria-label=" previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
                                 @for (int i = 1; i <= ViewBag.PageCount; i++)
                                 {
                                     <li class="@(ViewBag.CurPage==i ? "active": "")">
-                                        <a href="@Url.Action("Search", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone,Address = ViewBag.Address ,Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = i,type = type})">@i</a>
+                                        <a href="@Url.Action("Search", "Home", new {page = i,type = ViewBag.type })">@i</a>
                                     </li>
                                 }
                                 <li class="@(ViewBag.CurPage==ViewBag.PageCount ? "disabled": "")">
-                                    <a href="@Url.Action("Search", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone,Address = ViewBag.Address, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = ViewBag.CurPage + 1,type = type })" aria-label="Nex aria-label=" next">
+                                    <a href="@Url.Action("Search", "Home", new { page = ViewBag.CurPage + 1,type = ViewBag.type })" aria-label="Nex aria-label=" next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>

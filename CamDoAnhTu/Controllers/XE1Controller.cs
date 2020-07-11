@@ -355,9 +355,9 @@ namespace CamDoAnhTu.Controllers
                 if (!string.IsNullOrEmpty(tentaisan))
                     lsttrave = lsttrave.Where(p => p.tentaisan.Contains(tentaisan)).ToList();
 
-                lsttrave = (from p in lsttrave
-                            where Const.masotradungArr.Any(val => p.Code.Contains(val))
-                            select p).ToList();
+                //lsttrave = (from p in lsttrave
+                //            where Const.masotradungArr.Any(val => p.Code.Contains(val))
+                //            select p).ToList();
                 int count = lsttrave.Count();
                 int nPages = count / pageSz + (count % pageSz > 0 ? 1 : 0);
                 List<Customer> lsttrave1 = lsttrave.OrderBy(p => p.Code)

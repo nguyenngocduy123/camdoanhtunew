@@ -10,7 +10,7 @@
 }
 @{
 
-
+    int count = 0;
     int type = (int)ViewBag.type;
     User us = CamDoAnhTu.Helper.Helper.GetUserInfo();
 
@@ -496,13 +496,12 @@ else
                             <thead style="background-color: gold">
                                 <tr>
                                     <th>Mã số</th>
-                                    <th style="width: 2px">Mã chữ cái</th>
-                                    <th style="width: 3px">Số thứ tự</th>
+                                    <th style="width: 2px">Mã số</th>
                                     <th style="width: 100px">Họ tên Đ/C</th>
-                                    <th style="width: 100px">Ngày vay/SĐT/Tên tài sản</th>
-                                    <th style="width: 30px">Nợ / Lãi k/ngày</th>
+                                    <th style="width: 100px">Ngày vay/SĐT</th>
+                                    <th style="width: 100px">Nợ</th>
+                                    <th style="width: 30px">Ghi chú</th>
 
-                                    <th>Ngày đóng</th>
                                     <th>&nbsp;</th>
                                 </tr>
                             </thead>
@@ -510,107 +509,91 @@ else
                                 @foreach (Customer p in Model)
                                 {
                                     Loan k = new Loan();
+                                    if (p.DayBonus == null)
+                                    {
+                                        p.DayBonus = 0;
+                                    }
 
                                     using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
                                     {
-                                        t = ctx.Loans.Where(l => l.IDCus == p.ID && l.Type == false).OrderBy(l => l.Date).ToList();
-                                        loanAddManual = ctx.Loans.Where(l => l.IDCus == p.ID && l.Type == true).OrderBy(l => l.Date).ToList();
+                                        t = ctx.Loans.Where(l => l.IDCus == p.ID).OrderBy(l => l.Date).ToList();
                                         k = t.FirstOrDefault();
                                     }
 
-                                    string loaigiayto = "";
+                                    string id = p.Code;
+                                    int day = 0;
 
-                                    if (p.loaigiayto == 3) // k co giay to
-                                    {
-                                        loaigiayto = "style=" + "background-color:red";
-                                    }
-                                    else if (p.loaigiayto == 2) // giay to photo
-                                    {
-                                        loaigiayto = "style=" + "background-color:green";
-                                    }
-                                    else
-                                    {
-                                        loaigiayto = "";
-                                    }
-
+                                    count++;
                                     if (p.Description == "End")
                                     {
-                                        <tr style="color: green">
+                                        <tr style="color:green">
                                             <td>@p.CodeSort</td>
-
-
-                                            <td @loaigiayto>
-                                                @p.Code.Substring(0, 2)
-
-                                            </td>
-                                            <td>@Int32.Parse(p.Code.Substring(2, p.Code.Length - 2))</td>
-
-
-
+                                            <td>@p.Code</td>
                                             <td>
                                                 <p style="text-decoration: underline">@p.Name</p>
                                                 <p>@p.Address</p>
-
+                                                @if (p.OldCode != null)
+                                                {
+                                                    <p style="color: blue">Mã số cũ:@p.OldCode </p>
+                                                }
                                             </td>
                                             <td>
                                                 @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
-                                                <p>@p.tentaisan</p>
-                                                @foreach (var item in loanAddManual)
-                                                {
-                                                    <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
-                                                }
                                             </td>
+                                            <td style="color:red;font-size:30px">@p.Loan</td>
                                             <td>
-                                                @string.Format("{0:N0}", p.Loan)
-                                                <p>@string.Format("{0:N0}", p.Price)</p>
-
-                                                <p style="color: blue">@p.Note</p>
-                                            </td>
-                                            <td>
-                                                <input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />
-
-                                                @foreach (Loan i in t)
-                                                {
-                                                    <input type="hidden" id="IDCUS_@(i.ID)" name="IDCUS_@(i.ID)" value="@p.ID" />
-
-                                                    if (i.Status == 0)
-                                                    {
-                                                        <a style="width: 47px; text-align: left; float: left" class="btn btn-danger" title="Chưa đóng tiền" role="button" id="item_@(i.ID)" onclick="return chuadongtien(@i.ID,@us.Permission);">
-                                                            @i.Date.ToString("dd.MM")
-                                                        </a>
-                                                    }
-                                                    else
-                                                    {
-                                                        <a style="width: 47px; text-align: left; float: left" class="btn btn-success" title="Đã đóng tiền" role="button" id="item_@(i.ID)" onclick="return chuadongtien1(@i.ID,@us.Permission);">
-                                                            @i.Date.ToString("dd.MM")
-                                                        </a>
-                                                    }
-                                                }
-                                                <a data-toggle="modal" data-id="@p.ID" title="Add this item" class="open-AddBookDialog btn btn-primary" href="#addBookDialog">
-                                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                                </a>
+                                                <p style="color: red">@p.Note</p>
                                             </td>
                                             <td style="width: 100px">
-                                                <a href="@Url.Action(" Detail", "Home" , new {id=@p.ID})" role="button" title="Chi tiết">
+                                                <a href="@Url.Action("Detail", "Home", new {id = @p.Code})" role="button" title="Chi tiết">
                                                     <i class="glyphicon glyphicon-eye-open"></i>
-                                                </a>
-                                                <a href="@Url.Action(" History", "History" , new {id=@p.Code})" role="button" title="Lịch sử">
-                                                    <i class="fa fa-history"></i>
-                                                </a>
-                                                <a href="@Url.Action(" Index", "Print" , new {code=@p.Code})" role="button" title="In">
-                                                    <i class="fa fa-print"></i>
                                                 </a>
                                                 @if (us.Permission == 1)
                                                 {
-                                                    <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID') : null"><i class="fa fa-remove"></i></a>
+                                                    <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.Code') : null"><i class="fa fa-remove"></i></a>
 
-                                                    <a class="btn btn-primary btn-xs" href="@Url.Action(" UpdateXE1", "Home" , new {id=@p.Code,type =type})" role="button" title="Chỉnh sửa">
+                                                    <a class="btn btn-primary btn-xs" href="@Url.Action("UpdateXE1", "Home", new {id = @p.Code})" role="button" title="Chỉnh sửa">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
-                                                    <a href="@Url.Action(" Index", "Loan" , new {idcus=@p.ID})" role="button" title="Quản lí nợ">
-                                                        <i class="fa fa-adjust"></i>
+                                                    <a class="btn btn-primary btn-xs" role="button" title="Kết thúc dây nợ" onclick="return effect();">
+                                                        <i class="fa fa-refresh"></i>
                                                     </a>
-                                                    <a class="btn btn-primary btn-xs" role="button" title="Kết thúc dây nợ" onclick="return effect(@k.ID);">
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                    else if (p.NgayNo >= 3 + Int32.Parse(p.DayBonus.ToString()))
+                                    {
+                                        <tr style="color:red" id="effect_@(p.Code)">
+                                            <td>@p.CodeSort</td>
+                                            <td>@p.Code</td>
+                                            <td>
+                                                <p style="text-decoration: underline">@p.Name</p>
+                                                <p>@p.Address</p>
+                                                @if (p.OldCode != null)
+                                                {
+                                                    <p style="color: blue">Mã số cũ:@p.OldCode </p>
+                                                }
+                                            </td>
+                                            <td>
+                                                @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
+                                            </td>
+                                            <td style="color:red;font-size:30px">@p.Loan</td>
+                                            <td>
+                                                <p style="color: red">@p.Note</p>
+                                            </td>
+                                            <td style="width: 100px">
+                                                <a href="@Url.Action("Detail", "Home", new {id = @p.Code})" role="button" title="Chi tiết">
+                                                    <i class="glyphicon glyphicon-eye-open"></i>
+                                                </a>
+                                                @if (us.Permission == 1)
+                                                {
+                                                    <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.Code') : null"><i class="fa fa-remove"></i></a>
+
+                                                    <a class="btn btn-primary btn-xs" href="@Url.Action("UpdateXE1", "Home", new {id = @p.Code})" role="button" title="Chỉnh sửa">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                    <a class="btn btn-primary btn-xs" role="button" title="Kết thúc dây nợ" onclick="return effect();">
                                                         <i class="fa fa-refresh"></i>
                                                     </a>
                                                 }
@@ -619,246 +602,60 @@ else
                                     }
                                     else
                                     {
-                                        if (p.nodung == true)
-                                        {
-                                            <tr style="color: red">
-                                                <td>@p.CodeSort</td>
-
-                                                @if (p.Code.Contains("BD") || p.Code.Contains("CD") || p.Code.Contains("ZD")
-                                                || p.Code.Contains("MD") || p.Code.Contains("TD") || p.Code.Contains("YD"))
+                                        <tr id="effect_@(p.Code)">
+                                            <td>@p.CodeSort</td>
+                                            <td>@p.Code</td>
+                                            <td>
+                                                <p style="text-decoration: underline">@p.Name</p>
+                                                <p>@p.Address</p>
+                                                @if (p.OldCode != null)
                                                 {
-                                                    <td @loaigiayto>
-                                                        @p.Code.Substring(0, 2)
-
-                                                    </td>
-                                                    <td>@Int32.Parse(p.Code.Substring(2, p.Code.Length - 2))</td>
+                                                    <p style="color: blue">Mã số cũ:@p.OldCode </p>
                                                 }
-                                                else if ((p.Code[0] >= 'A' && p.Code[0] <= 'Z') || (p.Code[0] >= 'a' && p.Code[0] <= 'z'))
+                                            </td>
+                                            <td>
+                                                @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
+                                            </td>
+                                            <td style="color:red;font-size:30px">@p.Loan</td>
+                                            <td>
+                                                <p style="color: red">@p.Note</p>
+                                            </td>
+                                            <td style="width: 100px">
+                                                <a href="@Url.Action("Detail", "Home", new {id = @p.Code})" role="button" title="Chi tiết">
+                                                    <i class="glyphicon glyphicon-eye-open"></i>
+                                                </a>
+                                                @if (us.Permission == 1)
                                                 {
-                                                    <td @loaigiayto>@p.Code[0]</td>
-                                                    <td>@Int32.Parse(p.Code.Substring(1, p.Code.Length - 1))</td>
+                                                    <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.Code') : null"><i class="fa fa-remove"></i></a>
+
+                                                    <a class="btn btn-primary btn-xs" href="@Url.Action("UpdateXE1", "Home", new {id = @p.Code})" role="button" title="Chỉnh sửa">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                    <a class="btn btn-primary btn-xs" role="button" title="Kết thúc dây nợ" onclick="return effect();">
+                                                        <i class="fa fa-refresh"></i>
+                                                    </a>
                                                 }
-                                                else
-                                                {
-                                                    <td @loaigiayto></td>
-                                                    <td>@Int32.Parse(p.Code)</td>
-                                                }
-
-                                                <td>
-                                                    <p style="text-decoration: underline">@p.Name</p>
-                                                    <p>@p.Address</p>
-
-                                                </td>
-                                                <td>
-                                                    @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
-                                                    <p>@p.tentaisan</p>
-                                                    @foreach (var item in loanAddManual)
-                                                    {
-                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
-                                                    }
-                                                </td>
-                                                <td>
-                                                    @string.Format("{0:N0}", p.Loan)
-                                                    <p>@string.Format("{0:N0}", p.Price)</p>
-                                                    <p style="color: blue">@p.Note</p>
-                                                </td>
-                                                <td>
-                                                    <input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />
-
-                                                    @foreach (Loan i in t)
-                                                    {
-                                                        <input type="hidden" id="IDCUS_@(i.ID)" name="IDCUS_@(i.ID)" value="@p.ID" />
-
-                                                        if (p.Description != "End")
-                                                        {
-                                                            if (i.Status == 0)
-                                                            {
-                                                                <a style="width: 47px; text-align: left; float: left" class="btn btn-danger" title="Chưa đóng tiền" role="button" id="item_@(i.ID)" onclick="return chuadongtien(@i.ID,@us.Permission);">
-                                                                    @i.Date.ToString("dd.MM")
-                                                                </a>
-                                                            }
-                                                            else
-                                                            {
-                                                                <a style="width: 47px; text-align: left; float: left" class="btn btn-success" title="Đã đóng tiền" role="button" id="item_@(i.ID)" onclick="return chuadongtien1(@i.ID,@us.Permission);">
-                                                                    @i.Date.ToString("dd.MM")
-                                                                </a>
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            if (i.Status == 0)
-                                                            {
-                                                                <a style="width: 47px; text-align: left; float: left" class="btn btn-danger" title="Chưa đóng tiền" role="button" id="item_@(i.ID)">
-                                                                    @i.Date.ToString("dd.MM")
-                                                                </a>
-                                                            }
-                                                            if (i.Status == 1)
-                                                            {
-                                                                <a style="width: 47px; text-align: left; float: left" class="btn btn-success" title="Đã đóng tiền" role="button" id="item_@(i.ID)">
-                                                                    @i.Date.ToString("dd.MM")
-                                                                </a>
-                                                            }
-                                                        }
-
-
-                                                    }
-                                                    <a data-toggle="modal" data-id="@p.ID" title="Add this item" class="open-AddBookDialog btn btn-primary" href="#addBookDialog">
-                                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                                    </a>
-                                                </td>
-                                                <td style="width: 100px">
-                                                    <a href="@Url.Action(" Detail", "Home" , new {id=@p.ID})" role="button" title="Chi tiết">
-                                                        <i class="glyphicon glyphicon-eye-open"></i>
-                                                    </a>
-                                                    <a href="@Url.Action(" History", "History" , new {id=@p.Code})" role="button" title="Lịch sử">
-                                                        <i class="fa fa-history"></i>
-                                                    </a>
-                                                    <a href="@Url.Action(" Index", "Print" , new {code=@p.Code})" role="button" title="In">
-                                                        <i class="fa fa-print"></i>
-                                                    </a>
-                                                    @if (us.Permission == 1)
-                                                    {
-                                                        <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID') : null"><i class="fa fa-remove"></i></a>
-
-                                                        <a class="btn btn-primary btn-xs" href="@Url.Action(" UpdateXE1", "Home" , new {id=@p.Code,type =type})" role="button" title="Chỉnh sửa">
-                                                            <i class="fa fa-pencil"></i>
-                                                        </a>
-                                                        <a href="@Url.Action(" Index", "Loan" , new {idcus=@p.ID})" role="button" title="Quản lí nợ">
-                                                            <i class="fa fa-adjust"></i>
-                                                        </a>
-                                                        <a class="btn btn-primary btn-xs" role="button" title="Kết thúc dây nợ" onclick="return effect(@k.ID);">
-                                                            <i class="fa fa-refresh"></i>
-                                                        </a>
-                                                    }
-                                                </td>
-                                            </tr>
-                                        }
-                                        else
-                                        {
-                                            <tr style="color: black">
-                                                <td>@p.CodeSort</td>
-
-                                                @if (p.Code.Contains("BD") || p.Code.Contains("CD") || p.Code.Contains("ZD")
-                                                || p.Code.Contains("MD") || p.Code.Contains("TD") || p.Code.Contains("YD"))
-                                                {
-                                                    <td @loaigiayto>
-                                                        @p.Code.Substring(0, 2)
-
-                                                    </td>
-                                                    <td>@Int32.Parse(p.Code.Substring(2, p.Code.Length - 2))</td>
-                                                }
-                                                else
-                                                {
-                                                    <td @loaigiayto></td>
-                                                    <td>@Int32.Parse(p.Code)</td>
-                                                }
-
-                                                <td>
-                                                    <p style="text-decoration: underline">@p.Name</p>
-                                                    <p>@p.Address</p>
-
-                                                </td>
-                                                <td>
-                                                    @p.StartDate.ToString("dd/MM/yyyy")<p>@p.Phone</p>
-                                                    <p>@p.tentaisan</p>
-                                                    @foreach (var item in loanAddManual)
-                                                    {
-                                                        <p style="color:royalblue">@(item.Date.ToShortDateString() + " : " + String.Format("{0:n0}", item.money.Value)) </p>
-                                                    }
-                                                </td>
-                                                <td>
-                                                    @string.Format("{0:N0}", p.Loan)
-                                                    <p>@string.Format("{0:N0}", p.Price)</p>
-                                                    <p style="color: blue">@p.Note</p>
-                                                </td>
-                                                <td>
-                                                    <input style="width: 50px" type="text" id="songaydong_@(p.ID)" name="songaydong_@(p.ID)" class="form-control" />
-                                                    @foreach (Loan i in t)
-                                                    {
-                                                        <input type="hidden" id="IDCUS_@(i.ID)" name="IDCUS_@(i.ID)" value="@p.ID" />
-
-                                                        if (p.Description != "End" && us.Permission != 0)
-                                                        {
-                                                            if (i.Status == 0)
-                                                            {
-                                                                <a style="width: 47px; text-align: left; float: left" class="btn btn-danger" title="Chưa đóng tiền" role="button" id="item_@(i.ID)" onclick="return chuadongtien(@i.ID,@us.Permission);">
-                                                                    @i.Date.ToString("dd.MM")
-                                                                </a>
-                                                            }
-                                                            else
-                                                            {
-                                                                <a style="width: 47px; text-align: left; float: left" class="btn btn-success" title="Đã đóng tiền" role="button" id="item_@(i.ID)" onclick="return chuadongtien1(@i.ID,@us.Permission);">
-                                                                    @i.Date.ToString("dd.MM")
-                                                                </a>
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            if (i.Status == 0)
-                                                            {
-                                                                <a style="width: 47px; text-align: left; float: left" class="btn btn-danger" title="Chưa đóng tiền" role="button" id="item_@(i.ID)">
-                                                                    @i.Date.ToString("dd.MM")
-                                                                </a>
-                                                            }
-                                                            if (i.Status == 1)
-                                                            {
-                                                                <a style="width: 47px; text-align: left; float: left" class="btn btn-success" title="Đã đóng tiền" role="button" id="item_@(i.ID)">
-                                                                    @i.Date.ToString("dd.MM")
-                                                                </a>
-                                                            }
-                                                        }
-                                                    }
-                                                    <a data-toggle="modal" data-id="@p.ID" title="Add this item" class="open-AddBookDialog btn btn-primary" href="#addBookDialog">
-                                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action(" Detail", "Home" , new {id=@p.ID})" role="button" title="Chi tiết">
-                                                        <i class="glyphicon glyphicon-eye-open"></i>
-                                                    </a>
-                                                    <a href="@Url.Action(" History", "History" , new {id=@p.Code})" role="button" title="Lịch sử">
-                                                        <i class="fa fa-history"></i>
-                                                    </a>
-                                                    <a href="@Url.Action(" Index", "Print" , new {code=@p.Code})" role="button" title="In">
-                                                        <i class="fa fa-print"></i>
-                                                    </a>
-                                                    @if (us.Permission == 1)
-                                                    {
-                                                        <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID') : null"><i class="fa fa-remove"></i></a>
-
-                                                        <a class="btn btn-primary btn-xs" href="@Url.Action(" UpdateXE1", "Home" , new {id=@p.Code,type =type})" role="button" title="Chỉnh sửa">
-                                                            <i class="fa fa-pencil"></i>
-                                                        </a>
-                                                        <a href="@Url.Action(" Index", "Loan" , new {idcus=@p.ID})" role="button" title="Quản lí nợ">
-                                                            <i class="fa fa-adjust"></i>
-                                                        </a>
-                                                        <a class="btn btn-primary btn-xs" role="button" title="Kết thúc dây nợ" onclick="return effect(@k.ID);">
-                                                            <i class="fa fa-refresh"></i>
-                                                        </a>
-                                                    }
-                                                </td>
-                                            </tr>
-                                        }
+                                            </td>
+                                        </tr>
                                     }
-
                                 }
                             </tbody>
                         </table>
                         <nav style="margin-top:20px; margin-left:50px">
                             <ul class="pagination">
                                 <li class="@(ViewBag.CurPage==1 ? "disabled": "")">
-                                    <a href="@Url.Action("SearchXE1", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = ViewBag.CurPage - 1 })" aria-label="Pre aria-label=" previous">
+                                    <a href="@Url.Action("SearchXE1", "XE1", new { page = ViewBag.CurPage - 1 })" aria-label="Pre aria-label=" previous">
                                         <span aria-hidden="true">&laquo;</span>
-                                    </a>
+                                    </a>sto
                                 </li>
                                 @for (int i = 1; i <= ViewBag.PageCount; i++)
                                 {
                                     <li class="@(ViewBag.CurPage==i ? "active": "")">
-                                        <a href="@Url.Action("SearchXE1", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = i})">@i</a>
+                                        <a href="@Url.Action("SearchXE1", "XE1", new {page = i })">@i</a>
                                     </li>
                                 }
                                 <li class="@(ViewBag.CurPage==ViewBag.PageCount ? "disabled": "")">
-                                    <a href="@Url.Action("SearchXE1", "Home", new { Code = ViewBag.Code ,Name=ViewBag.Name, Phone = ViewBag.Phone, Noxau = ViewBag.Noxau, hetno = ViewBag.hetno, page = ViewBag.CurPage + 1 })" aria-label="Nex aria-label=" next">
+                                    <a href="@Url.Action("SearchXE1", "XE1", new { page = ViewBag.CurPage + 1 })" aria-label="Nex aria-label=" next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
