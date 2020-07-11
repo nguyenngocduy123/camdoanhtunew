@@ -344,7 +344,7 @@ listItems = new List<SelectListItem>
             <div class="panel panel-default" style="background-color:antiquewhite">
                 <div class="panel-heading">
                     @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductsModal"><i class="fa fa-plus"></i>  Thêm</button>*@
-                    <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","Home")" role="button">
+                    <a class="btn btn-success" href="@Url.Action("LoadCustomerXE1","XE1", new { type = type })" role="button">
                         <i class="fa fa-home"></i>Trang đứng
                     </a>
                     <a class="btn btn-success" href="@Url.Action("LoadCustomer", "Home",new {type = -1})" role="button">

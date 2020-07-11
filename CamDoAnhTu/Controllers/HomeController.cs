@@ -506,9 +506,9 @@ namespace CamDoAnhTu.Controllers
                 //        }
                 //    }
                 //}
-                lsttrave = (from p in lsttrave
-                            where masotragopArr.Any(val => p.Code.Contains(val))
-                            select p).ToList();
+                //lsttrave = (from p in lsttrave
+                //            where masotragopArr.Any(val => p.Code.Contains(val))
+                //            select p).ToList();
                 int count = lsttrave.Count();
                 int nPages = count / pageSz + (count % pageSz > 0 ? 1 : 0);
                 List<Customer> lsttrave1 = lsttrave.OrderBy(p => p.Code)

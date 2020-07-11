@@ -198,7 +198,7 @@ namespace CamDoAnhTu.Controllers
                     bm = Helper.Helper.ResizeBitmap((Bitmap)bm, 160, 160); /// new width, height
                     bm.Save(Path.Combine(targetDirPath, "main.jpg"));
                 }
-                return RedirectToAction("LoadCustomerXE1", "Xe1", new { type = myViewModel.model.type });
+                return RedirectToAction("LoadCustomerXE1", "XE1", new { type = myViewModel.model.type });
             }
 
         }
