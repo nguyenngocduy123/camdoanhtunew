@@ -35,6 +35,54 @@
     <script src="~/Assets/Admin/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/Assets/Admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/loadcustomer.js"></script>
+    <script>
+        function effect(idLoan) {
+
+        if (confirm('Bạn có thật sự muốn kết thúc dây nợ không ? ')) {
+            var idcus = document.getElementById("IDCUS_" + idLoan).value;
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: '/Home/Reset',
+                data: { id: idcus },
+                success: function (data) {
+                    if (data.success) {
+                        document.getElementById("effect_" + idcus).style.color = "green";
+                        document.getElementById("item_" + idLoan).setAttribute("onclick", "");
+                        location.reload();
+                    } else
+                        alert('có lỗi xảy ra');
+                },
+                error: function (textStatus, errorThrown) {
+                    alert('Error - ' + errorThrown);
+                }
+            });
+        }
+    }
+
+    function deleteCus(cusid) {
+        $.ajax({
+            cache: false,
+            dataType: "json",
+            type: "POST",
+            url: '@Url.Action("DeleteCustomer", "Home")',
+            data: { id: cusid },
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+            success: function (result, status, xhr) {
+                if (result != null) {
+                    if (result.status == "success") {
+                        window.location.reload(true);
+                    } else if (result.status == "error") {
+                        window.alert(result.message);
+                        window.location.reload(true);
+                    }
+                }
+            }
+        });
+    }
+    </script>
 }
 
 @if (Model.Count == 0)

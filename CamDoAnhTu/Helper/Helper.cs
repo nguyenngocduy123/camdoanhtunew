@@ -194,8 +194,13 @@ namespace CamDoAnhTu.Helper
 
                 List<Loan> query = t.Where(p => p.Date >= StartDate && p.Date <= EndDate).ToList();
                 int count = 0;
+                int daypaid = 0;
+                decimal? amountpaid = 0;
+
                 foreach (Loan temp in query)
                 {
+                    if (temp.Status == 1) daypaid++;
+
                     if (temp.Status == 0)
                     {
                         count++;
@@ -207,6 +212,9 @@ namespace CamDoAnhTu.Helper
                     }
                 }
 
+                cs.DayPaids = daypaid;
+                cs.AmountPaid = daypaid * cs.Price;
+                cs.RemainingAmount = cs.Loan - cs.AmountPaid;
                 cs.NgayNo = countMax;
                 ctx.SaveChanges();
             }
