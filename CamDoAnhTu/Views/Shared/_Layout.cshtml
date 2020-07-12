@@ -62,7 +62,7 @@
                 </li>
             </ul>
         </nav>
-        
+
         @RenderBody()
 
         <div id="myModal" class="modal fade" role="dialog">
@@ -127,12 +127,13 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Assets/Admin/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/Assets/Admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+    <script src="~/Assets/Admin/bower_components/metisMenu/dist/metisMenu.js"></script>
     <script src="~/Assets/Admin/dist/js/sb-admin-2.js"></script>
 
 
     <script>
         $(document).on("click", ".open-AddBookDialog", function () {
-            
+
             $('#txtPrice').val('');
 
             var myBookId = $(this).data('id');

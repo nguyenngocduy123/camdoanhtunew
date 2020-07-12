@@ -141,16 +141,14 @@ namespace CamDoAnhTu.Controllers
                 if (type == -1)
                 {
                     list1 = ctx.Customers.Where(p => p.IsDeleted == false
-                    && p.type != 12
-                    && (p.Description == "End" || p.NgayNo < 59)).ToList();
+                    && p.type != 12).ToList();
 
                 }
                 else if (type == 1 || type == 2 || type == 3 || type == 4 ||
                     type == 5 || type == 6 || type == 7)
                 {
                     list1 = ctx.Customers.Where(p => p.IsDeleted == false
-                                && p.type == type
-                                && (p.Description == "End" || p.DayPaids == (p.Loan / p.Price) || p.NgayNo < 59)).ToList();
+                                && p.type == type).ToList();
 
                 }
 
