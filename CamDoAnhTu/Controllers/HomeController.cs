@@ -43,8 +43,8 @@ namespace CamDoAnhTu.Controllers
 
                 if (type == -1)
                 {
-                    list = ctx.Customers.Where(p => p.type == 1 || p.type == 2 || p.type == 3 ||
-                    p.type == 4 || p.type == 5 || p.type == 6 || p.type == 7
+                    list = ctx.Customers.Where(p => (p.type == 1 || p.type == 2 || p.type == 3 ||
+                    p.type == 4 || p.type == 5 || p.type == 6 || p.type == 7)
                     && (p.IsDeleted == false)).ToList();
                     return PartialView(list);
                 }
@@ -721,7 +721,7 @@ namespace CamDoAnhTu.Controllers
                 int newId = 0;
                 int id = 0;
 
-                var lstType = ctx.Customers.Where(p => p.type == type).ToList();
+                var lstType = ctx.Customers.Where(p => p.type == type && p.Description != "Deleted").ToList();
 
                 if (lstType.Count <= 0)
                     newId = 1;
@@ -749,7 +749,7 @@ namespace CamDoAnhTu.Controllers
                         temp = "YA" + newId;
                         break;
                     case 6:
-                        temp = "TA" + newId;
+                        temp = "TA" + (newId - 4); // số khách bị trừ hụt
                         break;
                     case 7:
                         temp = "QA" + newId;
@@ -1277,7 +1277,7 @@ namespace CamDoAnhTu.Controllers
                     ct = csCustomer.Price;
                     amount = csCustomer.AmountPaid ?? 0;
                     remainingamount = csCustomer.RemainingAmount.Value;
-
+                    ctx.SaveChanges();
                     Helper.Helper.UpdateLoanCustomer(csCustomer);
                 }
                 else
@@ -1332,7 +1332,7 @@ namespace CamDoAnhTu.Controllers
                         ct = csCustomer.Price * songay;
                         amount = csCustomer.AmountPaid ?? 0;
                         remainingamount = csCustomer.RemainingAmount.Value;
-
+                        ctx.SaveChanges();
                         Helper.Helper.UpdateLoanCustomer(csCustomer);
                     }
                 }
@@ -1515,7 +1515,7 @@ namespace CamDoAnhTu.Controllers
                         temp.Name = cus.Name;
                         temp.Phone = cus.Phone;
                         temp.Address = cus.Address;
-                        temp.Description = cus.Description;
+                        temp.Description = "Deleted";
                         temp.type = cus.type;
                         temp.StartDate = cus.StartDate;
                         temp.IsDeleted = true;
