@@ -111,8 +111,6 @@ namespace CamDoAnhTu.Controllers
                 DateTime startdate = new DateTime(2018, 10, 1);
                 DateTime enddate = DateTime.Now;
 
-                //DateTime startdate = new DateTime(DateTime.Now.Year, 1, 1);
-                //DateTime enddate = new DateTime(DateTime.Now.Year, 12, 31);
                 var tienlaithucte = ctx.GetTienLaiThatTe(type, startdate, enddate).SingleOrDefault();
 
                 if (tienlai != null)
@@ -221,6 +219,7 @@ namespace CamDoAnhTu.Controllers
 
                 str.Append("Số tiền phải thu trong ngày " + DateTime.Now.Date.ToShortDateString() + " : " + k.ToString("N0"));
                 ViewBag.Message1 = str.ToString();
+
 
                 return View(list);
             }
@@ -1077,86 +1076,86 @@ namespace CamDoAnhTu.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult UpdateXE1(MyViewModel myViewModel)
-        {
-            var model = myViewModel.model;
+        //[HttpPost]
+        //public ActionResult UpdateXE1(MyViewModel myViewModel)
+        //{
+        //    var model = myViewModel.model;
 
-            if (model.DayBonus == null)
-                model.DayBonus = 0;
-
-
-            using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
-            {
-                ctx.Configuration.ValidateOnSaveEnabled = false;
-                Customer pro = ctx.Customers.Where(p => p.Code == model.Code).FirstOrDefault();
-                pro.Name = model.Name;
-                pro.Phone = model.Phone;
-                pro.Address = model.Address;
-                pro.Note = model.Note;
-                pro.tentaisan = model.tentaisan;
-                pro.loaigiayto = myViewModel.SelectedLoaiGiayTo;
-                pro.Price = myViewModel.model.Price;
-
-                if (pro.StartDate != model.StartDate)
-                {
-                    List<Loan> lstLoan = new List<Loan>();
-                    pro.StartDate = model.StartDate;
-
-                    List<Loan> lstTong = ctx.Loans.Where(p => p.IDCus == model.ID).ToList();
-                    List<Loan> lstLoandadong = ctx.Loans.Where(p => p.IDCus == model.ID && p.Status == 1).ToList();
-                    int sldadong = lstLoandadong.Count;
-
-                    foreach (var item in lstTong)
-                        ctx.Loans.Remove(item);
+        //    if (model.DayBonus == null)
+        //        model.DayBonus = 0;
 
 
-                    //int day = model.songayno == 0 ? 0 : (int)model.songayno;
-                    //DateTime k = model.StartDate;
+        //    using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
+        //    {
+        //        ctx.Configuration.ValidateOnSaveEnabled = false;
+        //        Customer pro = ctx.Customers.Where(p => p.Code == model.Code).FirstOrDefault();
+        //        pro.Name = model.Name;
+        //        pro.Phone = model.Phone;
+        //        pro.Address = model.Address;
+        //        pro.Note = model.Note;
+        //        pro.tentaisan = model.tentaisan;
+        //        pro.loaigiayto = myViewModel.SelectedLoaiGiayTo;
+        //        pro.Price = myViewModel.model.Price;
 
-                    //for (int i = 0; i < 90; i++)
-                    //{
-                    //    Loan temp = new Loan();
-                    //    temp.Date = k.AddDays(i);
-                    //    temp.IDCus = model.ID;
-                    //    temp.Status = 0;
-                    //    ctx.Loans.Add(temp);
+        //        if (pro.StartDate != model.StartDate)
+        //        {
+        //            List<Loan> lstLoan = new List<Loan>();
+        //            pro.StartDate = model.StartDate;
 
-                    //    k = temp.Date;
-                    //    lstLoan.Add(temp);
-                    //}
+        //            List<Loan> lstTong = ctx.Loans.Where(p => p.IDCus == model.ID).ToList();
+        //            List<Loan> lstLoandadong = ctx.Loans.Where(p => p.IDCus == model.ID && p.Status == 1).ToList();
+        //            int sldadong = lstLoandadong.Count;
 
-                    //for (int i = 0; i < sldadong; i++)
-                    //{
-                    //    var temp = lstLoan.ElementAt(i);
-                    //    temp.Status = 1;
-                    //}
+        //            foreach (var item in lstTong)
+        //                ctx.Loans.Remove(item);
 
-                    ctx.SaveChanges();
 
-                    ViewData["Loans"] = lstLoan;
+        //            int day = model.songayno == 0 ? 0 : (int)model.songayno;
+        //            DateTime k = model.StartDate;
 
-                }
+        //            for (int i = 0; i < 90; i++)
+        //            {
+        //                Loan temp = new Loan();
+        //                temp.Date = k.AddDays(i);
+        //                temp.IDCus = model.ID;
+        //                temp.Status = 0;
+        //                ctx.Loans.Add(temp);
 
-                ctx.SaveChanges();
-            }
+        //                k = temp.Date;
+        //                lstLoan.Add(temp);
+        //            }
 
-            if (myViewModel.fuMain != null && myViewModel.fuMain.ContentLength > 0)
-            {
-                string spDirPath = Server.MapPath("~/image");
-                string targetDirPath = Path.Combine(spDirPath, myViewModel.model.Code.ToString());
-                Directory.CreateDirectory(targetDirPath);
+        //            for (int i = 0; i < sldadong; i++)
+        //            {
+        //                var temp = lstLoan.ElementAt(i);
+        //                temp.Status = 1;
+        //            }
 
-                string mainFileName = Path.Combine(targetDirPath, "main.jpg");
-                //myViewModel.fuMain.SaveAs(mainFileName);
+        //            ctx.SaveChanges();
 
-                Image bm = Image.FromStream(myViewModel.fuMain.InputStream);
-                bm = Helper.Helper.ResizeBitmap((Bitmap)bm, 160, 160); /// new width, height
-                bm.Save(Path.Combine(targetDirPath, "main.jpg"));
-            }
+        //            ViewData["Loans"] = lstLoan;
 
-            return RedirectToAction("LoadCustomerXE1", "Home", new { type = myViewModel.model.type });
-        }
+        //        }
+
+        //        ctx.SaveChanges();
+        //    }
+
+        //    if (myViewModel.fuMain != null && myViewModel.fuMain.ContentLength > 0)
+        //    {
+        //        string spDirPath = Server.MapPath("~/image");
+        //        string targetDirPath = Path.Combine(spDirPath, myViewModel.model.Code.ToString());
+        //        Directory.CreateDirectory(targetDirPath);
+
+        //        string mainFileName = Path.Combine(targetDirPath, "main.jpg");
+        //        myViewModel.fuMain.SaveAs(mainFileName);
+
+        //        Image bm = Image.FromStream(myViewModel.fuMain.InputStream);
+        //        bm = Helper.Helper.ResizeBitmap((Bitmap)bm, 160, 160); /// new width, height
+        //        bm.Save(Path.Combine(targetDirPath, "main.jpg"));
+        //    }
+
+        //    return RedirectToAction("LoadCustomerXE1", "Home", new { type = myViewModel.model.type });
+        //}
 
         public ActionResult Detail(int id)
         {
@@ -1477,25 +1476,25 @@ namespace CamDoAnhTu.Controllers
             return Json(products, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult RemoveItem(int proId)
-        {
-            using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
-            {
-                ctx.Configuration.ValidateOnSaveEnabled = false;
-                Customer ep = ctx.Customers.Where(p => p.ID == proId).FirstOrDefault();
-                List<Loan> lstLoans = ctx.Loans.Where(p => p.IDCus == proId).ToList();
+        //public ActionResult RemoveItem(int proId)
+        //{
+        //    using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
+        //    {
+        //        ctx.Configuration.ValidateOnSaveEnabled = false;
+        //        Customer ep = ctx.Customers.Where(p => p.ID == proId).FirstOrDefault();
+        //        List<Loan> lstLoans = ctx.Loans.Where(p => p.IDCus == proId).ToList();
 
-                ctx.Customers.Remove(ep);
+        //        ctx.Customers.Remove(ep);
 
-                foreach (var item in lstLoans)
-                {
-                    ctx.Loans.Remove(item);
-                }
-                ctx.SaveChanges();
-            }
-            ViewBag.Delete = true;
-            return RedirectToAction("LoadCustomer", "Home");
-        }
+        //        foreach (var item in lstLoans)
+        //        {
+        //            ctx.Loans.Remove(item);
+        //        }
+        //        ctx.SaveChanges();
+        //    }
+        //    ViewBag.Delete = true;
+        //    return RedirectToAction("LoadCustomer", "Home");
+        //}
 
         [HttpPost]
         public JsonResult DeleteCustomer(int id)
