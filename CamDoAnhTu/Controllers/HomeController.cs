@@ -745,7 +745,7 @@ namespace CamDoAnhTu.Controllers
                         temp = "YA" + (newId + 51);
                         break;
                     case 6:
-                        temp = "TA" + (newId + 50); // số khách bị trừ hụt
+                        temp = "TA" + (newId + 55); // số khách bị trừ hụt 1456 -- TA1511
                         break;
                     case 7:
                         temp = "QA" + (newId - 9);
