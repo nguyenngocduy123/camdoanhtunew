@@ -84,7 +84,6 @@ namespace CamDoAnhTu.Controllers
 
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {
-
                 ctx.Configuration.ValidateOnSaveEnabled = false;
                 var lishExample = ctx.Customers.Where(p => p.type == type && p.IsDeleted == false).ToList();
 
@@ -118,8 +117,6 @@ namespace CamDoAnhTu.Controllers
 
                 if (tienlaithucte != null)
                 {
-                    //save tien lai
-
                     var message = ctx.Messages.Where(p => p.Date == DateTime.Now)
                         .FirstOrDefault();
                     if (message == null && DateTime.Now.Day == 1)
@@ -720,7 +717,7 @@ namespace CamDoAnhTu.Controllers
                 int newId = 0;
                 int id = 0;
 
-                var lstType = ctx.Customers.Where(p => p.type == type && p.Description != "Deleted").ToList();
+                var lstType = ctx.Customers.Where(p => p.type == type && (!p.Description.Contains("Deleted") || p.Description == null)).ToList();
 
                 if (lstType.Count <= 0)
                     newId = 1;
@@ -733,25 +730,25 @@ namespace CamDoAnhTu.Controllers
                 switch (type)
                 {
                     case 1:
-                        temp = "BA" + newId;
+                        temp = "BA" + (newId);
                         break;
                     case 2:
-                        temp = "CA" + newId;
+                        temp = "CA" + (newId);
                         break;
                     case 3:
-                        temp = "MA" + newId;
+                        temp = "MA" + (newId + 32);
                         break;
                     case 4:
-                        temp = "ZA" + newId;
+                        temp = "ZA" + (newId - 7);
                         break;
                     case 5:
-                        temp = "YA" + newId;
+                        temp = "YA" + (newId + 51);
                         break;
                     case 6:
-                        temp = "TA" + (newId - 4); // số khách bị trừ hụt
+                        temp = "TA" + (newId + 50); // số khách bị trừ hụt
                         break;
                     case 7:
-                        temp = "QA" + newId;
+                        temp = "QA" + (newId - 9);
                         break;
                     default:
                         break;
@@ -1521,6 +1518,7 @@ namespace CamDoAnhTu.Controllers
                         temp.Code = Helper.Helper.RandomString(4);
                         temp.Loan = cus.Loan;
                         temp.tiengoc = cus.tiengoc;
+                        temp.OldCode = cus.Code;
                         ctx.Customers.Add(temp);
                         foreach (var item in lstLoans)
                         {
@@ -1569,7 +1567,7 @@ namespace CamDoAnhTu.Controllers
 
                 ctx.Loans.Add(model);
 
-                timetemp = DateTime.Now.ToString();
+                timetemp = l.Date.ToShortDateString();
                 ctx.SaveChanges();
                 WriteHistory(cs, money, model.ID);
 
