@@ -12,6 +12,8 @@ namespace CamDoAnhTu.Models
         public SelectList ListLoaiGiayTo { get; set; }
         public Customer model { get; set; }
         public HttpPostedFileBase fuMain { get; set; }
+        public int sokhachbiloai { get; set; }
+        public int constTA { get; set; }
 
         public MyViewModel()
         {
