@@ -217,7 +217,6 @@ namespace CamDoAnhTu.Controllers
                 str.Append("Số tiền phải thu trong ngày " + DateTime.Now.Date.ToShortDateString() + " : " + k.ToString("N0"));
                 ViewBag.Message1 = str.ToString();
 
-
                 return View(list);
             }
         }
@@ -1559,17 +1558,8 @@ namespace CamDoAnhTu.Controllers
         {
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {
-                //string t = l.Money.Replace(',', ' ');
-                //t = t.ToCharArray()
-                // .Where(c => !Char.IsWhiteSpace(c))
-                // .Select(c => c.ToString())
-                // .Aggregate((a, b) => a + b);
-
-                //int i = t.IndexOf('.');
-                //t = t.Remove(i);
-
                 int money = Int32.Parse(l.Money);
-
+                StringBuilder str = new StringBuilder();
                 Customer cs = ctx.Customers.Where(p => p.ID == l.IDCus).FirstOrDefault();
 
                 Loan model = new Loan();
@@ -1581,10 +1571,20 @@ namespace CamDoAnhTu.Controllers
 
                 ctx.Loans.Add(model);
 
-                timetemp = l.Date.ToShortDateString();
-                ctx.SaveChanges();
-                WriteHistory(cs, money, model.ID);
+                timetemp = DateTime.Now.ToString();
+                
+                history hs = new history();
+                str.Append("Đóng tiền cho ngày: " + l.Date.ToShortDateString());
+                hs.CustomerId = cs.ID;
+                hs.CustomerCode = cs.Code;
+                hs.Detail = str.ToString();
+                hs.Ngaydongtien = chonngaylam.HasValue ? chonngaylam : throw new Exception("Chưa chọn ngày làm"); ;
+                hs.price = money;
+                hs.status = 1;
+                hs.loanid = l.ID;
+                ctx.histories.Add(hs);
 
+                ctx.SaveChanges();
                 return Json(new { amountpaid = cs.AmountPaid, remainingamount = cs.RemainingAmount },
                     JsonRequestBehavior.AllowGet);
             }
