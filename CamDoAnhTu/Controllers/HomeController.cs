@@ -739,11 +739,11 @@ namespace CamDoAnhTu.Controllers
                     return View(myViewModel);
                 }
 
-                if (day > 60)
-                {
-                    ViewBag.Message = "Số ngày nợ lớn hơn 60";
-                    return View(myViewModel);
-                }
+                //if (day > 60)
+                //{
+                //    ViewBag.Message = "Số ngày nợ lớn hơn 60";
+                //    return View(myViewModel);
+                //}
 
                 myViewModel.model.DayPaids = 0;
                 myViewModel.model.AmountPaid = 0;

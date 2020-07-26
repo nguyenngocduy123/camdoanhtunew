@@ -29,7 +29,7 @@ namespace CamDoAnhTu.Controllers
                 if (us != null)
                 {
                     Session["User"] = us;
-                    Session.Timeout = 2;
+                    Session.Timeout = 5;
                     
                     return RedirectToAction("Index", "Home");
                 }
