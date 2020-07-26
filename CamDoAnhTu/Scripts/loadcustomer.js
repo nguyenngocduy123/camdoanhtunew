@@ -6,6 +6,7 @@
     ).draw();
 }
 
+
 function filterColumn(i) {
     $('#dataTables-example').DataTable().column(i).search(
         $('#col' + i + '_filter').val(),
@@ -278,3 +279,5 @@ function chuadongtien1(idLoan, permission) {
         }
     });
 }
+
+
