@@ -9,6 +9,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using OfficeOpenXml;
+using System.Data;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace CamDoAnhTu.Controllers
 {
@@ -429,7 +432,6 @@ namespace CamDoAnhTu.Controllers
             int pageSz = Convert.ToInt32(ConfigurationManager.AppSettings["PageSize"]);
             List<Loan> lstLoan = new List<Loan>();
 
-
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {
                 DateTime startdate = new DateTime(DateTime.Now.Year, 1, 1);
@@ -448,7 +450,11 @@ namespace CamDoAnhTu.Controllers
                     ViewBag.tiengoc = $"{tiengoc.Value:N0}";
 
                 ctx.Configuration.ValidateOnSaveEnabled = false;//masotragopArr.Any(cs.Code.Contains)
-                var list = ctx.Customers.ToList();
+                var list = new List<Customer>();
+                if (type != -1)
+                {
+                    list = ctx.Customers.Where(p => p.type == type).ToList();
+                }                
 
                 List<Customer> lsttrave = new List<Customer>();
 
@@ -473,17 +479,17 @@ namespace CamDoAnhTu.Controllers
 
                 lsttrave = lsttrave.Where(p => p.IsDeleted == false).ToList();
 
-                //if (Noxau == 1)
-                //{
-                //    List<Customer> lstCus = ctx.Customers.Where(p => p.Price != null && p.Loan != null).ToList();
-                //    foreach (Customer p in lstCus)
-                //    {
-                //        if (p.NgayNo >= 3 + Int32.Parse(p.DayBonus.ToString()))
-                //        {
-                //            lsttrave.Add(p);
-                //        }
-                //    }
-                //}
+                if (Noxau == 1)
+                {
+                    List<Customer> lstCus = ctx.Customers.Where(p => p.Price != null && p.Loan != null).ToList();
+                    foreach (Customer p in lstCus)
+                    {
+                        if (p.NgayNo >= 3)
+                        {
+                            lsttrave.Add(p);
+                        }
+                    }
+                }
 
                 //if (hetno == 1)
                 //{
@@ -1607,6 +1613,67 @@ namespace CamDoAnhTu.Controllers
             }
             //chonngaylam = DateTime.Parse(chonngaylamVal);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult ExcelExport(int? type)
+        {
+            using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
+            {
+                var customers = ctx.Customers.Where(p => p.type == type.Value).ToList();
+
+                DataTable Dt = new DataTable();
+                Dt.Columns.Add("Code", typeof(string));
+                Dt.Columns.Add("Name", typeof(string));
+                Dt.Columns.Add("Phone", typeof(string));
+                Dt.Columns.Add("Address", typeof(string));
+
+                foreach (Customer p in customers)
+                {
+                    if (p.NgayNo >= 3)
+                    {
+                        DataRow row = Dt.NewRow();
+                        row[0] = p.Code;
+                        row[1] = p.Name;
+                        row[2] = p.Phone;
+                        row[3] = p.Address;
+                        Dt.Rows.Add(row);
+                    }
+                }
+
+                var memoryStream = new MemoryStream();
+                using (var excelPackage = new ExcelPackage(memoryStream))
+                {
+                    var worksheet = excelPackage.Workbook.Worksheets.Add("Sheet1");
+                    worksheet.Cells["A1"].LoadFromDataTable(Dt, true);
+                    worksheet.Cells["A1:AN1"].Style.Font.Bold = true;
+                    worksheet.DefaultRowHeight = 18;
+
+                    worksheet.Column(2).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
+                    worksheet.Column(6).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    worksheet.Column(7).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    worksheet.DefaultColWidth = 20;
+                    worksheet.Column(2).AutoFit();
+
+                    Session["DownloadExcel_FileManager"] = excelPackage.GetAsByteArray();
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            return View();
+        }
+
+        public ActionResult Download()
+        {
+
+            if (Session["DownloadExcel_FileManager"] != null)
+            {
+                byte[] data = Session["DownloadExcel_FileManager"] as byte[];
+                return File(data, "application/octet-stream", "khachhangnoxau.xlsx");
+            }
+            else
+            {
+                return new EmptyResult();
+            }
         }
     }
 }
