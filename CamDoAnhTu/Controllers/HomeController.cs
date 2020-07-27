@@ -463,7 +463,6 @@ namespace CamDoAnhTu.Controllers
                 else
                     lsttrave = list;
 
-
                 if (!string.IsNullOrEmpty(Code))
                     lsttrave = lsttrave.Where(p => p.Code == Code || p.Code.StartsWith(Code.ToUpper())).ToList();
 
@@ -478,17 +477,17 @@ namespace CamDoAnhTu.Controllers
 
 
                 lsttrave = lsttrave.Where(p => p.IsDeleted == false).ToList();
-
+                var lstNoxau = new List<Customer>();
                 if (Noxau == 1)
                 {
-                    List<Customer> lstCus = ctx.Customers.Where(p => p.Price != null && p.Loan != null).ToList();
-                    foreach (Customer p in lstCus)
+                    foreach (Customer p in lsttrave)
                     {
-                        if (p.NgayNo >= 3)
+                        if (p.NgayNo >= 5)
                         {
-                            lsttrave.Add(p);
+                            lstNoxau.Add(p);
                         }
                     }
+                    lsttrave = lstNoxau;
                 }
 
                 //if (hetno == 1)
@@ -789,7 +788,7 @@ namespace CamDoAnhTu.Controllers
             return RedirectToAction("LoadCustomer", "Home", new { type = myViewModel.model.type });
         }
 
-        public ActionResult Update(string id)
+        public ActionResult Update(int id)
         {
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {
@@ -803,7 +802,7 @@ namespace CamDoAnhTu.Controllers
                     }, "Value", "Text");
 
                 update = 0;
-                Customer pro = ctx.Customers.Where(p => p.Code == id).FirstOrDefault();
+                Customer pro = ctx.Customers.Where(p => p.ID == id).FirstOrDefault();
 
                 if (pro.Loan == null || pro.Price == null)
                     update = 1;
@@ -1629,7 +1628,7 @@ namespace CamDoAnhTu.Controllers
 
                 foreach (Customer p in customers)
                 {
-                    if (p.NgayNo >= 3)
+                    if (p.NgayNo >= 5)
                     {
                         DataRow row = Dt.NewRow();
                         row[0] = p.Code;
