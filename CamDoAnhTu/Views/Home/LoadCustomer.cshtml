@@ -60,13 +60,13 @@
         }
     }
 
-    function deleteCus(cusid) {
+    function deleteCus(cusid, type) {
         $.ajax({
             cache: false,
             dataType: "json",
             type: "POST",
             url: '@Url.Action("DeleteCustomer", "Home")',
-            data: { id: cusid },
+            data: { id: cusid, type: type },
             error: function (xhr, status, error) {
                 alert(error);
             },

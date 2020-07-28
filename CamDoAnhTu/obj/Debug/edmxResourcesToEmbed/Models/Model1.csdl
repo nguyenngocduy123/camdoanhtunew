@@ -117,6 +117,7 @@
       <Parameter Name="date1" Mode="In" Type="DateTime" />
       <Parameter Name="date2" Mode="In" Type="DateTime" />
     </FunctionImport>
+    <EntitySet Name="Configurations" EntityType="camdoanhtuModel.Configuration" />
   </EntityContainer>
   <ComplexType Name="GetCustomerEven_Result">
     <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
@@ -196,4 +197,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Configuration">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="Int32" />
+    <Property Name="MaSoCu" Type="Int32" />
+  </EntityType>
 </Schema>

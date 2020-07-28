@@ -141,7 +141,8 @@ namespace CamDoAnhTu.Controllers
                 int newId = 0;
                 int id = 0;
 
-                var lstType = dbcontext.Customers.Where(p => p.type == type).ToList();
+                var lstType = dbcontext.Customers.Where(p => p.type == type && p.IsDeleted == false).ToList();
+                var configuration = dbcontext.Configurations.Where(p => p.Type == type).FirstOrDefault();
                 if (lstType.Count <= 0)
                     newId = 1;
                 else
@@ -153,10 +154,10 @@ namespace CamDoAnhTu.Controllers
                 switch (type)
                 {
                     case 12:
-                        temp = "BD" + newId;
+                        temp = "BD" + (newId + configuration.MaSoCu);
                         break;
                     case 13:
-                        temp = "CD" + newId;
+                        temp = "CD" + (newId + configuration.MaSoCu);
                         break;
                     case 14:
                         temp = "MD" + newId;

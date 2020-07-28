@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="camdoanhtuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Configuration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="int" />
+          <Property Name="MaSoCu" Type="int" />
+        </EntityType>
         <EntityType Name="history">
           <Key>
             <PropertyRef Name="ID" />
@@ -101,6 +109,7 @@
           <Parameter Name="date2" Type="date" Mode="In" />
         </Function>
         <EntityContainer Name="camdoanhtuModelStoreContainer">
+          <EntitySet Name="Configuration" EntityType="Self.Configuration" Schema="camdoanhtu" store:Type="Tables" />
           <EntitySet Name="history" EntityType="Self.history" Schema="camdoanhtu" store:Type="Tables" />
           <EntitySet Name="Message" EntityType="Self.Message" Schema="camdoanhtu" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
@@ -228,6 +237,7 @@
             <Parameter Name="date1" Mode="In" Type="DateTime" />
             <Parameter Name="date2" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="Configurations" EntityType="camdoanhtuModel.Configuration" />
         </EntityContainer>
         <ComplexType Name="GetCustomerEven_Result">
           <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
@@ -307,6 +317,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Configuration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="MaSoCu" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -459,6 +477,15 @@
           <FunctionImportMapping FunctionImportName="GetTienLaiThatTe" FunctionName="camdoanhtuModel.Store.GetTienLaiThatTe" />
           <FunctionImportMapping FunctionImportName="GetTienGoc_Dung" FunctionName="camdoanhtuModel.Store.GetTienGoc_Dung" />
           <FunctionImportMapping FunctionImportName="GetTienLaiThatTe_Dung" FunctionName="camdoanhtuModel.Store.GetTienLaiThatTe_Dung" />
+          <EntitySetMapping Name="Configurations">
+            <EntityTypeMapping TypeName="camdoanhtuModel.Configuration">
+              <MappingFragment StoreEntitySet="Configuration">
+                <ScalarProperty Name="MaSoCu" ColumnName="MaSoCu" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

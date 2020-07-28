@@ -15,12 +15,11 @@ namespace CamDoAnhTu.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class CamdoAnhTuEntities1 : DbContext , IDbContext
+    public partial class CamdoAnhTuEntities1 : DbContext
     {
         public CamdoAnhTuEntities1()
             : base("name=CamdoAnhTuEntities1")
         {
-            Configuration.ValidateOnSaveEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -33,6 +32,7 @@ namespace CamDoAnhTu.Models
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Loan> Loans { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Configuration> Configurations { get; set; }
     
         public virtual ObjectResult<GetCustomerEven_Result> GetCustomerEven()
         {

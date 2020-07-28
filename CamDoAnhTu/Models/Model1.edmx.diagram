@@ -12,6 +12,7 @@
         <EntityTypeShape EntityType="camdoanhtuModel.User" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <AssociationConnector Association="camdoanhtuModel.CustomerLoan" />
         <AssociationConnector Association="camdoanhtuModel.Customerhistory" />
+        <EntityTypeShape EntityType="camdoanhtuModel.Configuration" Width="1.5" PointX="5.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -225,6 +225,9 @@
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Helper\SessionTimeoutAttribute.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\Configuration.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Customer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

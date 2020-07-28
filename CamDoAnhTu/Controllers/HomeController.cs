@@ -716,7 +716,8 @@ namespace CamDoAnhTu.Controllers
                 int newId = 0;
                 int id = 0;
 
-                var lstType = ctx.Customers.Where(p => p.type == type && (!p.Description.Contains("Deleted") || p.Description == null)).ToList();
+                var lstType = ctx.Customers.Where(p => p.type == type && p.IsDeleted == false).ToList();
+                var configuration = ctx.Configurations.Where(p => p.Type == type).FirstOrDefault();
 
                 if (lstType.Count <= 0)
                     newId = 1;
@@ -729,38 +730,38 @@ namespace CamDoAnhTu.Controllers
                 switch (type)
                 {
                     case 1:
-                        temp = "BA" + (newId);
-                        mvViewModel.constTA = 0;
+                        temp = "BA" + (newId + configuration.MaSoCu);
+                        mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
                     case 2:
-                        temp = "CA" + (newId);
-                        mvViewModel.constTA = 0;
+                        temp = "CA" + (newId + configuration.MaSoCu);
+                        mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
                     case 3:
-                        temp = "MA" + (newId + 37); // 798
-                        mvViewModel.constTA = 37;
+                        temp = "MA" + (newId + configuration.MaSoCu);
+                        mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
                     case 4:
-                        temp = "ZA" + (newId - 7);
-                        mvViewModel.constTA = -7;
+                        temp = "ZA" + (newId + configuration.MaSoCu);
+                        mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
                     case 5:
-                        temp = "YA" + (newId + 65); //1255
-                        mvViewModel.constTA = 65;
+                        temp = "YA" + (newId + configuration.MaSoCu);
+                        mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
                     case 6:
-                        temp = "TA" + (newId + 58); // số khách bị trừ hụt 1456 -- TA1511
-                        mvViewModel.constTA = 58;
+                        temp = "TA" + (newId + configuration.MaSoCu);
+                        mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
                     case 7:
-                        temp = "QA" + (newId - 9);
-                        mvViewModel.constTA = -9;
+                        temp = "QA" + (newId + configuration.MaSoCu);
+                        mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
                     default:
@@ -1507,7 +1508,7 @@ namespace CamDoAnhTu.Controllers
         //}
 
         [HttpPost]
-        public JsonResult DeleteCustomer(int id)
+        public JsonResult DeleteCustomer(int id, int type)
         {
             Dictionary<string, object> result = new Dictionary<string, object>();
             try
@@ -1539,6 +1540,13 @@ namespace CamDoAnhTu.Controllers
                         }
 
                         ctx.Customers.Remove(cus);
+
+                        var configuration = ctx.Configurations.Where(p => p.Type == type).FirstOrDefault();
+                        if (configuration != null)
+                        {
+                            configuration.MaSoCu++;
+                        }
+
                         ctx.SaveChanges();
                         result["status"] = "success";
                     }

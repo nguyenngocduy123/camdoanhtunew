@@ -147,5 +147,14 @@
     <FunctionImportMapping FunctionImportName="GetTienLaiThatTe" FunctionName="camdoanhtuModel.Store.GetTienLaiThatTe" />
     <FunctionImportMapping FunctionImportName="GetTienGoc_Dung" FunctionName="camdoanhtuModel.Store.GetTienGoc_Dung" />
     <FunctionImportMapping FunctionImportName="GetTienLaiThatTe_Dung" FunctionName="camdoanhtuModel.Store.GetTienLaiThatTe_Dung" />
+    <EntitySetMapping Name="Configurations">
+      <EntityTypeMapping TypeName="camdoanhtuModel.Configuration">
+        <MappingFragment StoreEntitySet="Configuration">
+          <ScalarProperty Name="MaSoCu" ColumnName="MaSoCu" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
