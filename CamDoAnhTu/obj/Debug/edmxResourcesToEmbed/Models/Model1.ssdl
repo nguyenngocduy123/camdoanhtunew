@@ -7,6 +7,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Type" Type="int" />
     <Property Name="MaSoCu" Type="int" />
+    <Property Name="MaSoHienTai" Type="int" />
   </EntityType>
   <EntityType Name="history">
     <Key>

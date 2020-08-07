@@ -17,5 +17,6 @@ namespace CamDoAnhTu.Models
         public int Id { get; set; }
         public Nullable<int> Type { get; set; }
         public Nullable<int> MaSoCu { get; set; }
+        public Nullable<int> MaSoHienTai { get; set; }
     }
 }

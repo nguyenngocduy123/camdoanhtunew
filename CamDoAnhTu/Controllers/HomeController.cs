@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 namespace CamDoAnhTu.Controllers
@@ -1508,7 +1509,7 @@ namespace CamDoAnhTu.Controllers
         //}
 
         [HttpPost]
-        public JsonResult DeleteCustomer(int id, int type)
+        public JsonResult DeleteCustomer(int id, int? type)
         {
             Dictionary<string, object> result = new Dictionary<string, object>();
             try
@@ -1517,6 +1518,7 @@ namespace CamDoAnhTu.Controllers
                 {
                     ctx.Configuration.ValidateOnSaveEnabled = false;
                     Customer cus = ctx.Customers.Where(o => o.ID == id).FirstOrDefault();
+                    var masokhachhang = Int32.Parse(Regex.Match(cus.Code, @"\d+").Value);
                     List<Loan> lstLoans = ctx.Loans.Where(p => p.IDCus == id).ToList();
                     if (cus != null)
                     {
@@ -1525,7 +1527,6 @@ namespace CamDoAnhTu.Controllers
                         temp.Name = cus.Name;
                         temp.Phone = cus.Phone;
                         temp.Address = cus.Address;
-                        temp.Description = "Deleted";
                         temp.type = cus.type;
                         temp.StartDate = cus.StartDate;
                         temp.IsDeleted = true;
@@ -1542,11 +1543,11 @@ namespace CamDoAnhTu.Controllers
                         ctx.Customers.Remove(cus);
 
                         var configuration = ctx.Configurations.Where(p => p.Type == type).FirstOrDefault();
-                        if (configuration != null)
-                        {
-                            configuration.MaSoCu++;
+                        
+                        if (configuration != null && masokhachhang < configuration.MaSoHienTai)
+                        {                            
+                            configuration.MaSoCu++;                            
                         }
-
                         ctx.SaveChanges();
                         result["status"] = "success";
                     }

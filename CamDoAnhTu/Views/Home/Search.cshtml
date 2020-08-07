@@ -298,7 +298,7 @@
                 dataType: "json",
                 type: "POST",
                 url: '@Url.Action("DeleteCustomer", "Home")',
-                data: { id: cusid, type },
+                data: { id: cusid, type: type },
                 error: function(xhr, status, error) {
                     alert(error);
                 },

@@ -150,6 +150,7 @@
     <EntitySetMapping Name="Configurations">
       <EntityTypeMapping TypeName="camdoanhtuModel.Configuration">
         <MappingFragment StoreEntitySet="Configuration">
+          <ScalarProperty Name="MaSoHienTai" ColumnName="MaSoHienTai" />
           <ScalarProperty Name="MaSoCu" ColumnName="MaSoCu" />
           <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="Id" ColumnName="Id" />

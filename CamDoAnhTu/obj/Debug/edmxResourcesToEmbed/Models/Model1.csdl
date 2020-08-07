@@ -204,5 +204,6 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Type" Type="Int32" />
     <Property Name="MaSoCu" Type="Int32" />
+    <Property Name="MaSoHienTai" Type="Int32" />
   </EntityType>
 </Schema>

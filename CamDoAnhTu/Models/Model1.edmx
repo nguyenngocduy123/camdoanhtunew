@@ -12,6 +12,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Type" Type="int" />
           <Property Name="MaSoCu" Type="int" />
+          <Property Name="MaSoHienTai" Type="int" />
         </EntityType>
         <EntityType Name="history">
           <Key>
@@ -324,6 +325,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Type" Type="Int32" />
           <Property Name="MaSoCu" Type="Int32" />
+          <Property Name="MaSoHienTai" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -480,6 +482,7 @@
           <EntitySetMapping Name="Configurations">
             <EntityTypeMapping TypeName="camdoanhtuModel.Configuration">
               <MappingFragment StoreEntitySet="Configuration">
+                <ScalarProperty Name="MaSoHienTai" ColumnName="MaSoHienTai" />
                 <ScalarProperty Name="MaSoCu" ColumnName="MaSoCu" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

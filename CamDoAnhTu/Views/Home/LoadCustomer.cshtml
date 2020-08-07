@@ -60,7 +60,7 @@
         }
     }
 
-    function deleteCus(cusid, type) {
+        function deleteCus(cusid, type) {
         $.ajax({
             cache: false,
             dataType: "json",
@@ -457,7 +457,7 @@ else
                                                 </a>
                                                 @if (us.Permission == 1) // admin
                                                 {
-                                                    <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID') : null"><i class="fa fa-remove"></i></a>
+                                                    <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID', @type) : null"><i class="fa fa-remove"></i></a>
 
                                                     <a class="btn btn-primary btn-xs" href="@Url.Action("Update", "Home", new {id = @p.Code,type = type})" role="button" title="Chỉnh sửa">
                                                         <i class="fa fa-pencil"></i>
@@ -595,7 +595,7 @@ else
                                                 </a>
                                                 @if (us.Permission == 1) // admin
                                                 {
-                                                    <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID') : null"><i class="fa fa-remove"></i></a>
+                                                    <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID', @type) : null"><i class="fa fa-remove"></i></a>
 
                                                     <a class="btn btn-primary btn-xs" href="@Url.Action("Update", "Home", new {id = @p.Code,type = type})" role="button" title="Chỉnh sửa">
                                                         <i class="fa fa-pencil"></i>
@@ -734,7 +734,7 @@ else
                                                 </a>
                                                 @if (us.Permission == 1) // admin
                                                 {
-                                                    <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID') : null"><i class="fa fa-remove"></i></a>
+                                                    <a class="btn btn-danger btn-xs" href="javascript:" onclick="confirm('Bạn có thật sự muốn xóa?') ? deleteCus('@p.ID', @type) : null"><i class="fa fa-remove"></i></a>
 
                                                     <a class="btn btn-primary btn-xs" href="@Url.Action("Update", "Home", new {id = @p.Code,type = type})" role="button" title="Chỉnh sửa">
                                                         <i class="fa fa-pencil"></i>

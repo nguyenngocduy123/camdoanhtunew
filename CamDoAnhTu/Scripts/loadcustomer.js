@@ -73,7 +73,7 @@ $(document).ready(function () {
             dataType: "json",
             type: "POST",
             url: '@Url.Action("DeleteCustomer", "Home")',
-            data: { id: cusid },
+            data: { id: cusid, type: type  },
             error: function (xhr, status, error) {
                 alert(error);
             },
