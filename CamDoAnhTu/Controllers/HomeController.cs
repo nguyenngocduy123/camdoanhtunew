@@ -829,7 +829,7 @@ namespace CamDoAnhTu.Controllers
                 using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
                 {
                     ctx.Configuration.ValidateOnSaveEnabled = false;
-                    Customer pro = ctx.Customers.Where(p => p.Code == myViewModel.model.Code).FirstOrDefault();
+                    Customer pro = ctx.Customers.Where(p => p.ID == myViewModel.model.ID).FirstOrDefault();
                     pro.Name = myViewModel.model.Name;
                     pro.Phone = myViewModel.model.Phone;
                     pro.Address = myViewModel.model.Address;
@@ -1007,7 +1007,7 @@ namespace CamDoAnhTu.Controllers
             using (CamdoAnhTuEntities1 ctx = new CamdoAnhTuEntities1())
             {
                 ctx.Configuration.ValidateOnSaveEnabled = false;
-                Customer pro = ctx.Customers.Where(p => p.Code == model.Code).FirstOrDefault();
+                Customer pro = ctx.Customers.Where(p => p.ID == model.ID).FirstOrDefault();
                 pro.Name = model.Name;
                 pro.Phone = model.Phone;
                 pro.Address = model.Address;
