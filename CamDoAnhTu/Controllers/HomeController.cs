@@ -717,51 +717,53 @@ namespace CamDoAnhTu.Controllers
                 int newId = 0;
                 int id = 0;
 
-                var lstType = ctx.Customers.Where(p => p.type == type && p.IsDeleted == false).ToList();
+                var lstType = ctx.Customers.Where(p => p.type == type && p.IsDeleted == false).Select(o => o.Code).ToList();
                 var configuration = ctx.Configurations.Where(p => p.Type == type).FirstOrDefault();
 
-                if (lstType.Count <= 0)
-                    newId = 1;
-                else
-                {
-                    id = lstType.Count;
-                    newId = id + 1;
-                }
+                newId = lstType.Select(o => Int32.Parse(Regex.Match(o, @"\d+").Value)).Max() + 1;
+
+                //if (lstType.Count <= 0)
+                //    newId = 1;
+                //else
+                //{
+                //    id = lstType.Count;
+                //    newId = id + 1;
+                //}
                 string temp = "";
                 switch (type)
                 {
                     case 1:
-                        temp = "BA" + (newId + configuration.MaSoCu);
+                        temp = "BA" + (newId);
                         mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
                     case 2:
-                        temp = "CA" + (newId + configuration.MaSoCu);
+                        temp = "CA" + (newId);
                         mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
                     case 3:
-                        temp = "MA" + (newId + configuration.MaSoCu);
+                        temp = "MA" + (newId);
                         mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
                     case 4:
-                        temp = "ZA" + (newId + configuration.MaSoCu);
+                        temp = "ZA" + (newId);
                         mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
                     case 5:
-                        temp = "YA" + (newId + configuration.MaSoCu);
+                        temp = "YA" + (newId);
                         mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
                     case 6:
-                        temp = "TA" + (newId + configuration.MaSoCu);
+                        temp = "TA" + (newId);
                         mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
                     case 7:
-                        temp = "QA" + (newId + configuration.MaSoCu);
+                        temp = "QA" + (newId);
                         mvViewModel.constTA = configuration.MaSoCu.Value;
                         mvViewModel.sokhachbiloai = newId;
                         break;
