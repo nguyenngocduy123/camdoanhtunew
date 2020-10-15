@@ -17,7 +17,7 @@ namespace CamDoAnhTu.Helper
 
             if (authCookie == null)
             {
-                filterContext.Result = new RedirectResult("~/Account/Login");
+                filterContext.Result = new RedirectResult("~/User/Login");
                 return;
             }
             var authTicket = FormsAuthentication.Decrypt(authCookie.Value);

@@ -217,6 +217,7 @@
     <Compile Include="Controllers\LoanController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\PrintController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\XE1Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1596,6 +1597,8 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Home\LoadAccount.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
